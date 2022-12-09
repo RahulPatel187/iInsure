@@ -13,7 +13,7 @@ import {
 import Header from "../../components/default/Header";
 import SafeAreaView from "../../components/SafeAreaView";
 
-function InquiryListScreen({ navigation }) {
+function ClaimListScreen({ navigation }) {
   const [isLoading, setLoading] = useState(false);
 
   return (
@@ -23,10 +23,10 @@ function InquiryListScreen({ navigation }) {
         style={styles.headerBgImg}
       >
         <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
-        <Text style={styles.titleTxt}>{"My Inquiries"}</Text>
+        <Text style={styles.titleTxt}>{"My Claims"}</Text>
         <View style={styles.mainSection}>
           <FlatList
-            data={[1, 1, 1]}
+            data={[1, 1]}
             style={styles.listStyle}
             showsVerticalScrollIndicator={false}
             renderItem={({ item, index }) => {
@@ -42,8 +42,14 @@ function InquiryListScreen({ navigation }) {
                     }}
                   >
                     <View style={[styles.cardSubSec, { marginTop: 0 }]}>
-                      <Text style={styles.cardLabel}>{"Inquiry Date:"}</Text>
+                      <Text style={styles.cardLabel}>{"Applied Date:"}</Text>
                       <Text style={styles.cardValue}>{"08-Nov-22"}</Text>
+                    </View>
+                    <View style={styles.cardSubSec}>
+                      <Text style={styles.cardLabel}>{"Name:"}</Text>
+                      <Text style={styles.cardValue}>
+                        {"User Name"}
+                      </Text>
                     </View>
                     <View style={styles.cardSubSec}>
                       <Text style={styles.cardLabel}>{"Policy Number:"}</Text>
@@ -56,25 +62,9 @@ function InquiryListScreen({ navigation }) {
                       <Text style={styles.cardValue}>{"IL20414322100"}</Text>
                     </View>
                     <View style={styles.cardSubSec}>
-                      <Text style={styles.cardLabel}>{"Email:"}</Text>
-                      <Text style={styles.cardValue}>
-                        {"user@techforceglobal.com"}
-                      </Text>
-                    </View>
-                    <View style={styles.cardSubSec}>
-                      <Text style={styles.cardLabel}>{"Resolved in:"}</Text>
-                      <Text style={styles.cardValue}>{"-"}</Text>
-                    </View>
-                    <View style={styles.cardSubSec}>
                       <Text style={styles.cardLabel}>{"Status:"}</Text>
-                      <Text style={[styles.cardValue, { color: "#0DA600" }]}>
-                        {"Completed"}
-                      </Text>
-                    </View>
-                    <View style={styles.cardSubSec}>
-                      <Text style={styles.cardLabel}>{"Summary:"}</Text>
-                      <Text style={styles.cardValue} numberOfLines={2}>
-                        {"szgewet ctvesrtesysxdgdrhdh hsdhjds dshgdhsg"}
+                      <Text style={[styles.cardValue, { color: "#0024A6" }]}>
+                        {"Under Process"}
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -87,7 +77,7 @@ function InquiryListScreen({ navigation }) {
     </>
   );
 }
-export default InquiryListScreen;
+export default ClaimListScreen;
 
 const styles = StyleSheet.create({
   headerBgImg: {
@@ -145,7 +135,7 @@ const styles = StyleSheet.create({
   },
   cardSubSec: {
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 5,
   },
   cardLabel: {
     fontSize: 14,

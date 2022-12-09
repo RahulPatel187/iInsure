@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import CustomTextInput from "../../components/default/TextInput";
 import CustomButton from "../../components/default/Buttons";
-import Header from "../../components/Header";
+import Header from "../../components/default/Header";
 import Helpers from "../../utils/Helpers";
 import { useFormik } from "formik";
 
@@ -71,7 +71,7 @@ function Inquiry({ navigation }) {
                 source={require("../../assets/images/headerBgImg.png")}
                 style={styles.headerBgImg}
             >
-                <Header navigation={navigation} />
+                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>{"My "}</Text>
                     <Text style={styles.titleText2}>{"Inquiry"}</Text>
@@ -145,9 +145,9 @@ const styles = StyleSheet.create({
     headerBgImg: {
         width: "100%",
         flex: 1,
-        alignItems: "center",
+        // alignItems: "center",
         // justifyContent: "center",
-        paddingVertical: 20,
+        paddingBottom: 20,
     },
     container: {
         backgroundColor: "#F8F8F8",
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         padding: 20,
         width: '100%',
-        height: '80%'
+        height: '85%'
     },
     textStyle: {
         color: "#444444",

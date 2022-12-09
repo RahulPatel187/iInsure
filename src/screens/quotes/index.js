@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     Platform,
 } from "react-native";
-import Header from "../../components/Header";
+import Header from "../../components/default/Header";
 
 function GetAQuote({ navigation }) {
     return (
@@ -18,7 +18,7 @@ function GetAQuote({ navigation }) {
                 source={require("../../assets/images/headerBgImg.png")}
                 style={styles.headerBgImg}
             >
-                <Header navigation={navigation} />
+                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>{"Get A "}</Text>
                     <Text style={styles.titleText2}>{"Quote"}</Text>
@@ -67,9 +67,9 @@ const styles = StyleSheet.create({
     headerBgImg: {
         width: "100%",
         flex: 1,
-        alignItems: "center",
+        // alignItems: "center",
         // justifyContent: "center",
-        paddingVertical: 20,
+        paddingBottom: 20,
     },
     container: {
         backgroundColor: "#F8F8F8",

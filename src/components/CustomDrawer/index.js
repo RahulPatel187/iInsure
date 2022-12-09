@@ -64,16 +64,16 @@ const CustomDrawer = props => {
             props.navigation.navigate("Profile");
         } else if (slug == "claim_history") {
             props.navigation.closeDrawer();
-            props.navigation.navigate("ClaimHistory");
+            props.navigation.navigate("ClaimList");
         } else if (slug == "inquiry_list") {
             props.navigation.closeDrawer();
             props.navigation.navigate("InquiryList");
         } else if (slug == "reminder_list") {
             props.navigation.closeDrawer();
-            props.navigation.navigate("MyReminder");
+            props.navigation.navigate("ReminderList");
         } else if (slug == "notifications_list") {
             props.navigation.closeDrawer();
-            props.navigation.navigate("MyPushnotifications", {
+            props.navigation.navigate("NotificationList", {
                 isBack: false,
             });
             // props.navigation.navigate("MyPushnotifications");

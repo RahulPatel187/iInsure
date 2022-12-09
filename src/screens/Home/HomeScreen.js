@@ -35,22 +35,22 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </ScrollView>
         <View style={styles.bottomContainer}>
-          <View style={styles.column}>
+          <TouchableOpacity style={styles.column} onPress={() => navigation.navigate('HealthCard')}>
             <Image source={require("../../assets/images/Group17.png")} style={styles.columnImg} />
             <Text style={styles.columntext}>Health Card</Text>
-          </View>
-          <View style={styles.column}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.column}>
             <Image source={require("../../assets/images/Group18.png")} style={styles.columnImg} />
             <Text style={styles.columntext}>Inquiry</Text>
-          </View>
-          <View style={styles.column}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.column}>
             <Image source={require("../../assets/images/Group16.png")} style={styles.columnImg} />
             <Text style={styles.columntext}>Reminder</Text>
-          </View>
-          <View style={styles.column}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.column}>
             <Image source={require("../../assets/images/Group15.png")} style={styles.columnImg} />
             <Text style={styles.columntext}>About Us</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
       </View>

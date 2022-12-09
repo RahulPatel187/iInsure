@@ -16,6 +16,9 @@ import GetAQuote from "../screens/quotes";
 import Inquiry from "../screens/Inquiry";
 import Reminder from "../screens/Reminder";
 import Claim from "../screens/Claim/index.js";
+import HealthCard from "../screens/HealthCard";
+import ClaimListScreen from "../screens/Claim/ClaimList";
+import NotificationListScreen from "../screens/Notification";
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +34,10 @@ const BottomTabNavigator = () => {
       <Tab.Screen name="InquiryList" component={InquiryListScreen} />
       <Tab.Screen name="Inquiry" component={Inquiry} />
       <Tab.Screen name="Claim" component={Claim} />
+      <Tab.Screen name="ClaimList" component={ClaimListScreen} />
+      <Tab.Screen name="NotificationList" component={NotificationListScreen} />
       <Tab.Screen name="GetAQotes" component={GetAQuote} />
+      <Tab.Screen name="HealthCard" component={HealthCard} />
     </Tab.Navigator>
   );
 }

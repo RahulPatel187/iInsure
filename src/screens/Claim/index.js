@@ -224,23 +224,26 @@ function Claim({ navigation }) {
                     keyboardShouldPersistTaps="handled"
                 > */}
                 <View style={styles.container}>
-                    <View style={{ marginHorizontal: 16, marginTop: 20, marginBottom: 10, backgroundColor: Colors.whiteColor }}>
-                        <View style={{width: '70%'}}>
+                    <View style={{ marginHorizontal: 16, marginTop: 20, marginBottom: 10, backgroundColor: Colors.whiteColor, display: 'flex', flexDirection: 'row' }}>
+                        <View style={{width: '60%'}}>
                             <View style={styles.cardSubSec}>
-                                <Text style={styles.cardLabel}>{"Policy Number:"}</Text>
-                                <Text style={styles.cardValue}>{"IL20414322100"}</Text>
+                                <Text style={styles.cardLabel}>{"Insured Name:"}</Text>
+                                <Text style={styles.cardValue}>{"User Name"}</Text>
                             </View>
                             <View style={styles.cardSubSec}>
                                 <Text style={styles.cardLabel}>{"Policy Number:"}</Text>
-                                <Text style={styles.cardValue}>{"IL20414322100"}</Text>
+                                <Text style={styles.cardValue}>{"TITANIUM0011"}</Text>
                             </View>
                             <View style={styles.cardSubSec}>
-                                <Text style={styles.cardLabel}>{"Policy Number:"}</Text>
+                                <Text style={styles.cardLabel}>{"UHID Number:"}</Text>
                                 <Text style={styles.cardValue}>{"IL20414322100"}</Text>
                             </View>
                         </View>
-                        <View style={{width: '30%'}}>
-
+                        <View style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <Image
+                                source={require("../../assets/images/heart.png")}
+                                style={styles.heartImg}
+                            />
                         </View>
                     </View>
                     <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
@@ -360,6 +363,13 @@ const styles = StyleSheet.create({
         // justifyContent: "center",
         paddingBottom: 40,
     },
+    heartImg: {
+        width: 65,
+        height: 57,
+        // flex: 1,
+        // alignItems: "center",
+        // justifyContent: "center"
+    },
     container: {
         height: "87%",
         width: "100%",
@@ -462,10 +472,19 @@ const styles = StyleSheet.create({
         width: "50%",
     },
     cardValue: {
-        fontSize: 13,
+        fontSize: 14,
         color: "#444444",
-        fontWeight: "600",
+        fontWeight: "700",
         marginLeft: 24,
         width: "50%",
     },
+    headerSec: {
+        padding: 16,
+        borderRadius: 5,
+        color: 'black',
+        backgroundColor: '#ffffff',
+        marginTop: 10,
+        fontSize: 15,
+        fontWeight: '500'
+    }
 });
