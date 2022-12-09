@@ -19,44 +19,47 @@ function LoginScreen({ navigation }) {
 
   return (
     <>
-      <SafeAreaView>
       <KeyboardAwareScrollView
-          contentContainerStyle={styles.keyboardViewStyle}
-          showsVerticalScrollIndicator={false}
-          style={styles.keyboardStyle}
-        >
+        contentContainerStyle={styles.keyboardViewStyle}
+        showsVerticalScrollIndicator={false}
+        style={styles.keyboardStyle}
+      >
         <ImageBackground
           source={require("../../assets/images/headerBgImg.png")}
           style={styles.headerBgImg}
         >
-          <Image
-            style={styles.logoImg}
-            source={require("../../assets/images/appLogo.png")}
-          />
-        </ImageBackground>
-          <View style={styles.container}>
-            <Text style={styles.titleTxt}>{"Welcome to techforce"}</Text>
-            <View style={[styles.mainBox, styles.marginTop]}>
-              <Text style={styles.labelTxt}>{"Mobile"}</Text>
-              <TextInput style={styles.textBox} placeholder="Mobile" />
-            </View>
-            <Text style={styles.orTxt}>{"OR"}</Text>
-            <View style={styles.mainBox}>
-              <Text style={styles.labelTxt}>{"Email"}</Text>
-              <TextInput style={styles.textBox} placeholder="Email" />
-            </View>
-            <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={() => {
-                navigation.navigate("Otp");
-              }}
-            >
-              <Text style={styles.loginBtnTxt}>{"Log in"}</Text>
-            </TouchableOpacity>
+          <View style={styles.timerView}>
+            <Image
+              style={styles.logoImg}
+              source={require("../../assets/images/loginBack.png")}
+            />
+            <Image
+              style={styles.logoImg1}
+              source={require("../../assets/images/Framelogin.png")}
+            />
           </View>
-        </KeyboardAwareScrollView>
-      </SafeAreaView>
-      {/* <AuthBottomSection /> */}
+        </ImageBackground>
+        <View style={styles.container}>
+          <View style={[styles.mainBox, styles.marginTop]}>
+            <Text style={styles.labelTxt}>{"Mobile"}</Text>
+            <TextInput style={styles.textBox} placeholder="Mobile" />
+          </View>
+          <Text style={styles.orTxt}>{"OR"}</Text>
+          <View style={styles.mainBox}>
+            <Text style={styles.labelTxt}>{"Email"}</Text>
+            <TextInput style={styles.textBox} placeholder="Email" />
+          </View>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => {
+              navigation.navigate("Otp");
+            }}
+          >
+            <Text style={styles.loginBtnTxt}>{"Log in"}</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAwareScrollView>
+      <AuthBottomSection />
     </>
   );
 }
@@ -67,15 +70,28 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 60,
+    paddingVertical: 50,
     backgroundColor: "white",
+  },
+  timerView: {
+    alignItems: "center",
+    justifyContent: "center",
+    display: 'flex'
   },
   logoImg: {
-    width: 139,
-    height: 136,
+    width: 170,
+    height: 143,
+    marginTop: 90
+  },
+  logoImg1: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+    position: 'absolute',
+    zIndex: 999
   },
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#F8F8F8",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     marginTop: -30
@@ -85,8 +101,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 70,
   },
   keyboardStyle: {
-    marginTop: -25,
-    backgroundColor: "white",
+    marginTop: -35,
+    backgroundColor: "#F8F8F8",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
@@ -102,7 +118,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   marginTop: {
-    marginTop: 20,
+    marginTop: 30,
   },
   labelTxt: {
     fontSize: 15,

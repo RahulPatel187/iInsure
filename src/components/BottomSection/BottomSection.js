@@ -9,40 +9,42 @@ export default (props) => {
   const [selected, setSelected] = useState(1)
   return (
     <>
-      <View style={[styles.bottomSec, props.containerStyle]}>
-        <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Home'), setSelected(1) }}>
-          <Image source={require("../../assets/images/home.png")} style={[{ width: 20, height: 20 }, selected === 1 && { tintColor: '#0077B6' }]} />
-          <Text style={{ fontSize: 12, fontWeight: '400', color: 'black' }}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Profile'), setSelected(2) }}>
-          <Image source={require("../../assets/images/user.png")} style={[{ width: 20, height: 20 }, selected === 2 && { tintColor: '#0077B6' }]} />
-          <Text style={{ fontSize: 12, fontWeight: '400', color: 'black' }}>Profile</Text>
-        </TouchableOpacity>
-        <LinearGradient
-          colors={["#0096C7", "#0077B6", "#0077B6"]}
-          style={[
-            styles.middleBtn,
-            {
-              marginTop: -60,
-            },
-          ]}
-        >
-          <TouchableOpacity style={styles.middleBtn}>
-            <Image
-              style={styles.middleIcon}
-              source={require("../../assets/images/markQue.png")}
-            />
+      <LinearGradient colors={["#0077B6", "#0096C7", "#0077B6"]} style={[styles.bottomSec, props.containerStyle]}>
+        {/* <View style={[styles.bottomSec, props.containerStyle]}> */}
+          <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Home'), setSelected(1) }}>
+            <Image source={require("../../assets/images/home3.png")} style={[styles.tabImg, selected === 1 && { tintColor: '#FFFFFF' }]} />
+            <Text style={styles.tabText}>Home</Text>
           </TouchableOpacity>
-        </LinearGradient>
-        <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Reminder'), setSelected(3) }}>
-          <Image source={require("../../assets/images/Vectorclaims.png")} style={[{ width: 20, height: 20 }, selected === 3 && { tintColor: '#0077B6' }]} />
-          <Text style={{ fontSize: 12, fontWeight: '400', color: 'black' }}>Claims</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Inquiry'), setSelected(4) }}>
-          <Image source={require("../../assets/images/Vectorinquiry.png")} style={[{ width: 20, height: 20 }, selected === 4 && { tintColor: '#0077B6' }]} />
-          <Text style={{ fontSize: 12, fontWeight: '400', color: 'black' }}>Inquiry</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Reminder'), setSelected(2) }}>
+            <Image source={require("../../assets/images/ic_reminder_icon.png")} style={[styles.tabImg, selected === 2 && { tintColor: '#FFFFFF' }]} />
+            <Text style={styles.tabText}>Reminders</Text>
+          </TouchableOpacity>
+          <LinearGradient
+            colors={["#0096C7", "#0077B6", "#0077B6"]}
+            style={[
+              styles.middleBtn,
+              {
+                marginTop: -60,
+              },
+            ]}
+          >
+            <TouchableOpacity style={styles.middleBtn}>
+              <Image
+                style={styles.middleIcon}
+                source={require("../../assets/images/markQue.png")}
+              />
+            </TouchableOpacity>
+          </LinearGradient>
+          <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Claim'), setSelected(3) }}>
+            <Image source={require("../../assets/images/Vectorclaims.png")} style={[styles.tabImg, selected === 3 && { tintColor: '#ffffff' }]} />
+            <Text style={styles.tabText}>Claims</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Inquiry'), setSelected(4) }}>
+            <Image source={require("../../assets/images/Vectorinquiry.png")} style={[styles.tabImg, selected === 4 && { tintColor: '#ffffff' }]} />
+            <Text style={styles.tabText}>Inquiry</Text>
+          </TouchableOpacity>
+        {/* </View> */}
+      </LinearGradient>
     </>
   )
 };
@@ -90,5 +92,17 @@ const styles = StyleSheet.create({
     width: 28,
     resizeMode: 'stretch',
     tintColor: "white",
+  },
+  tabText: { 
+    fontSize: 12, 
+    fontWeight: '400', 
+    color: 'white', 
+    paddingTop: 5 
+  },
+  tabImg: { 
+    width: 22, 
+    height: 22, 
+    tintColor: '#FFFFFF',
+    resizeMode: 'contain', 
   },
 });

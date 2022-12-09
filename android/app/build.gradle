@@ -1,4 +1,6 @@
 apply plugin: "com.android.application"
+// apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -119,7 +121,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
-def enableHermes = project.ext.react.get("enableHermes", false);
+def enableHermes = project.ext.react.get("enableHermes", true);
 
 /**
  * Architectures to build native code for.
@@ -277,6 +279,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+    implementation 'com.facebook.fresco:animated-gif:2.5.0'
 }
 
 if (isNewArchitectureEnabled()) {

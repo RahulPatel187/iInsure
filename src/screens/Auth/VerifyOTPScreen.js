@@ -71,34 +71,38 @@ function VerifyOTPScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView>
-       <KeyboardAwareScrollView
-          contentContainerStyle={styles.keyboardViewStyle}
-          showsVerticalScrollIndicator={false}
-          style={styles.keyboardStyle}
-        >
-      <ImageBackground
-        source={require("../../assets/images/headerBgImg.png")}
-        style={styles.headerBgImg}
+    <>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.keyboardViewStyle}
+        showsVerticalScrollIndicator={false}
+        style={styles.keyboardStyle}
       >
-        <TouchableOpacity
-          style={styles.backIconBtn}
-          onPress={() => {
-            navigation.goBack();
-          }}
+        <ImageBackground
+          source={require("../../assets/images/headerBgImg.png")}
+          style={styles.headerBgImg}
         >
-          <Image
-            source={require("../../assets/images/backIcon.png")}
-            style={styles.backIcon}
-          />
-        </TouchableOpacity>
-        <View style={styles.timerView}>
-          <Text style={styles.timerTxt}>
-            {moment().minutes(0).seconds(counter).format("mm:ss")}
-          </Text>
-        </View>
-        <Text style={styles.otpTitleTxt}>{"OTP  Verification"}</Text>
-      </ImageBackground>
+          <TouchableOpacity
+            style={styles.backIconBtn}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Image
+              source={require("../../assets/images/backIcon.png")}
+              style={styles.backIcon}
+            />
+          </TouchableOpacity>
+          <View style={styles.timerView}>
+            <Image
+              source={require("../../assets/images/Groupotp.png")}
+              style={styles.logoImg}
+            />
+            <Text style={styles.timerTxt}>
+              {moment().minutes(0).seconds(counter).format("mm:ss")}
+            </Text>
+          </View>
+          <Text style={styles.otpTitleTxt}>{"OTP  Verification"}</Text>
+        </ImageBackground>
         <View style={styles.container}>
           <Text style={styles.titleTxt}>
             {
@@ -159,7 +163,7 @@ function VerifyOTPScreen({ navigation }) {
         </View>
       </KeyboardAwareScrollView>
       {/* <AuthBottomSection /> */}
-    </SafeAreaView>
+    </>
   );
 }
 export default VerifyOTPScreen;
@@ -169,7 +173,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 80,
+    paddingVertical: 100,
   },
   logoImg: {
     width: 139,
@@ -262,8 +266,8 @@ const styles = StyleSheet.create({
     color: "#FFF",
   },
   timerView: {
-    height: 150,
-    width: 150,
+    height: 170,
+    width: 170,
     borderRadius: 90,
     alignItems: "center",
     justifyContent: "center",
@@ -272,7 +276,8 @@ const styles = StyleSheet.create({
   timerTxt: {
     fontSize: 45,
     fontWeight: "600",
-    color: "#444444",
+    color: "#005C8C",
+    marginBottom: 40
   },
   otpTitleTxt: {
     fontSize: 25,
@@ -286,7 +291,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    top: 15,
+    top: 20,
     left: 5,
   },
   backIcon: {

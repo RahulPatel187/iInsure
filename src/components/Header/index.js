@@ -7,7 +7,7 @@ export default (props) => (
     <TouchableOpacity
       style={styles.backIconBtn}
       onPress={() => {
-        navigation.goBack();
+        props.navigation.toggleDrawer();
       }}
     >
       <Image

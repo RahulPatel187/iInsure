@@ -5,12 +5,6 @@ import LinearGradient from "react-native-linear-gradient";
 export default (props) => (
   <>
     <View style={styles.bottomSec}>
-      <TouchableOpacity style={styles.bottomBtn}>
-        <Image
-          style={styles.bottomBtnImg}
-          source={require("../../assets/images/emailIcon.png")}
-        />
-      </TouchableOpacity>
       <LinearGradient
         colors={["#0096C7", "#0077B6", "#0077B6"]}
         style={[
@@ -23,16 +17,42 @@ export default (props) => (
         <TouchableOpacity style={styles.middleBtn}>
           <Image
             style={styles.middleIcon}
-            source={require("../../assets/images/quote.png")}
+            source={require("../../assets/images/email.png")}
           />
         </TouchableOpacity>
       </LinearGradient>
-      <TouchableOpacity style={styles.bottomBtn}>
-        <Image
-          style={styles.bottomBtnImg}
-          source={require("../../assets/images/emailIcon.png")}
-        />
-      </TouchableOpacity>
+      <LinearGradient
+        colors={["#0096C7", "#0077B6", "#0077B6"]}
+        style={[
+          styles.middleBtn,
+          {
+            marginTop: -60,
+          },
+        ]}
+      >
+        <TouchableOpacity style={styles.middleBtn}>
+          <Image
+            style={styles.middleIcon}
+            source={require("../../assets/images/markQue.png")}
+          />
+        </TouchableOpacity>
+      </LinearGradient>
+      <LinearGradient
+        colors={["#0096C7", "#0077B6", "#0077B6"]}
+        style={[
+          styles.middleBtn,
+          {
+            marginTop: -60,
+          },
+        ]}
+      >
+        <TouchableOpacity style={styles.middleBtn}>
+          <Image
+            style={styles.middleIcon}
+            source={require("../../assets/images/call2.png")}
+          />
+        </TouchableOpacity>
+      </LinearGradient>
     </View>
   </>
 );
@@ -76,8 +96,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   middleIcon: {
-    height: 25,
+    height: 46,
     width: 28,
+    resizeMode: 'contain',
     tintColor: "white",
   },
 });

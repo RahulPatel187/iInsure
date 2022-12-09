@@ -22,7 +22,7 @@ function RemindersListScreen({ navigation }) {
         source={require("../../assets/images/headerBgImg.png")}
         style={styles.headerBgImg}
       >
-        <Header />
+        <Header navigation={navigation} />
         <Text style={styles.titleTxt}>{"My Reminders"}</Text>
         <View style={styles.mainSection}>
           <FlatList

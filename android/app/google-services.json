@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "445279124643",
+    "project_id": "uptrust-500bd",
+    "storage_bucket": "uptrust-500bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445279124643:android:0def0410f61df8d6481316",
+        "android_client_info": {
+          "package_name": "com.TF.UpTrust"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445279124643-p8j6c1tav1fv7to7r2enqj8910l1q1o3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIODlFv9WY27h413Pf15DYEltOE744M04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445279124643-p8j6c1tav1fv7to7r2enqj8910l1q1o3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "445279124643-parrsa6rgcgql13fp0qsgik51pob7cq2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.uptrust"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

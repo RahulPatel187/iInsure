@@ -19,7 +19,7 @@ function Profile({ navigation }) {
         source={require("../../assets/images/headerBgImg.png")}
         style={styles.headerBgImg}
       >
-        <Header />
+        <Header navigation={navigation} />
         {/* <View style={styles.timerView}> */}
         <Image source={require("../../assets/images/userScreen.png")} style={{ width: 100, height: 110, resizeMode: 'stretch' }} />
         {/* </View> */}

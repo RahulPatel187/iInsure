@@ -11,6 +11,11 @@ import Profile from "../screens/Profile";
 import RemindersListScreen from "../screens/Reminder/RemindersListScreen";
 import InquiryListScreen from "../screens/Inquiry/InquiryListScreen";
 import DrawerHeader from "../components/DrawerHeader";
+import CustomDrawer from "../components/CustomDrawer";
+import GetAQuote from "../screens/quotes";
+import Inquiry from "../screens/Inquiry";
+import Reminder from "../screens/Reminder";
+import Claim from "../screens/Claim/index.js";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,8 +26,12 @@ const BottomTabNavigator = () => {
     }} >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen name="Reminder" component={RemindersListScreen} />
-      <Tab.Screen name="Inquiry" component={InquiryListScreen} />
+      <Tab.Screen name="ReminderList" component={RemindersListScreen} />
+      <Tab.Screen name="Reminder" component={Reminder} />
+      <Tab.Screen name="InquiryList" component={InquiryListScreen} />
+      <Tab.Screen name="Inquiry" component={Inquiry} />
+      <Tab.Screen name="Claim" component={Claim} />
+      <Tab.Screen name="GetAQotes" component={GetAQuote} />
     </Tab.Navigator>
   );
 }
@@ -33,7 +42,9 @@ function MyDrawer() {
   return (
     <Drawer.Navigator screenOptions={{
       headerShown: false
-    }}>
+    }}
+    drawerContent={(props) => <CustomDrawer {...props} />}
+    >
       <Drawer.Screen name="Home" component={BottomTabNavigator} />
     </Drawer.Navigator>
   );
