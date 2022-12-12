@@ -346,7 +346,7 @@ function Reminder({ navigation }) {
                         />
                         <Image
                             style={styles.calanderImage}
-                            source={require("../../assets/images/ic_calendar.png")}
+                            source={require("../../assets/images/cal.png")}
                         />
                     </Pressable>
                     {errors.dueDate ? (
@@ -370,7 +370,7 @@ function Reminder({ navigation }) {
                         </Text>
                     ) : null}
                     <CustomButton
-                        text={"SUBMIT"}
+                        text={"Submit"}
                         isLarge={true}
                         onPress={() => {
                             Keyboard.dismiss();
@@ -402,10 +402,10 @@ export default Reminder;
 const styles = StyleSheet.create({
     headerBgImg: {
         width: "100%",
-        // flex: 1,
+        flex: 1,
         // alignItems: "center",
         // justifyContent: "center",
-        paddingBottom: 40,
+        // paddingBottom: 40,
     },
     container: {
         height: "87%",
@@ -473,7 +473,7 @@ const styles = StyleSheet.create({
     },
     calanderImage: {
         // marginRight: 16,
-        height: 20,
+        height: 23,
         width: 20,
         tintColor: '#444444',
     },
@@ -494,6 +494,6 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto-Bold",
         marginBottom: 5,
         marginTop: 10,
-        fontWeight: "500",
+        fontWeight: "700",
     },
 });

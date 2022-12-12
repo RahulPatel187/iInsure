@@ -49,8 +49,8 @@ function Header(props) {
           <Image
             source={require("../../assets/images/leftArrowmenu.png")}
             style={{
-              height: Helpers.getDynamicSize(25),
-              width: Helpers.getDynamicSize(21),
+              height: Helpers.getDynamicSize(18),
+              width: Helpers.getDynamicSize(18),
               resizeMode: "contain",
               tintColor: Colors.whiteColor,
             }}
@@ -67,18 +67,18 @@ function Header(props) {
       <View
         style={{
           //maxWidth: windowWidth - Helpers.getDynamicSize(120),
-          //flex: 1,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          justifyContent: "center",
-          alignItems: "center",
+          // flex: 1,
+          // position: "absolute",
+          display: 'flex',
+          // justifyContent: "center",
+          // alignItems: "center",
+          // maxWidth: 50,
+          // height: 100,
+          // flexWrap: 'wrap',
         }}
       >
-        <Text style={[styles.centerText]}>{props.title}</Text>
-      </View>
+        <Text style={[styles.centerText, { fontWeight: '300' }]}>  {props.title}  <Text style={[styles.centerText, { fontWeight: '600' }]}>{props.title1}</Text></Text>
+      </View >
     );
   };
 
@@ -101,8 +101,8 @@ function Header(props) {
           <Image
             source={props.rightIconImage}
             style={{
-              height: Helpers.getDynamicSize(25),
-              width: Helpers.getDynamicSize(21),
+              height: Helpers.getDynamicSize(18),
+              width: Helpers.getDynamicSize(23),
               resizeMode: "contain",
               tintColor: Colors.whiteColor,
             }}
@@ -125,16 +125,28 @@ function Header(props) {
 
   return (
     <View style={styles.headerView}>
-      {renderLeftIcon()}
+      <View style={styles.icon}>
+        {renderLeftIcon()}
+        {renderRightIcon()}
+      </View>
+
       {renderTitle()}
-      {renderRightIcon()}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   headerView: {
-    height: Helpers.getDynamicSize(50),
+    height: Helpers.getDynamicSize(30),
+    marginTop: 5
+    // flexDirection: "row",
+    // alignItems: "center",
+    // justifyContent: "space-between",
+    // paddingEnd: 5,
+    // paddingStart: 5
+  },
+  icon: {
+    height: Helpers.getDynamicSize(30),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -142,9 +154,9 @@ const styles = StyleSheet.create({
     paddingStart: 16
   },
   centerText: {
-    fontSize: Helpers.getDynamicSize(20),
+    fontSize: Helpers.getDynamicSize(25),
     color: Colors.whiteColor,
-    fontFamily: "Roboto-Bold",
+    // fontFamily: "Roboto-Bold",
     // fontFamily: 'Roboto-Light',
     //fontFamily: 'Roboto-Bold'
   },

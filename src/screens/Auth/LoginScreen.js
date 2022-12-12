@@ -44,7 +44,13 @@ function LoginScreen({ navigation }) {
             <Text style={styles.labelTxt}>{"Mobile"}</Text>
             <TextInput style={styles.textBox} placeholder="Mobile" />
           </View>
-          <Text style={styles.orTxt}>{"OR"}</Text>
+          <View style={styles.orView}>
+            <View style={[styles.line, { marginLeft: 20 }]} />
+            <View>
+              <Text style={styles.orTxt}>{"OR"}</Text>
+            </View>
+            <View style={[styles.line, { marginRight: 20 }]} />
+          </View>
           <View style={styles.mainBox}>
             <Text style={styles.labelTxt}>{"Email"}</Text>
             <TextInput style={styles.textBox} placeholder="Email" />
@@ -57,6 +63,13 @@ function LoginScreen({ navigation }) {
           >
             <Text style={styles.loginBtnTxt}>{"Log in"}</Text>
           </TouchableOpacity>
+        </View>
+        <View style={[styles.orView, {marginTop: 30}]}>
+          <View style={[styles.line, { marginLeft: 20 }]} />
+          <View>
+            <Text style={[styles.orTxt, {width: 100}]}>{"Sign up Via"}</Text>
+          </View>
+          <View style={[styles.line, { marginRight: 20 }]} />
         </View>
       </KeyboardAwareScrollView>
       <AuthBottomSection />
@@ -77,6 +90,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     display: 'flex'
+  },
+  orView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#737373'
   },
   logoImg: {
     width: 170,
@@ -143,13 +166,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   orTxt: {
+    width: 50,
     fontSize: 15,
     fontWeight: "600",
-    color: "#444444",
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    marginTop: 20,
+    textAlign: 'center',
+    color: "#444444"
   },
   loginBtn: {
     width: "90%",

@@ -106,8 +106,9 @@ function VerifyOTPScreen({ navigation }) {
         <View style={styles.container}>
           <Text style={styles.titleTxt}>
             {
-              "Please type the OTP as shared on your\n email: username@techforceglobal.com"
-            }
+              "Please type the OTP as shared on your\n email:"}<Text style={{fontWeight: '700'}}>{" username@techforceglobal.com"
+              }
+            </Text>
           </Text>
           <CodeField
             ref={ref2}
@@ -142,7 +143,7 @@ function VerifyOTPScreen({ navigation }) {
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
-              navigation.navigate("Drawer");
+              navigation.navigate("Loader");
             }}
           >
             <Text style={styles.loginBtnTxt}>{"Submit"}</Text>
@@ -266,8 +267,8 @@ const styles = StyleSheet.create({
     color: "#FFF",
   },
   timerView: {
-    height: 170,
-    width: 170,
+    height: 180,
+    width: 180,
     borderRadius: 90,
     alignItems: "center",
     justifyContent: "center",
@@ -292,15 +293,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     position: "absolute",
     top: 20,
-    left: 5,
+    left: 0,
   },
   backIcon: {
-    height: 26,
-    width: 25,
+    height: 18,
+    width: 18,
   },
   resendCodeTip: {
     textAlign: "center",
-    marginTop: 10,
+    // marginTop: 10,
     fontSize: 17,
     fontWeight: "400",
     color: "#444444",

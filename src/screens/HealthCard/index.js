@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         flex: 1,
         // alignItems: "center",
         // justifyContent: "center",
-        paddingBottom: 20,
+        // paddingBottom: 20,
     },
     container: {
         backgroundColor: "#F8F8F8",
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         padding: 10,
         width: '100%',
-        height: '85%'
+        height: '87%'
     },
     heartImg: {
         width: 95,
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10
+        // marginTop: 10
     },
     titleText: {
         display: 'flex',
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
     footer: { 
         display: 'flex', 
         alignItems: 'center', 
-        justifyContent: 'space-around', 
+        justifyContent: 'center', 
         flexDirection: 'row', 
         padding: 5, 
         borderBottomLeftRadius: 50, 

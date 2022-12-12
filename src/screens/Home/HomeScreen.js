@@ -2,7 +2,7 @@ import React from "react";
 import { Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import BottomSection from "../../components/BottomSection/BottomSection";
 import SafeAreaView from "../../components/SafeAreaView";
-import Header from "../../components/Header";
+import Header from "../../components/default/Header";
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -11,9 +11,11 @@ const HomeScreen = ({ navigation }) => {
         source={require("../../assets/images/headerBgImg.png")}
         style={styles.headerBgImg}
       >
-        <Header navigation={navigation} />
-        <Text style={styles.headerText}>{"Hello,"}</Text>
-        <Text style={styles.headerText2}>{"User long name"}</Text>
+        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
+        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={styles.headerText}>{"Hello,"}</Text>
+          <Text style={styles.headerText2}>{"User long name"}</Text>
+        </View>
       </ImageBackground>
 
       <View style={styles.container}>
@@ -62,14 +64,15 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   headerBgImg: {
-    alignItems: "center",
+    // alignItems: "center",
+    // display: 'flex'
     flex: 1,
   },
   container: {
     backgroundColor: "white",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    height: '80%',
+    height: '84%',
     position: 'absolute',
     bottom: 0
   },
@@ -80,29 +83,29 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  headerText: { 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    fontSize: 25, 
-    fontWeight: '300', 
-    color: '#FFFFFF' 
+  headerText: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 25,
+    fontWeight: '300',
+    color: '#FFFFFF'
   },
-  headerText2: { 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    fontSize: 25, 
-    fontWeight: '600', 
-    color: '#FFFFFF' 
+  headerText2: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 25,
+    fontWeight: '600',
+    color: '#FFFFFF'
   },
-  bannerImg: { 
-    height: 270, 
-    resizeMode: 'stretch' 
+  bannerImg: {
+    height: 270,
+    resizeMode: 'stretch'
   },
-  bottomContainer: { 
-    display: 'flex', 
-    flexDirection: 'row', 
+  bottomContainer: {
+    display: 'flex',
+    flexDirection: 'row',
     // justifyContent: 'center', 
     // alignItems: 'center', 
     flexWrap: 'wrap',
@@ -110,21 +113,21 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginTop: -20
   },
-  column: { 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    paddingBottom: 10, 
-    paddingLeft: 25, 
+  column: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 10,
+    paddingLeft: 25,
   },
-  columnImg: { 
-    width: 132, 
-    height: 90, 
-    resizeMode: 'contain' 
+  columnImg: {
+    width: 132,
+    height: 90,
+    resizeMode: 'contain'
   },
-  columntext: { 
-    fontSize: 14, 
-    fontWeight: '400', 
-    color: 'black' 
+  columntext: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: 'black'
   },
 });

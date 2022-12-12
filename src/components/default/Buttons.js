@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   btnTxt: {
     color: Colors.whiteColor,
     fontSize: 18,
-    textTransform: "uppercase",
+    // textTransform: "uppercase",
   },
 });
 

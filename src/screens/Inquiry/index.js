@@ -128,7 +128,7 @@ function Inquiry({ navigation }) {
                     />
                 </View>
                 <CustomButton
-                    text={"SUBMIT"}
+                    text={"Submit"}
                     isLarge={true}
                     onPress={() => {
                         Keyboard.dismiss();
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         flex: 1,
         // alignItems: "center",
         // justifyContent: "center",
-        paddingBottom: 20,
+        // paddingBottom: 20,
     },
     container: {
         backgroundColor: "#F8F8F8",
@@ -159,14 +159,14 @@ const styles = StyleSheet.create({
         bottom: 0,
         padding: 20,
         width: '100%',
-        height: '85%'
+        height: '87%'
     },
     textStyle: {
         color: "#444444",
         fontSize: Helpers.getDynamicSize(14),
         fontFamily: "Roboto-Bold",
         marginBottom: 5,
-        fontWeight: "500",
+        fontWeight: "700",
         marginTop: 10,
     },
     titleTxt: {
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10
+        // marginTop: 10
     },
     titleText: {
         display: 'flex',

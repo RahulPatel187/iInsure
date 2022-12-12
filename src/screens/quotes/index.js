@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
     StyleSheet,
     View,
@@ -10,8 +10,55 @@ import {
     Platform,
 } from "react-native";
 import Header from "../../components/default/Header";
+import CustomTextInput from "../../components/default/TextInput";
+import CustomButton from "../../components/default/Buttons";
+import { useFormik } from "formik";
 
 function GetAQuote({ navigation }) {
+    const emailRef = useRef(null);
+    const mobileNumberRef = useRef(null);
+    const typeofInsuranceRef = useRef(null);
+    const nameRef = useRef(null);
+
+    const {
+        handleChange,
+        handleSubmit,
+        handleBlur,
+        values,
+        errors,
+        touched,
+        resetForm,
+        setFieldValue,
+    } = useFormik({
+        //  validationSchema: InquirySchema,
+        validate: (values) => {
+            const errors = {};
+            if (!values.name) {
+                errors.name = "Your name is required";
+            }
+            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
+            }
+            if (!values.policyNo) {
+                errors.policyNo = "Mobile number is required";
+            }
+            if (!values.summary) {
+                errors.summary = "Summary is required";
+            }
+            return errors;
+        },
+        validateOnChange: false,
+        //initialValues: { firstName: '', lastName: '', phoneNumber: '', email: '' },
+        initialValues: { email: "", mobileNo: "", name: "", summary: "" },
+        onSubmit: (values) => {
+            if (checkedBox.includes(true) === false) {
+                console.log("1");
+                return;
+                // errors.dueDate = "Due date is required";
+            }
+            //   callApi(values);
+        },
+    });
     return (
         <>
             <ImageBackground
@@ -30,33 +77,81 @@ function GetAQuote({ navigation }) {
                         "Your Full Name"
                     }
                 </Text>
-                <TextInput style={styles.textInput} placeholder={'Enter Your Full Name'} />
+                <CustomTextInput
+                    ref={nameRef}
+                    placeholder="Enter Your Full Name"
+                    onChangeText={handleChange("fullName")}
+                    value={values.name}
+                    returnKeyType="next"
+                    onSubmitEditing={() => emailRef.current?.focus()}
+                    showPasswordIcon={false}
+                    errors={errors.name}
+                />
                 <Text style={styles.titleTxt}>
                     {
                         "Your Email"
                     }
                 </Text>
-                <TextInput style={styles.textInput} placeholder={'Enter Your Email'} />
+                <CustomTextInput
+                    ref={emailRef}
+                    placeholder="Enter Your E-mail"
+                    onChangeText={handleChange("email")}
+                    value={values.email}
+                    returnKeyType="next"
+                    showPasswordIcon={false}
+                    errors={errors.email}
+                />
                 <Text style={styles.titleTxt}>
                     {
                         "Your Summary"
                     }
                 </Text>
-                <TextInput style={styles.textInput} multiline={true} numberOfLines={4} placeholder={'Enter Your Full Name'} />
+                <CustomTextInput
+                    ref={typeofInsuranceRef}
+                    placeholder="Enter Your Summary"
+                    onChangeText={handleChange("insuranceType")}
+                    value={values.summary}
+                    returnKeyType="next"
+                    onSubmitEditing={() => mobileNumberRef.current?.focus()}
+                    showPasswordIcon={false}
+                    errors={errors.summary}
+                    // containerStyle={{
+                    //   backgroundColor: Colors.inputColorNewBackground,
+                    // }}
+                    numberOfLines={6}
+                    multiline={true}
+                    minHeight={100}
+                    maxHeight={150}
+                />
                 <Text style={styles.titleTxt}>
                     {
                         "Your Mobile Number"
                     }
                 </Text>
-                <TextInput style={styles.textInput} placeholder={'Enter Your Mobile Number'} />
-                <TouchableOpacity
-                    style={styles.loginBtn}
+                <CustomTextInput
+                    ref={mobileNumberRef}
+                    placeholder="Mobile No."
+                    onChangeText={handleChange("mobileNo")}
+                    value={values.mobileNo}
+                    returnKeyType="done"
+                    onSubmitEditing={() => { }}
+                    showPasswordIcon={false}
+                    errors={errors.mobileNo}
+                    // keyboardType="phone-pad"
+                    keyboardType="number-pad"
+                    maxLength={10}
+                // containerStyle={{
+                //   backgroundColor: Colors.inputColorNewBackground,
+                // }}
+                />
+                 <CustomButton
+                    text={"Submit"}
+                    isLarge={true}
                     onPress={() => {
-                        navigation.navigate("Drawer");
+                        Keyboard.dismiss();
+                        handleSubmit();
                     }}
-                >
-                    <Text style={styles.loginBtnTxt}>{"Submit"}</Text>
-                </TouchableOpacity>
+                />
             </View>
         </>
     );
@@ -69,7 +164,7 @@ const styles = StyleSheet.create({
         flex: 1,
         // alignItems: "center",
         // justifyContent: "center",
-        paddingBottom: 20,
+        // paddingBottom: 20,
     },
     container: {
         backgroundColor: "#F8F8F8",
@@ -81,7 +176,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         padding: 20,
         width: '100%',
-        height: '80%'
+        height: '87%'
     },
     titleTxt: {
         fontSize: 15,
@@ -120,31 +215,31 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10
+        // marginTop: 10
     },
-    titleText: { 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        fontSize: 25, 
-        fontWeight: '300', 
-        color: '#FFFFFF' 
+    titleText: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 25,
+        fontWeight: '300',
+        color: '#FFFFFF'
     },
-    titleText2: { 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        fontSize: 25, 
-        fontWeight: '600', 
-        color: '#FFFFFF' 
+    titleText2: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 25,
+        fontWeight: '600',
+        color: '#FFFFFF'
     },
-    textInput: { 
-        padding: 10, 
-        borderRadius: 5, 
-        color: 'black', 
-        backgroundColor: '#ffffff', 
-        marginTop: 5, 
-        fontSize: 15, 
-        fontWeight: '500' 
+    textInput: {
+        padding: 10,
+        borderRadius: 5,
+        color: 'black',
+        backgroundColor: '#ffffff',
+        marginTop: 5,
+        fontSize: 15,
+        fontWeight: '500'
     },
 });

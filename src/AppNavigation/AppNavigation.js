@@ -19,6 +19,8 @@ import Claim from "../screens/Claim/index.js";
 import HealthCard from "../screens/HealthCard";
 import ClaimListScreen from "../screens/Claim/ClaimList";
 import NotificationListScreen from "../screens/Notification";
+import Loading from "../screens/Loading";
+import Intro from "../screens/intro";
 
 const Tab = createBottomTabNavigator();
 
@@ -49,7 +51,7 @@ function MyDrawer() {
     <Drawer.Navigator screenOptions={{
       headerShown: false
     }}
-    drawerContent={(props) => <CustomDrawer {...props} />}
+      drawerContent={(props) => <CustomDrawer {...props} />}
     >
       <Drawer.Screen name="Home" component={BottomTabNavigator} />
     </Drawer.Navigator>
@@ -70,6 +72,8 @@ export default AppNavigation = () => {
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Otp" component={VerifyOTPScreen} />
+      <Stack.Screen name="Loader" component={Loading} />
+      <Stack.Screen name="Intro" component={Intro} />
       <Stack.Screen name="Drawer" component={MyDrawer} />
     </Stack.Navigator>
   );

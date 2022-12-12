@@ -216,7 +216,7 @@ function Claim({ navigation }) {
                     <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
                     <View style={styles.titleContainer}>
                         <Text style={styles.titleText}>{"My "}</Text>
-                        <Text style={styles.titleText2}>{"Claims"}</Text>
+                        <Text style={styles.titleText2}>{"Claim"}</Text>
                     </View>
                 </ImageBackground>
                 {/* <KeyboardAwareScrollView
@@ -304,7 +304,7 @@ function Claim({ navigation }) {
                         />
                         <Image
                             style={styles.calanderImage}
-                            source={require("../../assets/images/ic_calendar.png")}
+                            source={require("../../assets/images/cal.png")}
                         />
                     </Pressable>
                     {errors.dueDate ? (
@@ -326,7 +326,7 @@ function Claim({ navigation }) {
                         />
                     </View>
                     <CustomButton
-                        text={"SUBMIT"}
+                        text={"Claim"}
                         isLarge={true}
                         onPress={() => {
                             Keyboard.dismiss();
@@ -358,10 +358,10 @@ export default Claim;
 const styles = StyleSheet.create({
     headerBgImg: {
         width: "100%",
-        // flex: 1,
+        flex: 1,
         // alignItems: "center",
         // justifyContent: "center",
-        paddingBottom: 40,
+        // paddingBottom: 40,
     },
     heartImg: {
         width: 65,
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
     },
     calanderImage: {
         // marginRight: 16,
-        height: 20,
+        height: 23,
         width: 20,
         tintColor: '#444444',
     },
