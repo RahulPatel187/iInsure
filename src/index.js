@@ -1,20 +1,20 @@
-import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SplashScreen from "./screens/SplashScreen";
-import LoginScreen from "./screens/Auth/LoginScreen";
-import VerifyOTPScreen from "./screens/Auth/VerifyOTPScreen";
-import HomeScreen from "./screens/Home/HomeScreen";
-import Profile from "./screens/Profile";
-import RemindersListScreen from "./screens/Reminder/RemindersListScreen";
-import InquiryListScreen from "./screens/Inquiry/InquiryListScreen";
-import AppNavigation from "./AppNavigation/AppNavigation";
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import SplashScreen from './screens/SplashScreen';
+import LoginScreen from './screens/Auth/LoginScreen';
+import VerifyOTPScreen from './screens/Auth/VerifyOTPScreen';
+import HomeScreen from './screens/Home/HomeScreen';
+import Profile from './screens/Profile';
+import RemindersListScreen from './screens/Reminder/RemindersListScreen';
+import InquiryListScreen from './screens/Inquiry/InquiryListScreen';
+import AppNavigation from './AppNavigation/AppNavigation';
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-       {/* <Stack.Navigator
+      {/* <Stack.Navigator
             screenOptions={{
                 headerShown: false,
             }}
@@ -28,7 +28,7 @@ function App() {
             <Stack.Screen name="Reminder" component={RemindersListScreen} />
             <Stack.Screen name="Inquiry" component={InquiryListScreen} />
         </Stack.Navigator> */}
-        <AppNavigation />
+      <AppNavigation />
     </NavigationContainer>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,41 +8,55 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
-} from "react-native";
-import BottomSection from "../../components/BottomSection/BottomSection";
-import Header from "../../components/Header";
+} from 'react-native';
+import BottomSection from '../../components/BottomSection/BottomSection';
+import Header from '../../components/Header';
 
-function Profile({ navigation }) {
+function Profile({navigation}) {
   return (
     <>
       <ImageBackground
-        source={require("../../assets/images/headerBgImg.png")}
-        style={styles.headerBgImg}
-      >
+        source={require('../../assets/images/headerBgImg.png')}
+        style={styles.headerBgImg}>
         <Header navigation={navigation} />
         {/* <View style={styles.timerView}> */}
-        <Image source={require("../../assets/images/userScreen.png")} style={styles.logoImg} />
+        <Image
+          source={require('../../assets/images/userScreen.png')}
+          style={styles.logoImg}
+        />
         {/* </View> */}
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>{"My "}</Text>
-          <Text style={styles.titleText2}>{"Profile"}</Text>
+          <Text style={styles.titleText}>{'My '}</Text>
+          <Text style={styles.titleText2}>{'Profile'}</Text>
         </View>
       </ImageBackground>
       <View style={styles.container}>
-        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <ImageBackground source={require("../../assets/images/userBack.png")} style={{ width: 63, height: 63, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Image source={require("../../assets/images/userr.png")} style={{ width: 22, height: 22 }} />
+        <View
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ImageBackground
+            source={require('../../assets/images/userBack.png')}
+            style={{
+              width: 63,
+              height: 63,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../../assets/images/userr.png')}
+              style={{width: 22, height: 22}}
+            />
           </ImageBackground>
         </View>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>{"Hello, "}</Text>
-          <Text style={styles.titleText2}>{"User"}</Text>
+          <Text style={[styles.titleText, {color: '#000'}]}>{'Hello, '}</Text>
+          <Text style={[styles.titleText2, , {color: '#000'}]}>{'User'}</Text>
         </View>
-        <Text style={styles.titleTxt}>
-          {
-            "Registered details"
-          }
-        </Text>
+        <Text style={styles.titleTxt}>{'Registered details'}</Text>
         <Text style={styles.textStyle}>UserName</Text>
         <Text style={styles.textStyle}>9876543210</Text>
         <Text style={styles.textStyle}>user@techforceglobal.com</Text>
@@ -54,19 +68,19 @@ export default Profile;
 
 const styles = StyleSheet.create({
   headerBgImg: {
-    width: "100%",
+    width: '100%',
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     // justifyContent: "center",
     paddingBottom: 20,
   },
   logoImg: {
     width: 100,
     height: 110,
-    resizeMode: 'stretch'
+    resizeMode: 'stretch',
   },
   container: {
-    backgroundColor: "#F8F8F8",
+    backgroundColor: '#F8F8F8',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     position: 'absolute',
@@ -75,7 +89,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     padding: 20,
     width: '100%',
-    height: '63%'
+    height: '63%',
   },
   keyboardViewStyle: {
     borderTopLeftRadius: 70,
@@ -83,29 +97,29 @@ const styles = StyleSheet.create({
   },
   keyboardStyle: {
     marginTop: -25,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
   titleTxt: {
     fontSize: 17,
     // alignSelf: "center",
-    color: "#444444",
-    fontWeight: "500",
+    color: '#444444',
+    fontWeight: '500',
     // textAlign: "center",
     marginTop: 10,
   },
   mainBox: {
-    width: "90%",
-    alignSelf: "center",
+    width: '90%',
+    alignSelf: 'center',
   },
   marginTop: {
     marginTop: 10,
   },
   labelTxt: {
     fontSize: 15,
-    fontWeight: "600",
-    color: "#444444",
+    fontWeight: '600',
+    color: '#444444',
     paddingLeft: 5,
   },
   titleContainer: {
@@ -113,31 +127,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10
-},
-titleText: {
+    marginTop: 10,
+  },
+  titleText: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 25,
     fontWeight: '300',
-    color: '#FFFFFF'
-},
-titleText2: {
+    color: '#FFFFFF',
+  },
+  titleText2: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 25,
     fontWeight: '600',
-    color: '#FFFFFF'
-},
- textStyle: { 
-  padding: 16, 
-  borderRadius: 5, 
-  color: 'black', 
-  backgroundColor: '#ffffff', 
-  marginTop: 10, 
-  fontSize: 15, 
-  fontWeight: '500' 
-}
+    color: '#FFFFFF',
+  },
+  textStyle: {
+    padding: 16,
+    borderRadius: 5,
+    color: 'black',
+    backgroundColor: '#ffffff',
+    marginTop: 10,
+    fontSize: 15,
+    fontWeight: '500',
+  },
 });

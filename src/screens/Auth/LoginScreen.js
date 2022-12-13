@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,13 +8,13 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import LinearGradient from "react-native-linear-gradient";
-import SafeAreaView from "../../components/SafeAreaView";
-import AuthBottomSection from "../../components/AuthBottomSection";
+} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import LinearGradient from 'react-native-linear-gradient';
+import SafeAreaView from '../../components/SafeAreaView';
+import AuthBottomSection from '../../components/AuthBottomSection';
 
-function LoginScreen({ navigation }) {
+function LoginScreen({navigation}) {
   const [isLoading, setLoading] = useState(false);
 
   return (
@@ -22,54 +22,51 @@ function LoginScreen({ navigation }) {
       <KeyboardAwareScrollView
         contentContainerStyle={styles.keyboardViewStyle}
         showsVerticalScrollIndicator={false}
-        style={styles.keyboardStyle}
-      >
+        style={styles.keyboardStyle}>
         <ImageBackground
-          source={require("../../assets/images/headerBgImg.png")}
-          style={styles.headerBgImg}
-        >
+          source={require('../../assets/images/headerBgImg.png')}
+          style={styles.headerBgImg}>
           <View style={styles.timerView}>
             <Image
               style={styles.logoImg}
-              source={require("../../assets/images/loginBack.png")}
+              source={require('../../assets/images/loginBack.png')}
             />
             <Image
               style={styles.logoImg1}
-              source={require("../../assets/images/Framelogin.png")}
+              source={require('../../assets/images/Framelogin.png')}
             />
           </View>
         </ImageBackground>
         <View style={styles.container}>
           <View style={[styles.mainBox, styles.marginTop]}>
-            <Text style={styles.labelTxt}>{"Mobile"}</Text>
+            <Text style={styles.labelTxt}>{'Mobile'}</Text>
             <TextInput style={styles.textBox} placeholder="Mobile" />
           </View>
           <View style={styles.orView}>
-            <View style={[styles.line, { marginLeft: 20 }]} />
+            <View style={[styles.line, {marginLeft: 35}]} />
             <View>
-              <Text style={styles.orTxt}>{"OR"}</Text>
+              <Text style={styles.orTxt}>{'OR'}</Text>
             </View>
-            <View style={[styles.line, { marginRight: 20 }]} />
+            <View style={[styles.line, {marginRight: 35}]} />
           </View>
           <View style={styles.mainBox}>
-            <Text style={styles.labelTxt}>{"Email"}</Text>
+            <Text style={styles.labelTxt}>{'Email'}</Text>
             <TextInput style={styles.textBox} placeholder="Email" />
           </View>
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
-              navigation.navigate("Otp");
-            }}
-          >
-            <Text style={styles.loginBtnTxt}>{"Log in"}</Text>
+              navigation.navigate('Otp');
+            }}>
+            <Text style={styles.loginBtnTxt}>{'Log in'}</Text>
           </TouchableOpacity>
         </View>
         <View style={[styles.orView, {marginTop: 30}]}>
-          <View style={[styles.line, { marginLeft: 20 }]} />
+          <View style={[styles.line, {marginLeft: 35}]} />
           <View>
-            <Text style={[styles.orTxt, {width: 100}]}>{"Sign up Via"}</Text>
+            <Text style={[styles.orTxt, {width: 100}]}>{'Sign up Via'}</Text>
           </View>
-          <View style={[styles.line, { marginRight: 20 }]} />
+          <View style={[styles.line, {marginRight: 35}]} />
         </View>
         <AuthBottomSection containerStyle={{marginTop: 50}} />
       </KeyboardAwareScrollView>
@@ -80,44 +77,44 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
   headerBgImg: {
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 50,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   timerView: {
-    alignItems: "center",
-    justifyContent: "center",
-    display: 'flex'
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
   },
   orView: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 10
+    marginTop: 10,
   },
   line: {
     flex: 1,
     height: 1,
-    backgroundColor: '#737373'
+    backgroundColor: '#737373',
   },
   logoImg: {
     width: 170,
     height: 143,
-    marginTop: 90
+    marginTop: 90,
   },
   logoImg1: {
     width: 200,
     height: 200,
     marginBottom: 20,
     position: 'absolute',
-    zIndex: 999
+    zIndex: 999,
   },
   container: {
-    backgroundColor: "#F8F8F8",
+    backgroundColor: '#F8F8F8',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    marginTop: -30
+    marginTop: -30,
   },
   keyboardViewStyle: {
     borderTopLeftRadius: 70,
@@ -125,37 +122,37 @@ const styles = StyleSheet.create({
   },
   keyboardStyle: {
     marginTop: -35,
-    backgroundColor: "#F8F8F8",
+    backgroundColor: '#F8F8F8',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
   titleTxt: {
     fontSize: 26,
-    alignSelf: "center",
-    marginVertical: Platform.OS === "ios" ? 30 : 10,
-    color: "#0077B6",
-    fontWeight: "600",
+    alignSelf: 'center',
+    marginVertical: Platform.OS === 'ios' ? 30 : 10,
+    color: '#0077B6',
+    fontWeight: '600',
   },
   mainBox: {
-    width: "90%",
-    alignSelf: "center",
+    width: '90%',
+    alignSelf: 'center',
   },
   marginTop: {
     marginTop: 30,
   },
   labelTxt: {
     fontSize: 15,
-    fontWeight: "600",
-    color: "#444444",
+    fontWeight: '600',
+    color: '#444444',
     paddingLeft: 5,
   },
   textBox: {
-    width: "100%",
+    width: '100%',
     height: 56,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 50,
     marginTop: 10,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -168,20 +165,20 @@ const styles = StyleSheet.create({
   orTxt: {
     width: 50,
     fontSize: 15,
-    fontWeight: "600",
+    fontWeight: '600',
     textAlign: 'center',
-    color: "#444444"
+    color: '#444444',
   },
   loginBtn: {
-    width: "90%",
+    width: '90%',
     height: 50,
-    alignSelf: "center",
-    backgroundColor: "#F6861A",
-    alignItems: "center",
-    justifyContent: "center",
+    alignSelf: 'center',
+    backgroundColor: '#F6861A',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 50,
     marginVertical: 25,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -192,7 +189,7 @@ const styles = StyleSheet.create({
   },
   loginBtnTxt: {
     fontSize: 20,
-    fontWeight: "600",
-    color: "#FFF",
+    fontWeight: '600',
+    color: '#FFF',
   },
 });
