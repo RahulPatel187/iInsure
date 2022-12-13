@@ -38,19 +38,27 @@ const HomeScreen = ({ navigation }) => {
         </ScrollView>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.column} onPress={() => navigation.navigate('HealthCard')}>
-            <Image source={require("../../assets/images/Group17.png")} style={styles.columnImg} />
+            <View style={styles.columnImgView}>
+              <Image source={require("../../assets/images/HealthCard.png")} style={styles.columnImg} />
+            </View>
             <Text style={styles.columntext}>Health Card</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.column}>
-            <Image source={require("../../assets/images/Group18.png")} style={styles.columnImg} />
+            <View style={styles.columnImgView}>
+              <Image source={require("../../assets/images/Group.png")} style={styles.columnImg} />
+            </View>
             <Text style={styles.columntext}>Inquiry</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.column}>
-            <Image source={require("../../assets/images/Group16.png")} style={styles.columnImg} />
+            <View style={styles.columnImgView}>
+              <Image source={require("../../assets/images/Group28.png")} style={styles.columnImg} />
+            </View>
             <Text style={styles.columntext}>Reminder</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.column}>
-            <Image source={require("../../assets/images/Group15.png")} style={styles.columnImg} />
+            <View style={styles.columnImgView}>
+              <Image source={require("../../assets/images/Frame(1).png")} style={styles.columnImg} />
+            </View>
             <Text style={styles.columntext}>About Us</Text>
           </TouchableOpacity>
         </View>
@@ -121,8 +129,8 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
   },
   columnImg: {
-    width: 132,
-    height: 90,
+    width: 75,
+    height: 60,
     resizeMode: 'contain'
   },
   columntext: {
@@ -130,4 +138,14 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: 'black'
   },
+  columnImgView: {
+    borderRadius: 13, 
+    borderWidth: 1, 
+    borderColor: '#0384BC', 
+    width: 132, 
+    height: 90, 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    // elevation: 3,
+  }
 });
