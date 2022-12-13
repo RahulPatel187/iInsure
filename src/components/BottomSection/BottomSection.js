@@ -11,38 +11,28 @@ export default (props) => {
     <>
       <LinearGradient colors={["#0077B6", "#0096C7", "#0077B6"]} style={[styles.bottomSec, props.containerStyle]}>
         {/* <View style={[styles.bottomSec, props.containerStyle]}> */}
-          <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Home'), setSelected(1) }}>
-            <Image source={require("../../assets/images/home3.png")} style={[styles.tabImg, selected === 1 && { tintColor: '#FFFFFF' }]} />
-            <Text style={styles.tabText}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Reminder'), setSelected(2) }}>
-            <Image source={require("../../assets/images/ic_reminder_icon.png")} style={[styles.tabImg, selected === 2 && { tintColor: '#FFFFFF' }]} />
-            <Text style={styles.tabText}>Reminders</Text>
-          </TouchableOpacity>
-          <LinearGradient
-            colors={["#0096C7", "#0077B6", "#0077B6"]}
-            style={[
-              styles.middleBtn,
-              {
-                marginTop: -60,
-              },
-            ]}
-          >
-            <TouchableOpacity style={styles.middleBtn}>
-              <Image
-                style={styles.middleIcon}
-                source={require("../../assets/images/markQue.png")}
-              />
-            </TouchableOpacity>
-          </LinearGradient>
-          <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Claim'), setSelected(3) }}>
-            <Image source={require("../../assets/images/Vectorclaims.png")} style={[styles.tabImg, selected === 3 && { tintColor: '#ffffff' }]} />
-            <Text style={styles.tabText}>Claims</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Inquiry'), setSelected(4) }}>
-            <Image source={require("../../assets/images/Vectorinquiry.png")} style={[styles.tabImg, selected === 4 && { tintColor: '#ffffff' }]} />
-            <Text style={styles.tabText}>Inquiry</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Home'), setSelected(1) }}>
+          <Image source={require("../../assets/images/home3.png")} style={[styles.tabImg, selected === 1 && { tintColor: '#FFFFFF' }]} />
+          <Text style={styles.tabText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Reminder'), setSelected(2) }}>
+          <Image source={require("../../assets/images/ic_reminder_icon.png")} style={[styles.tabImg, selected === 2 && { tintColor: '#FFFFFF' }]} />
+          <Text style={styles.tabText}>Reminders</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.middleBtn}>
+          <Image
+            style={[styles.middleIcon, { marginTop: -60 }]}
+            source={require("../../assets/images/i-ensure.png")}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Claim'), setSelected(3) }}>
+          <Image source={require("../../assets/images/Vectorclaims.png")} style={[styles.tabImg, selected === 3 && { tintColor: '#ffffff' }]} />
+          <Text style={styles.tabText}>Claims</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Inquiry'), setSelected(4) }}>
+          <Image source={require("../../assets/images/Vectorinquiry.png")} style={[styles.tabImg, selected === 4 && { tintColor: '#ffffff' }]} />
+          <Text style={styles.tabText}>Inquiry</Text>
+        </TouchableOpacity>
         {/* </View> */}
       </LinearGradient>
     </>
@@ -81,28 +71,27 @@ const styles = StyleSheet.create({
     width: 37,
   },
   middleBtn: {
-    height: 66,
-    width: 66,
+    height: 76,
+    width: 76,
     borderRadius: 33,
     alignItems: "center",
     justifyContent: "center",
   },
   middleIcon: {
-    height: 46,
-    width: 28,
-    resizeMode: 'stretch',
-    tintColor: "white",
+    height: 76,
+    width: 76,
+    resizeMode: 'contain'
   },
-  tabText: { 
-    fontSize: 12, 
-    fontWeight: '400', 
-    color: 'white', 
-    paddingTop: 5 
+  tabText: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: 'white',
+    paddingTop: 5
   },
-  tabImg: { 
-    width: 22, 
-    height: 22, 
+  tabImg: {
+    width: 22,
+    height: 22,
     tintColor: '#FFFFFF',
-    resizeMode: 'contain', 
+    resizeMode: 'contain',
   },
 });
