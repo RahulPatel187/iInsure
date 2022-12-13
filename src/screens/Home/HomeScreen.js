@@ -19,50 +19,51 @@ const HomeScreen = ({ navigation }) => {
       </ImageBackground>
 
       <View style={styles.container}>
-        <ScrollView horizontal style={{ height: 240, marginTop: 10 }} showsHorizontalScrollIndicator={false}>
-          <View style={{ padding: 10 }}>
-            <Image source={require("../../assets/images/image11.png")} style={styles.bannerImg} />
-          </View>
-          <View style={{ padding: 10 }}>
-            <Image source={require("../../assets/images/image13.png")} style={styles.bannerImg} />
-          </View>
-          <View style={{ padding: 10 }}>
-            <Image source={require("../../assets/images/image10.png")} style={styles.bannerImg} />
-          </View>
-          <View style={{ padding: 10 }}>
-            <Image source={require("../../assets/images/image9.png")} style={styles.bannerImg} />
-          </View>
-          <View style={{ padding: 10 }}>
-            <Image source={require("../../assets/images/image12.png")} style={styles.bannerImg} />
+        <ScrollView>
+          <ScrollView horizontal style={{ height: 300, marginTop: 10 }} showsHorizontalScrollIndicator={false}>
+            <View style={{ padding: 10 }}>
+              <Image source={require("../../assets/images/image11.png")} style={styles.bannerImg} />
+            </View>
+            <View style={{ padding: 10 }}>
+              <Image source={require("../../assets/images/image13.png")} style={styles.bannerImg} />
+            </View>
+            <View style={{ padding: 10 }}>
+              <Image source={require("../../assets/images/image10.png")} style={styles.bannerImg} />
+            </View>
+            <View style={{ padding: 10 }}>
+              <Image source={require("../../assets/images/image9.png")} style={styles.bannerImg} />
+            </View>
+            <View style={{ padding: 10 }}>
+              <Image source={require("../../assets/images/image12.png")} style={styles.bannerImg} />
+            </View>
+          </ScrollView>
+          <View style={styles.bottomContainer}>
+            <TouchableOpacity style={styles.column} onPress={() => navigation.navigate('HealthCard')}>
+              <View style={styles.columnImgView}>
+                <Image source={require("../../assets/images/HealthCard.png")} style={styles.columnImg} />
+              </View>
+              <Text style={styles.columntext}>Health Card</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.column}>
+              <View style={styles.columnImgView}>
+                <Image source={require("../../assets/images/Group.png")} style={styles.columnImg} />
+              </View>
+              <Text style={styles.columntext}>Inquiry</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.column}>
+              <View style={styles.columnImgView}>
+                <Image source={require("../../assets/images/Group28.png")} style={styles.columnImg} />
+              </View>
+              <Text style={styles.columntext}>Reminder</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.column}>
+              <View style={styles.columnImgView}>
+                <Image source={require("../../assets/images/Frame(1).png")} style={styles.columnImg} />
+              </View>
+              <Text style={styles.columntext}>About Us</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
-        <View style={styles.bottomContainer}>
-          <TouchableOpacity style={styles.column} onPress={() => navigation.navigate('HealthCard')}>
-            <View style={styles.columnImgView}>
-              <Image source={require("../../assets/images/HealthCard.png")} style={styles.columnImg} />
-            </View>
-            <Text style={styles.columntext}>Health Card</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.column}>
-            <View style={styles.columnImgView}>
-              <Image source={require("../../assets/images/Group.png")} style={styles.columnImg} />
-            </View>
-            <Text style={styles.columntext}>Inquiry</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.column}>
-            <View style={styles.columnImgView}>
-              <Image source={require("../../assets/images/Group28.png")} style={styles.columnImg} />
-            </View>
-            <Text style={styles.columntext}>Reminder</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.column}>
-            <View style={styles.columnImgView}>
-              <Image source={require("../../assets/images/Frame(1).png")} style={styles.columnImg} />
-            </View>
-            <Text style={styles.columntext}>About Us</Text>
-          </TouchableOpacity>
-        </View>
-
       </View>
     </>
   );
@@ -118,8 +119,8 @@ const styles = StyleSheet.create({
     // alignItems: 'center', 
     flexWrap: 'wrap',
     marginLeft: 25,
-    marginBottom: 30,
-    marginTop: -20
+    // marginBottom: 30,
+    // marginTop: -20
   },
   column: {
     display: 'flex',
@@ -139,12 +140,12 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   columnImgView: {
-    borderRadius: 13, 
-    borderWidth: 1, 
-    borderColor: '#0384BC', 
-    width: 132, 
-    height: 90, 
-    justifyContent: 'center', 
+    borderRadius: 13,
+    borderWidth: 1,
+    borderColor: '#0384BC',
+    width: 132,
+    height: 90,
+    justifyContent: 'center',
     alignItems: 'center',
     // elevation: 3,
   }

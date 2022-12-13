@@ -10,7 +10,7 @@ import {
   Platform,
   FlatList,
 } from "react-native";
-import Header from "../../components/Header";
+import Header from "../../components/default/Header";
 import SafeAreaView from "../../components/SafeAreaView";
 
 function RemindersListScreen({ navigation }) {
@@ -22,7 +22,7 @@ function RemindersListScreen({ navigation }) {
         source={require("../../assets/images/headerBgImg.png")}
         style={styles.headerBgImg}
       >
-        <Header navigation={navigation} />
+        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
         <Text style={styles.titleTxt}>{"My Reminders"}</Text>
         <View style={styles.mainSection}>
           <FlatList
@@ -76,9 +76,9 @@ export default RemindersListScreen;
 
 const styles = StyleSheet.create({
   headerBgImg: {
-    alignItems: "center",
+    // alignItems: "center",
     flex: 1,
-    paddingVertical: 20,
+    // paddingVertical: 20,
   },
   mainSection: {
     height: "88%",

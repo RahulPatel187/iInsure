@@ -133,7 +133,7 @@ function GetAQuote({ navigation }) {
                     placeholder="Mobile No."
                     onChangeText={handleChange("mobileNo")}
                     value={values.mobileNo}
-                    returnKeyType="done"
+                    // returnKeyType="done"
                     onSubmitEditing={() => { }}
                     showPasswordIcon={false}
                     errors={errors.mobileNo}
@@ -148,7 +148,7 @@ function GetAQuote({ navigation }) {
                     text={"Submit"}
                     isLarge={true}
                     onPress={() => {
-                        Keyboard.dismiss();
+                        // Keyboard.dismiss();
                         handleSubmit();
                     }}
                 />

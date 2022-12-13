@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     headerBgImg: {
         // alignItems: "center",
         flex: 1,
-        paddingBottom: 20,
+        // paddingBottom: 20,
     },
     mainSection: {
         height: "88%",

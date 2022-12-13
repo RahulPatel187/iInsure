@@ -16,7 +16,7 @@ export default (props) => {
           <Text style={styles.tabText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Reminder'), setSelected(2) }}>
-          <Image source={require("../../assets/images/ic_reminder_icon.png")} style={[styles.tabImg, selected === 2 && { tintColor: '#FFFFFF' }]} />
+          <Image source={require("../../assets/images/Vectorrem.png")} style={[styles.tabImg, selected === 2 && { tintColor: '#FFFFFF' }]} />
           <Text style={styles.tabText}>Reminders</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.middleBtn}>
@@ -26,11 +26,11 @@ export default (props) => {
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Claim'), setSelected(3) }}>
-          <Image source={require("../../assets/images/Vectorclaims.png")} style={[styles.tabImg, selected === 3 && { tintColor: '#ffffff' }]} />
+          <Image source={require("../../assets/images/Vectorcla.png")} style={[styles.tabImg, selected === 3 && { tintColor: '#ffffff' }]} />
           <Text style={styles.tabText}>Claims</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Inquiry'), setSelected(4) }}>
-          <Image source={require("../../assets/images/Vectorinquiry.png")} style={[styles.tabImg, selected === 4 && { tintColor: '#ffffff' }]} />
+          <Image source={require("../../assets/images/Vectorinq.png")} style={[styles.tabImg, selected === 4 && { tintColor: '#ffffff' }]} />
           <Text style={styles.tabText}>Inquiry</Text>
         </TouchableOpacity>
         {/* </View> */}

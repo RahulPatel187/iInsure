@@ -121,7 +121,7 @@ function Inquiry({ navigation }) {
                         placeholder="Enter Your Summary"
                         onChangeText={handleChange("summary")}
                         value={values.summary}
-                        returnKeyType="next"
+                        // returnKeyType="next"
                         multiline={true} numberOfLines={4}
                         showPasswordIcon={false}
                         errors={errors.summary}
@@ -131,7 +131,7 @@ function Inquiry({ navigation }) {
                     text={"Submit"}
                     isLarge={true}
                     onPress={() => {
-                        Keyboard.dismiss();
+                        // Keyboard.dismiss();
                         handleSubmit();
                     }}
                 />
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto-Bold",
         marginBottom: 5,
         fontWeight: "700",
-        marginTop: 10,
+        marginTop: 10
     },
     titleTxt: {
         fontSize: 15,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
         color: "#444444",
         fontWeight: "500",
         // textAlign: "center",
-        marginTop: 10,
+        marginTop: 10
     },
     loginBtn: {
         width: "90%",

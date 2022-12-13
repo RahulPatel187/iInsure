@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,21 +10,21 @@ import {
   Platform,
 } from 'react-native';
 import BottomSection from '../../components/BottomSection/BottomSection';
-import Header from '../../components/Header';
+import Header from "../../components/default/Header";
 
-function Profile({navigation}) {
+function Profile({ navigation }) {
   return (
     <>
       <ImageBackground
         source={require('../../assets/images/headerBgImg.png')}
         style={styles.headerBgImg}>
-        <Header navigation={navigation} />
-        {/* <View style={styles.timerView}> */}
-        <Image
-          source={require('../../assets/images/userScreen.png')}
-          style={styles.logoImg}
-        />
-        {/* </View> */}
+        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
+        <View style={styles.titleContainer}>
+          <Image
+            source={require('../../assets/images/userScreen.png')}
+            style={styles.logoImg}
+          />
+        </View>
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>{'My '}</Text>
           <Text style={styles.titleText2}>{'Profile'}</Text>
@@ -48,13 +48,13 @@ function Profile({navigation}) {
             }}>
             <Image
               source={require('../../assets/images/userr.png')}
-              style={{width: 22, height: 22}}
+              style={{ width: 22, height: 22 }}
             />
           </ImageBackground>
         </View>
         <View style={styles.titleContainer}>
-          <Text style={[styles.titleText, {color: '#000'}]}>{'Hello, '}</Text>
-          <Text style={[styles.titleText2, , {color: '#000'}]}>{'User'}</Text>
+          <Text style={[styles.titleText, { color: '#000' }]}>{'Hello, '}</Text>
+          <Text style={[styles.titleText2, , { color: '#000' }]}>{'User'}</Text>
         </View>
         <Text style={styles.titleTxt}>{'Registered details'}</Text>
         <Text style={styles.textStyle}>UserName</Text>
@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
   headerBgImg: {
     width: '100%',
     flex: 1,
-    alignItems: 'center',
+    // alignItems: 'center',
     // justifyContent: "center",
-    paddingBottom: 20,
+    // paddingBottom: 20,
   },
   logoImg: {
     width: 100,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     padding: 20,
     width: '100%',
-    height: '63%',
+    height: '68%',
   },
   keyboardViewStyle: {
     borderTopLeftRadius: 70,

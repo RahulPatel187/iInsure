@@ -57,7 +57,10 @@ const CustomDrawer = props => {
     setIndex(index);
     if (slug == 'dashboard') {
       props.navigation.closeDrawer();
-      props.navigation.navigate('Home');
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'Home'}],
+      });
     } else if (slug == 'profile') {
       props.navigation.closeDrawer();
       props.navigation.navigate('Profile');
@@ -108,7 +111,7 @@ const CustomDrawer = props => {
     if (slug == 'dashboard') {
       return require('../../assets/images/home.png');
     } else if (slug == 'profile') {
-      return require('../../assets/images/user.png');
+      return require('../../assets/images/Vectoruserpic.png');
     } else if (slug == 'claim_history') {
       return require('../../assets/images/ic_claim_status.png');
     } else if (slug == 'inquiry_list') {
@@ -196,7 +199,7 @@ const CustomDrawer = props => {
       </DrawerContentScrollView>
       <View style={styles.footer}>
         <Image
-          source={require('../../assets/images/techForce.png')}
+          source={require('../../assets/images/comn.png')}
           style={styles.footerLogo}
         />
         <View style={{flexDirection: 'row'}}>

@@ -86,7 +86,7 @@ function Header(props) {
     if (props.rightIcon) {
       return (
         <TouchableOpacity
-          onPress={props.rightClicked}
+          onPress={() => props.navigation.navigate("NotificationList")}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           style={{
             position: "absolute",
