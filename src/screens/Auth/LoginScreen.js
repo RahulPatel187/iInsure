@@ -71,8 +71,8 @@ function LoginScreen({ navigation }) {
           </View>
           <View style={[styles.line, { marginRight: 20 }]} />
         </View>
+        <AuthBottomSection containerStyle={{marginTop: 50}} />
       </KeyboardAwareScrollView>
-      <AuthBottomSection />
     </>
   );
 }

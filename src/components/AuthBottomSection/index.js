@@ -4,7 +4,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 export default (props) => (
   <>
-    <View style={styles.bottomSec}>
+    <View style={[styles.bottomSec, props.containerStyle]}>
       <LinearGradient
         colors={["#0096C7", "#0077B6", "#0077B6"]}
         style={[
@@ -21,22 +21,12 @@ export default (props) => (
           />
         </TouchableOpacity>
       </LinearGradient>
-      <LinearGradient
-        colors={["#0096C7", "#0077B6", "#0077B6"]}
-        style={[
-          styles.middleBtn,
-          {
-            marginTop: -60,
-          },
-        ]}
-      >
-        <TouchableOpacity style={styles.middleBtn}>
-          <Image
-            style={styles.middleIcon}
-            source={require("../../assets/images/markQue.png")}
-          />
-        </TouchableOpacity>
-      </LinearGradient>
+      <TouchableOpacity style={styles.middleBtn}>
+        <Image
+          style={[styles.middleIcon, { marginTop: -60, width: 76, height: 76 }]}
+          source={require("../../assets/images/i-ensure.png")}
+        />
+      </TouchableOpacity>
       <LinearGradient
         colors={["#0096C7", "#0077B6", "#0077B6"]}
         style={[
@@ -99,6 +89,5 @@ const styles = StyleSheet.create({
     height: 46,
     width: 28,
     resizeMode: 'contain',
-    tintColor: "white",
   },
 });
