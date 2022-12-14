@@ -90,7 +90,7 @@ function Header(props) {
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           style={{
             position: "absolute",
-            right: Helpers.getDynamicSize(16),
+            right: Helpers.getDynamicSize(10),
             zIndex: 8,
             height: 30,
             width: 30,

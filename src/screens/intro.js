@@ -54,7 +54,7 @@ const Intro = ({navigation}) => {
         <LinearGradient
           colors={['#0096C7', '#0077B6']}
           style={{borderRadius: 50, margin: 10}}>
-          <View style={{padding: 10}}>
+          <View style={{padding: 5}}>
             <FlatList
               horizontal
               ref={flatListRef}

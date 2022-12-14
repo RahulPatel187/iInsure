@@ -18,7 +18,7 @@ function Profile({ navigation }) {
       <ImageBackground
         source={require('../../assets/images/headerBgImg.png')}
         style={styles.headerBgImg}>
-        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
+        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
         <View style={styles.titleContainer}>
           <Image
             source={require('../../assets/images/userScreen.png')}

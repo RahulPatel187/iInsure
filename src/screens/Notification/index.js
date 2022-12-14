@@ -22,7 +22,7 @@ function NotificationListScreen({ navigation }) {
                 source={require("../../assets/images/headerBgImg.png")}
                 style={styles.headerBgImg}
             >
-                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
+                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                 <Text style={styles.titleTxt}>{"My Notifications"}</Text>
                 <View style={styles.mainSection}>
                     <FlatList

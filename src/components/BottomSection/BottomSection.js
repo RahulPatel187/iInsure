@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   bottomBtn: {
     height: 30,
-    width: '20%',
+    width: 70,
     alignItems: "center",
     justifyContent: "center",
   },

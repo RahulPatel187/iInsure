@@ -65,7 +65,7 @@ function GetAQuote({ navigation }) {
                 source={require("../../assets/images/headerBgImg.png")}
                 style={styles.headerBgImg}
             >
-                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
+                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>{"Get A "}</Text>
                     <Text style={styles.titleText2}>{"Quote"}</Text>

@@ -10,6 +10,7 @@ import {
   Platform,
   FlatList,
 } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import Header from "../../components/default/Header";
 import SafeAreaView from "../../components/SafeAreaView";
 
@@ -22,7 +23,7 @@ function InquiryListScreen({ navigation }) {
         source={require("../../assets/images/headerBgImg.png")}
         style={styles.headerBgImg}
       >
-        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
+        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
         <Text style={styles.titleTxt}>{"My Inquiries"}</Text>
         <View style={styles.mainSection}>
           <FlatList
@@ -82,6 +83,11 @@ function InquiryListScreen({ navigation }) {
               );
             }}
           />
+          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Inquiry')} >
+            <LinearGradient colors={['#F6861A', '#FF9E40']} style={styles.btnlinear}>
+              <Image source={require("../../assets/images/plus.png")} style={styles.btnImg} />
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
       </ImageBackground>
     </>
@@ -163,5 +169,28 @@ const styles = StyleSheet.create({
   },
   listStyle: {
     marginTop: 5,
+  },
+  btn: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 10,
+    width: 44,
+    height: 44,
+    position: 'absolute',
+    bottom: 20
+  },
+  btnlinear: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    width: 44,
+    height: 44
+  },
+  btnImg: {
+    width: 21,
+    height: 41,
+    resizeMode: 'contain'
   },
 });

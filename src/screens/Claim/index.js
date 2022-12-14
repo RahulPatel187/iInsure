@@ -213,7 +213,7 @@ function Claim({ navigation }) {
                     source={require("../../assets/images/headerBgImg.png")}
                     style={styles.headerBgImg}
                 >
-                    <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
+                    <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                     <View style={styles.titleContainer}>
                         <Text style={styles.titleText}>{"My "}</Text>
                         <Text style={styles.titleText2}>{"Claim"}</Text>

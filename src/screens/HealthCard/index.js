@@ -73,7 +73,7 @@ function HealthCard({ navigation }) {
                 source={require("../../assets/images/headerBgImg.png")}
                 style={styles.headerBgImg}
             >
-                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
+                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>{"My "}</Text>
                     <Text style={styles.titleText2}>{"HealthCard"}</Text>
@@ -81,7 +81,7 @@ function HealthCard({ navigation }) {
             </ImageBackground>
             <View style={styles.container}>
                 <FlatList
-                    data={[1, 1]}
+                    data={[1, 1, 1, 1]}
                     style={styles.listStyle}
                     showsVerticalScrollIndicator={false}
                     renderItem={({ item, index }) => {

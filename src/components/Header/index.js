@@ -19,7 +19,7 @@ export default (props) => (
       style={styles.noteIconBtn}
     >
       <Image
-        source={require("../../assets/images/Notification.png")}
+        source={require("../../assets/images/Notificationbell.png")}
         style={styles.noteIcon}
       />
     </TouchableOpacity>

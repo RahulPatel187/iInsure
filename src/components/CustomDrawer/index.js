@@ -109,15 +109,15 @@ const CustomDrawer = props => {
   };
   const getIcon = slug => {
     if (slug == 'dashboard') {
-      return require('../../assets/images/home.png');
+      return require('../../assets/images/home3.png');
     } else if (slug == 'profile') {
       return require('../../assets/images/Vectoruserpic.png');
     } else if (slug == 'claim_history') {
-      return require('../../assets/images/ic_claim_status.png');
+      return require('../../assets/images/Vectorcla.png');
     } else if (slug == 'inquiry_list') {
-      return require('../../assets/images/ic_drawer_inquiry.png');
+      return require('../../assets/images/Vectorinq.png');
     } else if (slug == 'reminder_list') {
-      return require('../../assets/images/ic_reminder_icon.png');
+      return require('../../assets/images/Vectorrem.png');
     } else if (slug == 'notifications_list') {
       return require('../../assets/images/ic_notification.png');
     } else if (slug == 'get_a_quote') {

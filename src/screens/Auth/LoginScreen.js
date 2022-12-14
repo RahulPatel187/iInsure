@@ -40,7 +40,7 @@ function LoginScreen({navigation}) {
         <View style={styles.container}>
           <View style={[styles.mainBox, styles.marginTop]}>
             <Text style={styles.labelTxt}>{'Mobile'}</Text>
-            <TextInput style={styles.textBox} placeholder="Mobile" />
+            <TextInput style={styles.textBox} placeholder="Mobile" placeholderTextColor={'#C7C7C7'} />
           </View>
           <View style={styles.orView}>
             <View style={[styles.line, {marginLeft: 35}]} />
@@ -51,14 +51,14 @@ function LoginScreen({navigation}) {
           </View>
           <View style={styles.mainBox}>
             <Text style={styles.labelTxt}>{'Email'}</Text>
-            <TextInput style={styles.textBox} placeholder="Email" />
+            <TextInput style={styles.textBox} placeholder="Email" placeholderTextColor={'#C7C7C7'} />
           </View>
           <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => {
               navigation.navigate('Otp');
             }}>
-            <Text style={styles.loginBtnTxt}>{'Log in'}</Text>
+            <Text style={styles.loginBtnTxt}>{'Log In'}</Text>
           </TouchableOpacity>
         </View>
         <View style={[styles.orView, {marginTop: 30}]}>
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 50,
     marginTop: 10,
+    color: '#444444',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

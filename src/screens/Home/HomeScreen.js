@@ -1,18 +1,47 @@
 import React from "react";
-import { Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ImageBackground, ScrollView, StyleSheet, Text, Dimensions, TouchableOpacity, View } from "react-native";
 import BottomSection from "../../components/BottomSection/BottomSection";
 import SafeAreaView from "../../components/SafeAreaView";
 import Header from "../../components/default/Header";
+import Carousel from "react-native-snap-carousel";
+const { width: screenWidth } = Dimensions.get('window');
+
+const imageData = [
+  {
+    image: require("../../assets/images/image11.png"),
+  },
+  {
+    image: require("../../assets/images/image13.png"),
+  },
+  {
+    image: require("../../assets/images/image10.png"),
+  },
+  {
+    image: require("../../assets/images/image9.png"),
+  },
+  {
+    image: require("../../assets/images/image12.png"),
+  }
+]
 
 const HomeScreen = ({ navigation }) => {
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <View style={{ padding: 10 }}>
+        <Image source={item.image} style={styles.bannerImg} />
+      </View>
+    );
+  }
+
   return (
     <>
       <ImageBackground
         source={require("../../assets/images/headerBgImg.png")}
         style={styles.headerBgImg}
       >
-        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notification.png")} navigation={navigation} />
-        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
           <Text style={styles.headerText}>{"Hello,"}</Text>
           <Text style={styles.headerText2}>{"User long name"}</Text>
         </View>
@@ -20,23 +49,13 @@ const HomeScreen = ({ navigation }) => {
 
       <View style={styles.container}>
         <ScrollView>
-          <ScrollView horizontal style={{ height: 300, marginTop: 10 }} showsHorizontalScrollIndicator={false}>
-            <View style={{ padding: 10 }}>
-              <Image source={require("../../assets/images/image11.png")} style={styles.bannerImg} />
-            </View>
-            <View style={{ padding: 10 }}>
-              <Image source={require("../../assets/images/image13.png")} style={styles.bannerImg} />
-            </View>
-            <View style={{ padding: 10 }}>
-              <Image source={require("../../assets/images/image10.png")} style={styles.bannerImg} />
-            </View>
-            <View style={{ padding: 10 }}>
-              <Image source={require("../../assets/images/image9.png")} style={styles.bannerImg} />
-            </View>
-            <View style={{ padding: 10 }}>
-              <Image source={require("../../assets/images/image12.png")} style={styles.bannerImg} />
-            </View>
-          </ScrollView>
+          <Carousel layout={'default'}
+            sliderWidth={screenWidth}
+            sliderHeight={screenWidth}
+            itemWidth={screenWidth}
+            data={imageData}
+            renderItem={renderItem} />
+
           <View style={styles.bottomContainer}>
             <TouchableOpacity style={styles.column} onPress={() => navigation.navigate('HealthCard')}>
               <View style={styles.columnImgView}>
@@ -115,10 +134,10 @@ const styles = StyleSheet.create({
   bottomContainer: {
     display: 'flex',
     flexDirection: 'row',
-    // justifyContent: 'center', 
+    justifyContent: 'space-evenly', 
     // alignItems: 'center', 
     flexWrap: 'wrap',
-    marginLeft: 25,
+    // marginLeft: 25,
     // marginBottom: 30,
     // marginTop: -20
   },
@@ -127,7 +146,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 10,
-    paddingLeft: 25,
   },
   columnImg: {
     width: 75,
@@ -137,7 +155,8 @@ const styles = StyleSheet.create({
   columntext: {
     fontSize: 14,
     fontWeight: '400',
-    color: 'black'
+    color: 'black',
+    paddingTop: 4
   },
   columnImgView: {
     borderRadius: 13,
