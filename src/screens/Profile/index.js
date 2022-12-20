@@ -9,10 +9,13 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import BottomSection from '../../components/BottomSection/BottomSection';
 import Header from "../../components/default/Header";
 
 function Profile({ navigation }) {
+  const userInfo = useSelector((state) => state.login.userInfo);
+
   return (
     <>
       <ImageBackground
@@ -57,9 +60,9 @@ function Profile({ navigation }) {
           <Text style={[styles.titleText2, , { color: '#000' }]}>{'User'}</Text>
         </View>
         <Text style={styles.titleTxt}>{'Registered details'}</Text>
-        <Text style={styles.textStyle}>UserName</Text>
-        <Text style={styles.textStyle}>9876543210</Text>
-        <Text style={styles.textStyle}>user@techforceglobal.com</Text>
+        <Text style={styles.textStyle}>{userInfo ? userInfo.name : 'UserName'}</Text>
+        <Text style={styles.textStyle}>{userInfo ? userInfo.phone : '9876543210'}</Text>
+        <Text style={styles.textStyle}>{userInfo ? userInfo.email : 'user@techforceglobal.com'}</Text>
       </View>
     </>
   );
@@ -153,5 +156,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 15,
     fontWeight: '500',
+    borderWidth: 1,
+    borderColor: '#C7C7C7'
   },
 });

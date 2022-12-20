@@ -25,6 +25,7 @@ const Helpers = {
         var value = defaultValue;
         try {
             value = await AsyncStorage.getItem(key);
+            console.log(value);
             if (value !== null) {
                 // We have data!!
             } else {

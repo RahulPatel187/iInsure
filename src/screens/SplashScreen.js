@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
+import { useSelector } from "react-redux";
 
 function SplashScreen({ navigation }) {
-  const [isLoading, setLoading] = useState(false);
+  const isLoading = useSelector((state) => state.login.loading);
+  const userToken = useSelector((state) => state.login.userToken);
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate("Login");
-    }, 5000);
+      if (userToken) {
+        navigation.navigate("Drawer");
+      } else {
+        navigation.navigate("Login");
+      }
+    }, 1000);
   }, []);
 
   return (

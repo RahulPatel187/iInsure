@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     View,
@@ -10,11 +10,126 @@ import {
     Platform,
     FlatList,
 } from "react-native";
+import { useDispatch } from "react-redux";
 import Header from "../../components/default/Header";
 import SafeAreaView from "../../components/SafeAreaView";
+import Colors from "../../config/Colors";
+import Helpers from "../../utils/Helpers";
+import Constant from "../../utils/Constant";
+import axiosPostClient from "../../api/ApiClient";
+import ApiRequest from "../../api/ApiRequest";
+import CustomAlertDialog from "../../components/default/CustomAlertDialog";
+import Logger from "../../utils/Logger";
+import Indicator from "../../components/default/Indicator";
+import GlobalStyle from "../../config/GlobalStyles";
+import moment from "moment";
+import { SIGN_IN } from "../../redux/types";
 
 function NotificationListScreen({ navigation }) {
     const [isLoading, setLoading] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
+    const [notificationList, setNotificationList] = useState("");
+    const [message, setMessage] = useState("");
+    const [showErrorDialog, setShowErrorDialog] = useState(false);
+    const [isSessionExpired, setSessionExpired] = useState(false);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener("focus", () => {
+            callGetNotificationListApi();
+        });
+        return unsubscribe;
+    }, [navigation]);
+
+    const callGetNotificationListApi = async () => {
+        if (await Helpers.checkInternet()) {
+            setLoading(true);
+            Logger.log(
+                "Calling Get reminder list api:=>>" +
+                Constant.API_BASE_URL +
+                Constant.API_INQUIRY_LIST
+            );
+            const userId = await Helpers.getFromPref(Constant.PREF_USER_ID, "");
+            const access_token = await Helpers.getFromPref(
+                Constant.PREF_ACCESS_TOKEN,
+                ""
+            );
+
+            var params = await ApiRequest.getInquiryListRequest(userId, access_token);
+            Logger.log("Params is" + JSON.stringify(params));
+            axiosPostClient()
+                .post(Constant.API_GET_NOTIFICATIONS, params)
+                .then((response) => {
+                    console.log("response", response);
+                    setLoading(false);
+                    setIsRefreshing(false);
+                    Logger.log("response" + JSON.stringify(response?.data));
+                    if (response?.data && response?.data?.status == 200) {
+                        setNotificationList(response?.data?.data);
+                    } else if (response?.data && response?.data?.status == 401) {
+                        //Logout user if received 401 status code.
+                        setMessage(response?.data?.message);
+                        setSessionExpired(true);
+                    } else {
+                        // setMessage(response?.data?.message);
+                        // setShowErrorDialog(true);
+                    }
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    setIsRefreshing(false);
+                    setShowErrorDialog(true);
+                    setMessage(JSON.stringify(error));
+                    Logger.log("error" + JSON.stringify(error));
+                });
+        } else {
+            setMessage(Constant.NO_INTERNET);
+            setShowErrorDialog(true);
+        }
+    };
+
+    const proceedLogout = async () => {
+        /*await Helpers.saveInPref(Constant.PREF_TOKEN, "")
+             await Helpers.removeFromPref(Constant.PREF_USER_INFO)
+             await Helpers.removeFromPref(Constant.PREF_ACCESS_TOKEN)
+             await Helpers.removeFromPref(Constant.PREF_USER_NAME)
+              dispatch({
+                 type: SIGN_IN,
+                 payload: ''
+             })*/
+        await Helpers.performLogout();
+        dispatch({
+          type: SIGN_IN,
+          payload: "",
+        });
+      };
+
+    const renderEmptyContainer = () => {
+        if (!isLoading) {
+            return (
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <Text style={GlobalStyle.noDataFoundStyle}>
+                        {Constant.NO_DATA_FOUND}
+                    </Text>
+                </View>
+            );
+        } else {
+            return null;
+        }
+    };
+
+    const onPullToRefresh = () => {
+        setIsRefreshing(true);
+        callGetNotificationListApi();
+    };
 
     return (
         <>
@@ -26,9 +141,10 @@ function NotificationListScreen({ navigation }) {
                 <Text style={styles.titleTxt}>{"My Notifications"}</Text>
                 <View style={styles.mainSection}>
                     <FlatList
-                        data={[1, 1]}
+                        data={notificationList}
                         style={styles.listStyle}
                         showsVerticalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item, index }) => {
                             return (
                                 <>
@@ -42,17 +158,33 @@ function NotificationListScreen({ navigation }) {
                                         }}
                                     >
                                         <View style={[styles.cardSubSec, { marginTop: 0 }]}>
-                                            <Text style={styles.cardLabel}>{"Inquiry Status"}</Text>
-                                            <Text style={styles.cardValue}>{"08-Nov-22"}</Text>
+                                            <Text style={styles.cardLabel}>{item?.title}</Text>
+                                            <Text style={styles.cardValue}>{item?.date_time ? moment(item?.date_time).format("DD-MMM-YY") : "-"}</Text>
                                         </View>
-                                        <Text style={[styles.cardValue, { width: '100%', marginLeft: 10, marginTop: 5, lineHeight: 20 }]}>{"User name, Your inquiry is now in Under Proccess and will be resolved in 2 working days!"}</Text>
+                                        <Text style={[styles.cardValue, { width: '100%', marginLeft: 10, marginTop: 5, lineHeight: 20 }]}>{item?.description}</Text>
                                     </TouchableOpacity>
                                 </>
                             );
                         }}
+                        ListEmptyComponent={renderEmptyContainer}
+                        onRefresh={onPullToRefresh}
+                        refreshing={isRefreshing}
                     />
                 </View>
             </ImageBackground>
+            <CustomAlertDialog
+                visible={showErrorDialog || isSessionExpired}
+                onCloseDialog={() => {
+                    if (isSessionExpired) {
+                        setSessionExpired(false);
+                        proceedLogout();
+                    } else {
+                        setShowErrorDialog(false);
+                    }
+                }}
+                description={message}
+            />
+            <Indicator showLoader={isLoading} />
         </>
     );
 }
@@ -138,7 +270,7 @@ const styles = StyleSheet.create({
         // marginLeft: 24,
         // width: "50%",
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 15
     },
     listStyle: {
         marginTop: 5,

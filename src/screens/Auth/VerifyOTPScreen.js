@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  BackHandler,
 } from 'react-native';
 import {
   CodeField,
@@ -16,16 +17,42 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import moment from 'moment';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import SafeAreaView from '../../components/SafeAreaView';
 import AuthBottomSection from '../../components/AuthBottomSection';
+import { useDispatch } from 'react-redux';
+import CustomButton from '../../components/default/Buttons';
+import Constant from "../../utils/Constant";
+import Logger from "../../utils/Logger";
+import Helpers from "../../utils/Helpers";
+import Indicator from "../../components/default/Indicator";
+import { SIGN_IN, SET_USER_INFO } from "../../redux/types";
+import axiosPostClient from "../../api/ApiClient";
+import ApiRequest from "../../api/ApiRequest";
+import CustomAlertDialog from "../../components/default/CustomAlertDialog";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function VerifyOTPScreen({navigation}) {
+function VerifyOTPScreen({ route, navigation }) {
   const CELL_COUNT2 = 6;
   const [isLoading, setLoading] = useState(false);
   const [counter, setCounter] = useState(30);
   const [startTimer, setStartTimer] = useState(true);
   const [otpInputValue, setOtpValue] = useState('');
+  const [error, setError] = useState("");
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch();
+
+  const [message, setMessage] = useState("");
+  const [showErrorDialog, setShowErrorDialog] = useState(false);
+
+  var {
+    email,
+    phoneNumber,
+    isEmailEnter,
+    is_verified_phone,
+    is_verified_email,
+  } = route.params;
+
   const ref2 = useBlurOnFulfill({
     value: otpInputValue,
     cellCount: CELL_COUNT2,
@@ -37,6 +64,10 @@ function VerifyOTPScreen({navigation}) {
 
   useEffect(() => {
     setTimeout(() => ref2.current?.focus(), 150);
+  }, []);
+
+  useEffect(() => {
+    requestUserPermission();
   }, []);
 
   useEffect(() => {
@@ -60,13 +91,213 @@ function VerifyOTPScreen({navigation}) {
   }, [counter, startTimer]);
 
   useEffect(() => {
-    setTimeout(() => ref2.current?.focus(), 150);
+    /*
+        This is for go back to previous screen(AddPhoneEmail Screen) when user backpress from this screen.
+        */
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        navigation.goBack();
+        return true;
+      }
+    );
+    return () => backHandler.remove();
   }, []);
+
+  const callSendOtpApi = async () => {
+    //calling sendotp api again on resend click
+
+    if (await Helpers.checkInternet()) {
+      if (isEmailEnter) {
+        setLoading(true);
+        Logger.log(
+          "Calling SendOtpWithEmailApi:=>>" +
+          Constant.API_BASE_URL +
+          Constant.API_SEND_OTP_WITH_EMAIL
+        );
+        var params = await ApiRequest.getSendOtpWithEmailRequest(email);
+        Logger.log("Params is" + JSON.stringify(params));
+        axiosPostClient()
+          .post(Constant.API_SEND_OTP_WITH_EMAIL, params)
+          .then((response) => {
+            setLoading(false);
+            Logger.log("response" + JSON.stringify(response?.data));
+            if (response?.data && response?.data?.status == 200) {
+              //  var emailOtp = response?.data?.data?.otp
+              setStartTimer(true);
+              setMessage(response?.data?.message);
+              setShowErrorDialog(true);
+              // proceedLoginWithEmail(emailOtp)
+            } else {
+              setMessage(response?.data?.message);
+              setShowErrorDialog(true);
+            }
+          })
+          .catch((error) => {
+            setLoading(false);
+            setShowErrorDialog(true);
+            setMessage(JSON.stringify(error));
+            Logger.log("error" + JSON.stringify(error));
+          });
+      } else {
+        setLoading(true);
+        Logger.log(
+          "Calling SendOtpWithPhoneApi:=>>" +
+          Constant.API_BASE_URL +
+          Constant.API_SEND_OTP_WITH_Phone
+        );
+        var params = await ApiRequest.getSendOtpWithPhoneRequest(phoneNumber);
+        Logger.log("Params is" + JSON.stringify(params));
+        axiosPostClient()
+          .post(Constant.API_SEND_OTP_WITH_Phone, params)
+          .then((response) => {
+            setLoading(false);
+            Logger.log("response" + JSON.stringify(response?.data));
+            if (response?.data && response?.data?.status == 200) {
+              // var emailOtp = response?.data?.data?.otp
+              setStartTimer(true);
+              setMessage(response?.data?.message);
+              setShowErrorDialog(true);
+              // proceedLoginWithEmail(emailOtp)
+            } else {
+              setMessage(response?.data?.message);
+              setShowErrorDialog(true);
+            }
+          })
+          .catch((error) => {
+            setLoading(false);
+            setShowErrorDialog(true);
+            setMessage(JSON.stringify(error));
+            Logger.log("error" + JSON.stringify(error));
+          });
+      }
+    } else {
+      setMessage(Constant.NO_INTERNET);
+      setShowErrorDialog(true);
+    }
+  };
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    if (enabled) {
+      console.log("Authorization status:", authStatus);
+      await messaging().registerDeviceForRemoteMessages();
+      await messaging()
+        .getToken()
+        .then((fcmToken) => {
+          if (fcmToken) {
+            console.log("fcmToken is--", fcmToken);
+            setToken(fcmToken);
+            AsyncStorage.setItem("fcmToken", fcmToken.toString());
+          }
+        });
+    }
+  }
+
+  const callVerifyOtpApi = async () => {
+    if (await Helpers.checkInternet()) {
+      setLoading(true);
+      Logger.log(
+        "Calling callVerifyOtpApi:=>>" +
+        Constant.API_BASE_URL +
+        Constant.API_VERIFY_OTP
+      );
+      var params = await ApiRequest.getVerifyOtpRequest(
+        otpInputValue,
+        email,
+        phoneNumber,
+        is_verified_phone,
+        is_verified_email,
+        token
+      );
+      /*
+            if email is verified and when you verfiy phone no. at that time pass is_verified_email="1".
+            Backend team need this flag.
+            */
+      Logger.log("Params is" + JSON.stringify(params));
+      axiosPostClient()
+        .post(Constant.API_VERIFY_OTP, params)
+        .then((response) => {
+          setLoading(false);
+          Logger.log("response" + JSON.stringify(response?.data));
+          if (response?.data && response?.data?.status == 200) {
+            if (
+              parseInt(response?.data?.data?.verified_phone) == 1 &&
+              parseInt(response?.data?.data?.verified_email) == 1
+            ) {
+              /*
+                if is_verified_phone and is_verified_email both 1 then redirect to dashboard
+                */
+              var userData = response?.data?.data;
+              proceedLogin(userData);
+            } else {
+              /*
+               if is_verified_phone or is_verified_email any flag is 0 then redirect to AddPhoneEmailScreen
+               */
+              gotoEnterPhoneEmailScreen();
+            }
+          } else {
+            setMessage(response?.data?.message);
+            setShowErrorDialog(true);
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          setShowErrorDialog(true);
+          setMessage(JSON.stringify(error));
+          Logger.log("error" + JSON.stringify(error));
+        });
+    } else {
+      setMessage(Constant.NO_INTERNET);
+      setShowErrorDialog(true);
+    }
+  };
+
+  const proceedLogin = async (userData) => {
+    //  setLoading(false)
+    await Helpers.saveInPref(Constant.PREF_TOKEN, "123");
+    await Helpers.saveInPref(
+      Constant.PREF_ACCESS_TOKEN,
+      userData?.access_token
+    );
+    await Helpers.saveInPref(Constant.PREF_USER_NAME, userData?.name);
+    await Helpers.saveInPref(Constant.PREF_USER_ID, userData?.id);
+    await Helpers.saveInPref(Constant.PREF_USER_INFO, JSON.stringify(userData));
+    dispatch({
+      type: SET_USER_INFO,
+      payload: userData,
+    });
+    dispatch({
+      type: SIGN_IN,
+      payload: "123",
+    });
+    navigation.navigate("Loader");
+  };
+
+  const validateScreen = () => {
+    var isValid = true;
+
+    if (!otpInputValue || otpInputValue.length < 6) {
+      var isValid = false;
+      setError("Please enter valid otp");
+    }
+
+    if (isValid) {
+      setError("");
+      //proceedLogin()
+      callVerifyOtpApi();
+    }
+  };
+
 
   const onResendClick = () => {
     if (!startTimer) {
       setCounter(30);
       setStartTimer(true);
+      callSendOtpApi();
     }
   };
 
@@ -103,7 +334,7 @@ function VerifyOTPScreen({navigation}) {
         <View style={styles.container}>
           <Text style={styles.titleTxt}>
             {'Please type the OTP as shared on your\n email:'}
-            <Text style={{fontWeight: '700'}}>
+            <Text style={{ fontWeight: '700' }}>
               {' username@techforceglobal.com'}
             </Text>
           </Text>
@@ -116,13 +347,13 @@ function VerifyOTPScreen({navigation}) {
               setOtpValue(text);
             }}
             onSubmitEditing={() => {
-              console.log('on');
+              validateScreen();
             }}
             cellCount={CELL_COUNT2}
             rootStyle={styles.codeFieldStyle}
             keyboardType="number-pad"
             textContentType="oneTimeCode"
-            renderCell={({index, symbol, isFocused}) => (
+            renderCell={({ index, symbol, isFocused }) => (
               <Text
                 key={index}
                 style={[
@@ -136,20 +367,22 @@ function VerifyOTPScreen({navigation}) {
               </Text>
             )}
           />
-          <TouchableOpacity
-            style={styles.loginBtn}
+          {error ? <Text style={styles.errorStyle}>{error}</Text> : null}
+          <CustomButton
+            text={"Submit"}
             onPress={() => {
-              navigation.navigate('Loader');
-            }}>
-            <Text style={styles.loginBtnTxt}>{'Submit'}</Text>
-          </TouchableOpacity>
+              // Keyboard.dismiss();
+              validateScreen();
+              //proceedLogin()
+            }}
+          />
           {!startTimer && (
             <>
               <Text style={styles.resendCodeTip}>
                 {'Did’t received any code?'}
               </Text>
               <Text
-                style={[styles.resendCodeTip, {color: '#F6861A'}]}
+                style={[styles.resendCodeTip, { color: '#F6861A' }]}
                 onPress={() => onResendClick()}>
                 {'Resend OTP'}
               </Text>
@@ -158,6 +391,14 @@ function VerifyOTPScreen({navigation}) {
         </View>
       </KeyboardAwareScrollView>
       {/* <AuthBottomSection /> */}
+      <Indicator showLoader={isLoading} />
+      <CustomAlertDialog
+        visible={showErrorDialog}
+        onCloseDialog={() => {
+          setShowErrorDialog(false);
+        }}
+        description={message}
+      />
     </>
   );
 }
@@ -169,6 +410,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 100,
+  },
+  errorStyle: {
+    marginHorizontal: 16,
+    color: 'red',
+    marginTop: 8,
+    alignSelf: "center",
+    fontFamily: "Roboto-Regular",
   },
   logoImg: {
     width: 139,

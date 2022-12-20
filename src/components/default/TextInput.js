@@ -24,13 +24,13 @@ const TextInputCustom = forwardRef(({ onChangeText, value, ...props }, ref) => {
   return (
     <View>
       <View
-        style={[styles.container, props.containerStyle ? containerStyle : null]}
+        style={[styles.container, props.containerStyle ? containerStyle : null, !props.textStyle && { borderWidth: 1, borderColor: '#C7C7C7', borderRadius: RFValue(10), backgroundColor: Colors.whiteColor, }]}
       >
         {showIcon && <Image source={props.icon} style={styles.iconStyle} />}
         <TextInput
           ref={ref}
           style={[
-            styles.textInput,
+            props.textStyle ? props.textStyle : styles.textInput,
             props.showPasswordIcon ? { marginEnd: 35 } : null,
             showIcon && { borderWidth: 0, borderColor: "white" },
             props.placeholder === "Enter Your Summary" && {
@@ -43,7 +43,7 @@ const TextInputCustom = forwardRef(({ onChangeText, value, ...props }, ref) => {
           keyboardType={props.type || "default"}
           secureTextEntry={secureTextEntry}
           {...props}
-          placeholderTextColor={Colors.grayColor}
+          placeholderTextColor={'#C7C7C7'}
         />
         {props.showPasswordIcon ? (
           <TouchableOpacity
@@ -77,8 +77,6 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     flexDirection: "row",
-    backgroundColor: Colors.whiteColor,
-    borderRadius: RFValue(5),
     shadowColor: "#000",
   },
   textInput: {
@@ -86,7 +84,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     color: 'black',
     backgroundColor: '#ffffff',
-    marginTop: 5,
+    // marginTop: 5,
+    marginLeft: 5,
     fontSize: 15,
     fontWeight: '500',
     borderRadius: 6,

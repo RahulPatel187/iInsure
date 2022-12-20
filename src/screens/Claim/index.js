@@ -219,122 +219,122 @@ function Claim({ navigation }) {
                         <Text style={styles.titleText2}>{"Claim"}</Text>
                     </View>
                 </ImageBackground>
-                {/* <KeyboardAwareScrollView
-                    contentContainerStyle={styles.container}
-                    keyboardShouldPersistTaps="handled"
-                > */}
-                <View style={styles.container}>
-                    <View style={{ marginHorizontal: 16, marginTop: 20, marginBottom: 10, backgroundColor: Colors.whiteColor, display: 'flex', flexDirection: 'row' }}>
-                        <View style={{width: '60%'}}>
-                            <View style={styles.cardSubSec}>
-                                <Text style={styles.cardLabel}>{"Insured Name:"}</Text>
-                                <Text style={styles.cardValue}>{"User Name"}</Text>
+                <KeyboardAwareScrollView
+                    contentContainerStyle={styles.keyboardViewStyle}
+                    showsVerticalScrollIndicator={false}
+                    style={styles.keyboardStyle}>
+                    <View style={styles.container}>
+                        <View style={{ marginHorizontal: 16, marginTop: 20, marginBottom: 10, backgroundColor: Colors.whiteColor, display: 'flex', flexDirection: 'row' }}>
+                            <View style={{ width: '60%' }}>
+                                <View style={styles.cardSubSec}>
+                                    <Text style={styles.cardLabel}>{"Insured Name:"}</Text>
+                                    <Text style={styles.cardValue}>{"User Name"}</Text>
+                                </View>
+                                <View style={styles.cardSubSec}>
+                                    <Text style={styles.cardLabel}>{"Policy Number:"}</Text>
+                                    <Text style={styles.cardValue}>{"TITANIUM0011"}</Text>
+                                </View>
+                                <View style={styles.cardSubSec}>
+                                    <Text style={styles.cardLabel}>{"UHID Number:"}</Text>
+                                    <Text style={styles.cardValue}>{"IL20414322100"}</Text>
+                                </View>
                             </View>
-                            <View style={styles.cardSubSec}>
-                                <Text style={styles.cardLabel}>{"Policy Number:"}</Text>
-                                <Text style={styles.cardValue}>{"TITANIUM0011"}</Text>
-                            </View>
-                            <View style={styles.cardSubSec}>
-                                <Text style={styles.cardLabel}>{"UHID Number:"}</Text>
-                                <Text style={styles.cardValue}>{"IL20414322100"}</Text>
+                            <View style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Image
+                                    source={require("../../assets/images/heart.png")}
+                                    style={styles.heartImg}
+                                />
                             </View>
                         </View>
-                        <View style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Image
-                                source={require("../../assets/images/heart.png")}
-                                style={styles.heartImg}
+                        <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
+                            <CustomTextInput
+                                ref={nameRef}
+                                placeholder="Doctor Name"
+                                onChangeText={handleChange("name")}
+                                value={values.name}
+                                returnKeyType="next"
+                                onSubmitEditing={() => policyNumberRef.current?.focus()}
+                                showPasswordIcon={false}
+                                errors={errors.name}
                             />
                         </View>
-                    </View>
-                    <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
-                        <CustomTextInput
-                            ref={nameRef}
-                            placeholder="Doctor Name"
-                            onChangeText={handleChange("name")}
-                            value={values.name}
-                            returnKeyType="next"
-                            onSubmitEditing={() => policyNumberRef.current?.focus()}
-                            showPasswordIcon={false}
-                            errors={errors.name}
+                        <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
+                            <CustomTextInput
+                                ref={policyNumberRef}
+                                placeholder="Hospital Name"
+                                onChangeText={handleChange("policyNo")}
+                                value={values.policyNo}
+                                returnKeyType="next"
+                                onSubmitEditing={() => showDatePicker()}
+                                showPasswordIcon={false}
+                                errors={errors.policyNo}
+                            />
+                        </View>
+                        <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
+                            <CustomTextInput
+                                ref={amt}
+                                placeholder="Diagnosis"
+                                onChangeText={handleChange("amt")}
+                                value={values.amt}
+                                type={"decimal-pad"}
+                                returnKeyType="next"
+                                onSubmitEditing={() => showDatePicker()}
+                                showPasswordIcon={false}
+                                errors={errors.amt}
+                            />
+                        </View>
+                        <Pressable onPress={() => showDatePicker()} style={styles.buttonExpiryDate}>
+                            <Text
+                                style={
+                                    isDateSelected
+                                        ? styles.textSelectedExpiryDate
+                                        : styles.textUnSelectedExpiryDate
+                                }
+                            >
+                                {`Admit Date: ${values.dueDate && moment(values.dueDate).format("DD-MM-yyyy")
+                                    }`}
+                            </Text>
+                            <DateTimePickerModal
+                                isVisible={isDatePickerVisible}
+                                mode="date"
+                                onConfirm={handleConfirm}
+                                onCancel={hideDatePicker}
+                                headerTextIOS="Admit Date"
+                                minimumDate={new Date()}
+                            />
+                            <Image
+                                style={styles.calanderImage}
+                                source={require("../../assets/images/cal.png")}
+                            />
+                        </Pressable>
+                        {errors.dueDate ? (
+                            <Text
+                                style={{ marginLeft: 23, marginTop: 5, color: Colors.redColor }}
+                            >
+                                {errors.dueDate}
+                            </Text>
+                        ) : null}
+                        <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
+                            <CustomTextInput
+                                ref={amt}
+                                placeholder="Hospital Contact Number"
+                                onChangeText={handleChange("amt")}
+                                value={values.amt}
+                                returnKeyType="next"
+                                showPasswordIcon={false}
+                                errors={errors.amt}
+                            />
+                        </View>
+                        <CustomButton
+                            text={"Claim"}
+                            isLarge={true}
+                            onPress={() => {
+                                Keyboard.dismiss();
+                                handleSubmit();
+                            }}
                         />
                     </View>
-                    <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
-                        <CustomTextInput
-                            ref={policyNumberRef}
-                            placeholder="Hospital Name"
-                            onChangeText={handleChange("policyNo")}
-                            value={values.policyNo}
-                            returnKeyType="next"
-                            onSubmitEditing={() => showDatePicker()}
-                            showPasswordIcon={false}
-                            errors={errors.policyNo}
-                        />
-                    </View>
-                    <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
-                        <CustomTextInput
-                            ref={amt}
-                            placeholder="Diagnosis"
-                            onChangeText={handleChange("amt")}
-                            value={values.amt}
-                            type={"decimal-pad"}
-                            returnKeyType="next"
-                            onSubmitEditing={() => showDatePicker()}
-                            showPasswordIcon={false}
-                            errors={errors.amt}
-                        />
-                    </View>
-                    <Pressable onPress={() => showDatePicker()} style={styles.buttonExpiryDate}>
-                        <Text
-                            style={
-                                isDateSelected
-                                    ? styles.textSelectedExpiryDate
-                                    : styles.textUnSelectedExpiryDate
-                            }
-                        >
-                            {`Admit Date: ${values.dueDate && moment(values.dueDate).format("DD-MM-yyyy")
-                                }`}
-                        </Text>
-                        <DateTimePickerModal
-                            isVisible={isDatePickerVisible}
-                            mode="date"
-                            onConfirm={handleConfirm}
-                            onCancel={hideDatePicker}
-                            headerTextIOS="Admit Date"
-                            minimumDate={new Date()}
-                        />
-                        <Image
-                            style={styles.calanderImage}
-                            source={require("../../assets/images/cal.png")}
-                        />
-                    </Pressable>
-                    {errors.dueDate ? (
-                        <Text
-                            style={{ marginLeft: 23, marginTop: 5, color: Colors.redColor }}
-                        >
-                            {errors.dueDate}
-                        </Text>
-                    ) : null}
-                    <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
-                        <CustomTextInput
-                            ref={amt}
-                            placeholder="Hospital Contact Number"
-                            onChangeText={handleChange("amt")}
-                            value={values.amt}
-                            returnKeyType="next"
-                            showPasswordIcon={false}
-                            errors={errors.amt}
-                        />
-                    </View>
-                    <CustomButton
-                        text={"Claim"}
-                        isLarge={true}
-                        onPress={() => {
-                            Keyboard.dismiss();
-                            handleSubmit();
-                        }}
-                    />
-                </View>
-                {/* </KeyboardAwareScrollView> */}
+                </KeyboardAwareScrollView>
                 <Indicator showLoader={isLoading} />
                 {/* <CustomAlertDialog
           visible={showErrorDialog || isSessionExpired}
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
         height: "87%",
         width: "100%",
         backgroundColor: "#F8F8F8",
-        position: "absolute",
+        // position: "absolute",
         bottom: 0,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
         color: Colors.blackColor,
     },
     unSelectedTypeTextColor: {
-        color: Colors.grayColor,
+        color: '#C7C7C7',
     },
     buttonExpiryDate: {
         // margin: 16,
@@ -418,14 +418,16 @@ const styles = StyleSheet.create({
         paddingEnd: RFValue(16),
         color: Colors.blackColor,
         // flex: 1,
-        borderRadius: 5,
+        borderRadius: 10,
         fontFamily: "Roboto-Regular",
         borderColor: Colors.grayColor,
         marginHorizontal: 16,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        marginBottom: 10
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: '#C7C7C7'
     },
     textUnSelectedExpiryDate: {
         // marginLeft: 16,
@@ -486,5 +488,16 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 15,
         fontWeight: '500'
-    }
+    },
+    keyboardViewStyle: {
+        borderTopLeftRadius: 70,
+        borderTopRightRadius: 70,
+    },
+    keyboardStyle: {
+        marginTop: -35,
+        backgroundColor: '#F8F8F8',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        height: "72%",
+    },
 });

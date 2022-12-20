@@ -18,7 +18,7 @@ export default {
   shadowColor: "#00000040",
   otpBorderColor: "#D3D3D3",
   newTextColor: "#156EA5",
-  status_pending: "#8F00FF",
+  status_pending: "#F36F56",
   staus_under_process: "#0000FF",
   status_accepted: "green",
   cardColor: "#E0F6FF",

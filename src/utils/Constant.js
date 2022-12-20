@@ -8,8 +8,8 @@ export default {
   PREF_USER_NAME: "name",
 
   //APIs List
-  API_BASE_URL: "http://upstaging.uptrust.in/api/",
-  // API_BASE_URL: "https://uptrust.in/api/",
+  // API_BASE_URL: "http://upstaging.uptrust.in/api/",
+  API_BASE_URL: "https://uptrust.in/api/",
   API_SEND_OTP_WITH_EMAIL: "sendOTPwithemail",
   API_VERIFY_OTP_WITH_EMAIL: "verifyOTPwithemail",
   API_VERIFY_OTP_WITH_PHONE: "phoneverify",

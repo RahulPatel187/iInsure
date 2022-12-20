@@ -14,6 +14,7 @@ import CustomButton from "../../components/default/Buttons";
 import Header from "../../components/default/Header";
 import Helpers from "../../utils/Helpers";
 import { useFormik } from "formik";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function Inquiry({ navigation }) {
     const emailRef = useRef(null);
@@ -77,65 +78,71 @@ function Inquiry({ navigation }) {
                     <Text style={styles.titleText2}>{"Inquiry"}</Text>
                 </View>
             </ImageBackground>
-            <View style={styles.container}>
-                <View>
-                    <Text style={styles.textStyle}>Your E-mail</Text>
-                    <CustomTextInput
-                        ref={emailRef}
-                        placeholder="Enter Your E-mail"
-                        onChangeText={handleChange("email")}
-                        value={values.email}
-                        returnKeyType="next"
-                        showPasswordIcon={false}
-                        errors={errors.email}
+            <KeyboardAwareScrollView
+                contentContainerStyle={styles.keyboardViewStyle}
+                showsVerticalScrollIndicator={false}
+                style={styles.keyboardStyle}>
+                <View style={styles.container}>
+                    <View>
+                        <Text style={styles.textStyle}>Your E-mail</Text>
+                        <CustomTextInput
+                            ref={emailRef}
+                            placeholder="Enter Your E-mail"
+                            onChangeText={handleChange("email")}
+                            value={values.email}
+                            returnKeyType="next"
+                            showPasswordIcon={false}
+                            errors={errors.email}
+                        />
+                    </View>
+                    <View>
+                        <Text style={styles.textStyle}>Your Policy Number</Text>
+                        <CustomTextInput
+                            ref={policyNumberRef}
+                            placeholder="Enter Your Policy Number"
+                            onChangeText={handleChange("policyNo")}
+                            value={values.policyNo}
+                            returnKeyType="next"
+                            showPasswordIcon={false}
+                            errors={errors.policyNo}
+                        />
+                    </View>
+                    <View>
+                        <Text style={styles.textStyle}>Your UHID Number</Text>
+                        <CustomTextInput
+                            ref={uhidRef}
+                            placeholder="Enter Your UHID Number"
+                            onChangeText={handleChange("uhid")}
+                            value={values.uhid}
+                            returnKeyType="next"
+                            showPasswordIcon={false}
+                            errors={errors.uhid}
+                        />
+                    </View>
+                    <View>
+                        <Text style={styles.textStyle}>Your Summary</Text>
+                        <CustomTextInput
+                            ref={summaryRef}
+                            placeholder="Enter Your Summary"
+                            onChangeText={handleChange("summary")}
+                            value={values.summary}
+                            // returnKeyType="next"
+                            multiline={true} 
+                            numberOfLines={4}
+                            showPasswordIcon={false}
+                            errors={errors.summary}
+                        />
+                    </View>
+                    <CustomButton
+                        text={"Submit"}
+                        isLarge={true}
+                        onPress={() => {
+                            // Keyboard.dismiss();
+                            handleSubmit();
+                        }}
                     />
                 </View>
-                <View>
-                    <Text style={styles.textStyle}>Your Policy Number</Text>
-                    <CustomTextInput
-                        ref={policyNumberRef}
-                        placeholder="Enter Your Policy Number"
-                        onChangeText={handleChange("policyNo")}
-                        value={values.policyNo}
-                        returnKeyType="next"
-                        showPasswordIcon={false}
-                        errors={errors.policyNo}
-                    />
-                </View>
-                <View>
-                    <Text style={styles.textStyle}>Your UHID Number</Text>
-                    <CustomTextInput
-                        ref={uhidRef}
-                        placeholder="Enter Your UHID Number"
-                        onChangeText={handleChange("uhid")}
-                        value={values.uhid}
-                        returnKeyType="next"
-                        showPasswordIcon={false}
-                        errors={errors.uhid}
-                    />
-                </View>
-                <View>
-                    <Text style={styles.textStyle}>Your Summary</Text>
-                    <CustomTextInput
-                        ref={summaryRef}
-                        placeholder="Enter Your Summary"
-                        onChangeText={handleChange("summary")}
-                        value={values.summary}
-                        // returnKeyType="next"
-                        multiline={true} numberOfLines={4}
-                        showPasswordIcon={false}
-                        errors={errors.summary}
-                    />
-                </View>
-                <CustomButton
-                    text={"Submit"}
-                    isLarge={true}
-                    onPress={() => {
-                        // Keyboard.dismiss();
-                        handleSubmit();
-                    }}
-                />
-            </View>
+            </KeyboardAwareScrollView>
         </>
     );
 }
@@ -153,7 +160,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F8F8F8",
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
-        position: 'absolute',
+        // position: 'absolute',
         // justifyContent: 'center',
         // alignItems: 'center',
         bottom: 0,
@@ -232,5 +239,16 @@ const styles = StyleSheet.create({
         marginTop: 5,
         fontSize: 15,
         fontWeight: '500'
+    },
+    keyboardViewStyle: {
+        borderTopLeftRadius: 70,
+        borderTopRightRadius: 70,
+    },
+    keyboardStyle: {
+        marginTop: -35,
+        backgroundColor: '#F8F8F8',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        height: "72%",
     },
 });

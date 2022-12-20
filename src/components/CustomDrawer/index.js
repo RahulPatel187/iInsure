@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,14 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import LinearGradient from 'react-native-linear-gradient';
+import { useDispatch } from 'react-redux';
+import Helpers from "../../utils/Helpers";
+import Constant from "../../utils/Constant";
+import CustomLogoutDialog from '../default/CustomLogoutDialog';
+import axiosPostClient from "../../api/ApiClient";
+import ApiRequest from "../../api/ApiRequest";
+import Indicator from '../default/Indicator';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const drawerList = [
   {
@@ -52,6 +60,10 @@ const drawerList = [
 
 const CustomDrawer = props => {
   const [indexs, setIndex] = useState(0);
+  const dispatch = useDispatch();
+  const [showLogoutDialog, setLogoutDialog] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [user, setUser] = useState();
 
   const onItemClick = (slug, index) => {
     setIndex(index);
@@ -59,7 +71,7 @@ const CustomDrawer = props => {
       props.navigation.closeDrawer();
       props.navigation.reset({
         index: 0,
-        routes: [{name: 'Home'}],
+        routes: [{ name: 'Home' }],
       });
     } else if (slug == 'profile') {
       props.navigation.closeDrawer();
@@ -86,25 +98,7 @@ const CustomDrawer = props => {
       });
       // props.navigation.navigate("GetAQuote");
     } else if (slug == 'logout') {
-      Alert.alert(
-        'Hold on!',
-        'Are you sure want to Logout?',
-        [
-          {
-            text: 'No',
-            onPress: () => console.log('Okay'),
-          },
-          {
-            text: 'Yes',
-            onPress: () =>
-              props.navigation.reset({
-                index: 0,
-                routes: [{name: 'Login'}],
-              }),
-          },
-        ],
-        {cancelable: false},
-      );
+      setLogoutDialog(true);
     }
   };
   const getIcon = slug => {
@@ -127,7 +121,66 @@ const CustomDrawer = props => {
     }
   };
 
-  const renderItem = ({item, index}) => {
+  const getUsetNameFromPref = async () => {
+    let name = await Helpers.getFromPref(Constant.PREF_USER_INFO, "");
+    setUser(JSON.parse(name));
+  };
+
+  useEffect(() => {
+    getUsetNameFromPref();
+  }, []);
+
+  const onLogoutYesClick = async () => {
+    /*await Helpers.saveInPref(Constant.PREF_TOKEN, "") 
+        await Helpers.removeFromPref(Constant.PREF_USER_INFO)
+        await Helpers.removeFromPref(Constant.PREF_ACCESS_TOKEN)
+        await Helpers.removeFromPref(Constant.PREF_USER_NAME)
+        await Helpers.removeFromPref(Constant.PREF_USER_ID)
+
+        if (auth().currentUser != null) {
+            auth().signOut()
+        }*/
+    await AsyncStorage.clear();
+    await Helpers.performLogout();
+    dispatch({
+      type: SIGN_IN,
+      payload: "",
+    });
+    props.navigation.navigate('Login');
+  };
+
+  const callLogoutApi = async () => {
+    if (await Helpers.checkInternet()) {
+      const userId = await Helpers.getFromPref(Constant.PREF_USER_ID, "");
+      const access_token = await Helpers.getFromPref("");
+      setLoading(true);
+      var params = await ApiRequest.logoutRequest(userId, access_token);
+      axiosPostClient()
+        .post(Constant.API_LOGOUT, params)
+        .then((response) => {
+          console.log("response--", response);
+          setLoading(false);
+          if (response?.status == 200) {
+            onLogoutYesClick();
+          } else if (response?.status == 401) {
+            //Logout user if received 401 status code.
+            // setMessage(response?.data?.message);
+          } else {
+            // setMessage(response?.data?.message);
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          // setMessage(JSON.stringify(error));
+          Logger.log("error" + JSON.stringify(error));
+        });
+    } else {
+      // setMessage(Constant.NO_INTERNET);
+    }
+  };
+
+
+  const renderItem = ({ item, index }) => {
     return indexs == index ? (
       <TouchableOpacity
         onPress={() => {
@@ -136,7 +189,7 @@ const CustomDrawer = props => {
         style={styles.tabContainer}>
         <LinearGradient
           colors={['#0077B6', '#0096C7', '#0077B6']}
-          style={{flex: 1, borderRadius: 10}}>
+          style={{ flex: 1, borderRadius: 10 }}>
           <View style={styles.tab}>
             <Image source={getIcon(item.slug)} style={styles.imageActive} />
             <Text style={styles.textActive}>{item.title}</Text>
@@ -163,27 +216,27 @@ const CustomDrawer = props => {
         <View style={styles.header}>
           <View>
             <Text style={styles.textHello}>Hello,</Text>
-            <Text style={styles.textName}>User Name</Text>
+            <Text style={styles.textName}>{user?.name}</Text>
             <View style={styles.mobEmail}>
               <Image
                 source={require('../../assets/images/call.png')}
                 style={styles.mobEmailPic}
               />
-              <Text style={styles.mobEmailText}>+91 9876543210</Text>
+              <Text style={styles.mobEmailText}>+91 {user?.phone}</Text>
             </View>
             <View style={styles.mobEmail}>
               <Image
                 source={require('../../assets/images/emailIcon.png')}
-                style={[styles.mobEmailPic, {tintColor: '#0090C3'}]}
+                style={[styles.mobEmailPic, { tintColor: '#0090C3' }]}
               />
-              <Text style={styles.mobEmailText}>username@policy.com</Text>
+              <Text style={styles.mobEmailText}>{user?.email}</Text>
             </View>
           </View>
-          <View style={{width: '30%'}}>
+          <View style={{ width: '30%' }}>
             <ImageBackground
               source={require('../../assets/images/userBack1.png')}
               style={styles.userPic}>
-              <Text style={styles.userPictext}>B</Text>
+              <Text style={styles.userPictext}>{user?.name.charAt(0).toUpperCase()}</Text>
             </ImageBackground>
           </View>
         </View>
@@ -193,7 +246,7 @@ const CustomDrawer = props => {
             keyExtractor={(item, index) => index.toString()}
             data={drawerList}
             renderItem={renderItem}
-            style={{padding: 5}}
+            style={{ padding: 5 }}
           />
         </View>
       </DrawerContentScrollView>
@@ -202,11 +255,24 @@ const CustomDrawer = props => {
           source={require('../../assets/images/comn.png')}
           style={styles.footerLogo}
         />
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <Text style={styles.textV}>Version</Text>
           <Text style={styles.textVersion}>1.0</Text>
         </View>
       </View>
+      <CustomLogoutDialog
+        visible={showLogoutDialog}
+        onNoClick={() => {
+          setLogoutDialog(false);
+        }}
+        onYesClick={() => {
+          setLogoutDialog(false);
+          callLogoutApi();
+          // onLogoutYesClick();
+        }}
+        message={"Are you sure you want to logout?"}
+      />
+      <Indicator showLoader={isLoading} />
     </View>
   );
 };
@@ -247,9 +313,10 @@ const styles = StyleSheet.create({
   },
   textName: {
     color: '#000',
-    fontSize: 18,
+    fontSize: 14,
     marginRight: 5,
     fontWeight: '400',
+    maxWidth: 150
   },
   mobEmail: {
     flexDirection: 'row',
@@ -267,6 +334,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#444444',
     marginLeft: 10,
+    maxWidth: 160
   },
   textV: {
     fontSize: 16,

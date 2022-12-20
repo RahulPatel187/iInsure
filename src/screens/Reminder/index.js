@@ -261,22 +261,27 @@ function Reminder({ navigation }) {
     };
 
     return (
-        <SafeAreaView>
-            <View
-                style={{
-                    flex: 1,
-                }}
+        <>
+            {/* // <SafeAreaView> */}
+            <ImageBackground
+                source={require("../../assets/images/headerBgImg.png")}
+                style={styles.headerBgImg}
             >
-                <ImageBackground
-                    source={require("../../assets/images/headerBgImg.png")}
-                    style={styles.headerBgImg}
-                >
-                    <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.titleText}>{"My "}</Text>
-                        <Text style={styles.titleText2}>{"Reminder"}</Text>
-                    </View>
-                </ImageBackground>
+                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+                <View style={styles.titleContainer}>
+                    <Text style={styles.titleText}>{"My "}</Text>
+                    <Text style={styles.titleText2}>{"Reminder"}</Text>
+                </View>
+            </ImageBackground>
+            <KeyboardAwareScrollView
+                contentContainerStyle={styles.keyboardViewStyle}
+                showsVerticalScrollIndicator={false}
+                style={styles.keyboardStyle}>
+                {/* <View
+                    style={{
+                        // flex: 1,
+                    }}
+                > */}
                 {/* <KeyboardAwareScrollView
                     contentContainerStyle={styles.container}
                     keyboardShouldPersistTaps="handled"
@@ -393,8 +398,10 @@ function Reminder({ navigation }) {
           }}
           description={"Reminder set successfully."}
         /> */}
-            </View>
-        </SafeAreaView>
+                {/* </View> */}
+            </KeyboardAwareScrollView>
+            {/* </SafeAreaView> */}
+        </>
     );
 }
 export default Reminder;
@@ -411,7 +418,7 @@ const styles = StyleSheet.create({
         height: "87%",
         width: "100%",
         backgroundColor: "#F8F8F8",
-        position: "absolute",
+        // position: "absolute",
         bottom: 0,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
@@ -455,13 +462,15 @@ const styles = StyleSheet.create({
         paddingEnd: RFValue(16),
         color: Colors.blackColor,
         // flex: 1,
-        borderRadius: 5,
+        borderRadius: 10,
         fontFamily: "Roboto-Regular",
         borderColor: Colors.grayColor,
         marginHorizontal: 16,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
+        borderWidth: 1,
+        borderColor: '#C7C7C7'
     },
     textUnSelectedExpiryDate: {
         // marginLeft: 16,
@@ -495,5 +504,16 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         marginTop: 10,
         fontWeight: "700",
+    },
+    keyboardViewStyle: {
+        borderTopLeftRadius: 70,
+        borderTopRightRadius: 70,
+    },
+    keyboardStyle: {
+        marginTop: -35,
+        backgroundColor: '#F8F8F8',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        height: "72%",
     },
 });
