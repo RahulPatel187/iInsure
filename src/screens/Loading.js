@@ -8,6 +8,7 @@ import {
   Text,
 } from 'react-native';
 import SafeAreaView from '../components/default/SafeAreaView';
+import Colors from '../config/Colors';
 
 const Loading = ({navigation}) => {
   const counter = useRef(new Animated.Value(0)).current;
@@ -60,9 +61,9 @@ const Loading = ({navigation}) => {
                 height: 10,
                 width: '100%',
                 borderRadius: 60,
-                backgroundColor: '#FF791F',
+                backgroundColor: Colors.introLineColor,
                 borderWidth: 2,
-                borderColor: '#FFF',
+                borderColor: Colors.whiteColor,
               },
             ]}
           />
@@ -102,8 +103,8 @@ const styles = StyleSheet.create({
     height: 15,
     flexDirection: 'row',
     width: '65%',
-    backgroundColor: 'white',
-    borderColor: '#000',
+    backgroundColor: Colors.whiteColor,
+    borderColor: Colors.blackColor,
     borderWidth: 2,
     borderRadius: 50,
     alignSelf: 'center',
@@ -120,6 +121,6 @@ const styles = StyleSheet.create({
   loadingTxt: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#FFFF',
+    color: Colors.whiteColor,
   },
 });

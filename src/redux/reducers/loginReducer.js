@@ -1,11 +1,12 @@
 // loginReducer.js
-import { SIGN_IN, SIGN_OUT, SET_USER_INFO, SET_HEALTH_CARD_API } from '../types';
+import { SIGN_IN, SIGN_OUT, SET_USER_INFO, SET_HEALTH_CARD_API, SET_NOTIFICATION_COUNT } from '../types';
 
 const initialState = {
     loading: true,
     userToken: '',
     userInfo: '',
-    isCallHealthCardApi: false
+    isCallHealthCardApi: false,
+    notificationCount: 0
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -31,6 +32,11 @@ const loginReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isCallHealthCardApi: action.payload
+            };
+        case SET_NOTIFICATION_COUNT:
+            return {
+                ...state,
+                notificationCount: action.payload
             };
         default:
             return state;

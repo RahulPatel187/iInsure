@@ -30,5 +30,18 @@ export default {
   contactusBgColorNew: "#f3defa",
   lightGrey: "#f4f7fa",
   newPlaceholder: "#82b1ea",
-  textColorNew: '#0d47a1'
+  textColorNew: '#0d47a1',
+  lineColor: '#737373',
+  containerColor: '#F8F8F8',
+  titleTextColor: '#0077B6',
+  labelTextColor: '#444444',
+  loginBtnColor: '#F6861A',
+  timerColor: '#005C8C',
+  cardBorder: "#AEB2B4",
+  unSelectTextColor: '#C7C7C7',
+  checkBoxImgColor: "#0077B6",
+  downloadColor: '#315C84',
+  cliamBtnColor: '#F58315',
+  columnImgBorderColor: '#0384BC',
+  introLineColor: '#FF791F'
 };

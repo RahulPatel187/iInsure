@@ -138,7 +138,7 @@ function Header(props) {
 const styles = StyleSheet.create({
   headerView: {
     height: Helpers.getDynamicSize(30),
-    marginTop: 5
+    marginTop: 10
     // flexDirection: "row",
     // alignItems: "center",
     // justifyContent: "space-between",
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     borderRadius: 10,
-    backgroundColor: "red",
+    backgroundColor: "#F27C22",
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",

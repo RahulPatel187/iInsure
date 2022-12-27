@@ -12,16 +12,18 @@ import {
 import { useSelector } from 'react-redux';
 import BottomSection from '../../components/BottomSection/BottomSection';
 import Header from "../../components/default/Header";
+import Colors from '../../config/Colors';
 
 function Profile({ navigation }) {
   const userInfo = useSelector((state) => state.login.userInfo);
+  const notificationCount = useSelector((state) => state.login.notificationCount);
 
   return (
     <>
       <ImageBackground
         source={require('../../assets/images/headerBgImg.png')}
         style={styles.headerBgImg}>
-        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+        <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
         <View style={styles.titleContainer}>
           <Image
             source={require('../../assets/images/userScreen.png')}
@@ -35,29 +37,19 @@ function Profile({ navigation }) {
       </ImageBackground>
       <View style={styles.container}>
         <View
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+          style={styles.flex}>
           <ImageBackground
             source={require('../../assets/images/userBack.png')}
-            style={{
-              width: 63,
-              height: 63,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+            style={styles.flexImgBg}>
             <Image
               source={require('../../assets/images/userr.png')}
-              style={{ width: 22, height: 22 }}
+              style={styles.flexImg}
             />
           </ImageBackground>
         </View>
         <View style={styles.titleContainer}>
-          <Text style={[styles.titleText, { color: '#000' }]}>{'Hello, '}</Text>
-          <Text style={[styles.titleText2, , { color: '#000' }]}>{'User'}</Text>
+          <Text style={[styles.titleText, { color: Colors.blackColor }]}>{'Hello, '}</Text>
+          <Text style={[styles.titleText2, , { color: Colors.blackColor }]}>{'User'}</Text>
         </View>
         <Text style={styles.titleTxt}>{'Registered details'}</Text>
         <Text style={styles.textStyle}>{userInfo ? userInfo.name : 'UserName'}</Text>
@@ -83,7 +75,7 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
   },
   container: {
-    backgroundColor: '#F8F8F8',
+    backgroundColor: Colors.containerColor,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     position: 'absolute',
@@ -100,14 +92,14 @@ const styles = StyleSheet.create({
   },
   keyboardStyle: {
     marginTop: -25,
-    backgroundColor: 'white',
+    backgroundColor: Colors.whiteColor,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
   titleTxt: {
     fontSize: 17,
     // alignSelf: "center",
-    color: '#444444',
+    color: Colors.labelTextColor,
     fontWeight: '500',
     // textAlign: "center",
     marginTop: 10,
@@ -122,7 +114,7 @@ const styles = StyleSheet.create({
   labelTxt: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#444444',
+    color: Colors.labelTextColor,
     paddingLeft: 5,
   },
   titleContainer: {
@@ -138,7 +130,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 25,
     fontWeight: '300',
-    color: '#FFFFFF',
+    color: Colors.whiteColor,
   },
   titleText2: {
     display: 'flex',
@@ -146,17 +138,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 25,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: Colors.whiteColor,
   },
   textStyle: {
     padding: 16,
     borderRadius: 5,
-    color: 'black',
-    backgroundColor: '#ffffff',
+    color: Colors.blackColor,
+    backgroundColor: Colors.whiteColor,
     marginTop: 10,
     fontSize: 15,
     fontWeight: '500',
     borderWidth: 1,
-    borderColor: '#C7C7C7'
+    borderColor: Colors.unSelectTextColor
   },
+  flex: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  flexImgBg: {
+    width: 63,
+    height: 63,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  flexImg: { 
+    width: 22, 
+    height: 22 
+  }
 });

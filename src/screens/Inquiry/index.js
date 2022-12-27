@@ -15,12 +15,33 @@ import Header from "../../components/default/Header";
 import Helpers from "../../utils/Helpers";
 import { useFormik } from "formik";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useDispatch, useSelector } from "react-redux";
+import Logger from "../../utils/Logger";
+import Colors from "../../config/Colors";
+import ApiRequest from "../../api/ApiRequest";
+import axiosPostClient from "../../api/ApiClient";
+import Constant from "../../utils/Constant";
+import Indicator from "../../components/default/Indicator";
+import { SIGN_IN } from "../../redux/types";
+import CustomAlertDialog from "../../components/default/CustomAlertDialog";
 
 function Inquiry({ navigation }) {
     const emailRef = useRef(null);
     const policyNumberRef = useRef(null);
     const uhidRef = useRef(null);
     const summaryRef = useRef(null);
+
+    const [isLoading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const [showErrorDialog, setShowErrorDialog] = useState(false);
+    const [isSessionExpired, setSessionExpired] = useState(false);
+    const [inquirySuccess, setInquirySuccess] = useState(false);
+    // const [email, setEmail] = useState('')
+    const [policyNumber, setPolicyNumber] = useState("");
+    const [cardNumber, setCardNumber] = useState("");
+    const notificationCount = useSelector((state) => state.login.notificationCount);
+
+    const dispatch = useDispatch();
 
     const {
         handleChange,
@@ -66,13 +87,99 @@ function Inquiry({ navigation }) {
         },
     });
 
+    useEffect(() => {
+        getDatafromPref();
+    }, []);
+
+    const getDatafromPref = async () => {
+        var userInfo = await Helpers.getFromPref(Constant.PREF_USER_INFO);
+        Logger.log("userInfo" + JSON.stringify(userInfo));
+        if (userInfo) {
+            var userJsonObject = JSON.parse(userInfo);
+            // setEmail(userJsonObject.email)
+            setFieldValue("email", userJsonObject?.email);
+            setPolicyNumber("Policy No: " + userJsonObject?.policy_no);
+            setCardNumber("UHID No: " + userJsonObject?.card_no);
+        }
+        //setEmail(userInfo.email)
+        //setPolicyNumber(userInfo.policyNumber)
+    };
+
+    //Calling add inquiry api.
+    const callAddInquiryApi = async () => {
+        if (await Helpers.checkInternet()) {
+            setLoading(true);
+            Logger.log(
+                "Calling Add Inquiry Api:=>>" +
+                Constant.API_BASE_URL +
+                Constant.API_ADD_INQUIRY
+            );
+            const userId = await Helpers.getFromPref(Constant.PREF_USER_ID, "");
+            const access_token = await Helpers.getFromPref(
+                Constant.PREF_ACCESS_TOKEN,
+                ""
+            );
+
+            var params = await ApiRequest.getAddInquiryRequest(
+                userId,
+                access_token,
+                values.email,
+                values.summary
+            );
+            Logger.log("Params is" + JSON.stringify(params));
+            axiosPostClient()
+                .post(Constant.API_ADD_INQUIRY, params)
+                .then((response) => {
+                    setLoading(false);
+                    Logger.log("response" + JSON.stringify(response?.data));
+                    if (response?.data && response?.data?.status == 200) {
+                        setMessage(response?.data?.message);
+                        setInquirySuccess(true);
+                    } else if (response?.data && response?.data?.status == 401) {
+                        //Logout user if received 401 status code.
+                        setMessage(response?.data?.message);
+                        setSessionExpired(true);
+                    } else {
+                        setMessage(response?.data?.message);
+                        setShowErrorDialog(true);
+                    }
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    setShowErrorDialog(true);
+                    setMessage(JSON.stringify(error));
+                    Logger.log("error" + JSON.stringify(error));
+                });
+        } else {
+            setMessage(Constant.NO_INTERNET);
+            setShowErrorDialog(true);
+        }
+    };
+
+    //Logout user if status code 401
+    const proceedLogout = async () => {
+        /*await Helpers.saveInPref(Constant.PREF_TOKEN, "")
+             await Helpers.removeFromPref(Constant.PREF_USER_INFO)
+             await Helpers.removeFromPref(Constant.PREF_ACCESS_TOKEN)
+             await Helpers.removeFromPref(Constant.PREF_USER_NAME)
+              dispatch({
+                 type: SIGN_IN,
+                 payload: ''
+             })*/
+        await Helpers.performLogout();
+        dispatch({
+            type: SIGN_IN,
+            payload: "",
+        });
+    };
+
     return (
         <>
             <ImageBackground
                 source={require("../../assets/images/headerBgImg.png")}
                 style={styles.headerBgImg}
             >
-                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+                <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>{"My "}</Text>
                     <Text style={styles.titleText2}>{"Inquiry"}</Text>
@@ -127,7 +234,7 @@ function Inquiry({ navigation }) {
                             onChangeText={handleChange("summary")}
                             value={values.summary}
                             // returnKeyType="next"
-                            multiline={true} 
+                            multiline={true}
                             numberOfLines={4}
                             showPasswordIcon={false}
                             errors={errors.summary}
@@ -143,6 +250,22 @@ function Inquiry({ navigation }) {
                     />
                 </View>
             </KeyboardAwareScrollView>
+            <Indicator showLoader={isLoading} />
+            <CustomAlertDialog
+                visible={showErrorDialog || isSessionExpired || inquirySuccess}
+                onCloseDialog={() => {
+                    if (isSessionExpired) {
+                        setSessionExpired(false);
+                        proceedLogout();
+                    } else if (inquirySuccess) {
+                        setInquirySuccess(false);
+                        navigation.goBack();
+                    } else {
+                        setShowErrorDialog(false);
+                    }
+                }}
+                description={message}
+            />
         </>
     );
 }
@@ -157,7 +280,7 @@ const styles = StyleSheet.create({
         // paddingBottom: 20,
     },
     container: {
-        backgroundColor: "#F8F8F8",
+        backgroundColor: Colors.containerColor,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         // position: 'absolute',
@@ -169,7 +292,7 @@ const styles = StyleSheet.create({
         height: '87%'
     },
     textStyle: {
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontSize: Helpers.getDynamicSize(14),
         fontFamily: "Roboto-Bold",
         marginBottom: 5,
@@ -179,7 +302,7 @@ const styles = StyleSheet.create({
     titleTxt: {
         fontSize: 15,
         // alignSelf: "center",
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontWeight: "500",
         // textAlign: "center",
         marginTop: 10
@@ -188,13 +311,13 @@ const styles = StyleSheet.create({
         width: "90%",
         height: 50,
         alignSelf: "center",
-        backgroundColor: "#F6861A",
+        backgroundColor: Colors.loginBtnColor,
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 50,
         marginTop: 25,
         marginBottom: 15,
-        shadowColor: "#000",
+        shadowColor: Colors.blackColor,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -206,7 +329,7 @@ const styles = StyleSheet.create({
     loginBtnTxt: {
         fontSize: 20,
         fontWeight: "600",
-        color: "#FFF",
+        color: Colors.whiteColor,
     },
     titleContainer: {
         display: 'flex',
@@ -221,7 +344,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '300',
-        color: '#FFFFFF'
+        color: Colors.whiteColor
     },
     titleText2: {
         display: 'flex',
@@ -229,13 +352,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '600',
-        color: '#FFFFFF'
+        color: Colors.whiteColor
     },
     textInput: {
         padding: 10,
         borderRadius: 5,
-        color: 'black',
-        backgroundColor: '#ffffff',
+        color: Colors.blackColor,
+        backgroundColor: Colors.whiteColor,
         marginTop: 5,
         fontSize: 15,
         fontWeight: '500'
@@ -246,9 +369,9 @@ const styles = StyleSheet.create({
     },
     keyboardStyle: {
         marginTop: -35,
-        backgroundColor: '#F8F8F8',
+        backgroundColor: Colors.containerColor,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        height: "72%",
+        height: "70%",
     },
 });

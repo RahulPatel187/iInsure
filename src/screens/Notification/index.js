@@ -10,7 +10,7 @@ import {
     Platform,
     FlatList,
 } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/default/Header";
 import SafeAreaView from "../../components/SafeAreaView";
 import Colors from "../../config/Colors";
@@ -33,6 +33,7 @@ function NotificationListScreen({ navigation }) {
     const [message, setMessage] = useState("");
     const [showErrorDialog, setShowErrorDialog] = useState(false);
     const [isSessionExpired, setSessionExpired] = useState(false);
+    const notificationCount = useSelector((state) => state.login.notificationCount);
 
     const dispatch = useDispatch();
 
@@ -110,11 +111,7 @@ function NotificationListScreen({ navigation }) {
         if (!isLoading) {
             return (
                 <View
-                    style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
+                    style={styles.emptyFlex}
                 >
                     <Text style={GlobalStyle.noDataFoundStyle}>
                         {Constant.NO_DATA_FOUND}
@@ -137,7 +134,7 @@ function NotificationListScreen({ navigation }) {
                 source={require("../../assets/images/headerBgImg.png")}
                 style={styles.headerBgImg}
             >
-                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+                <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                 <Text style={styles.titleTxt}>{"My Notifications"}</Text>
                 <View style={styles.mainSection}>
                     <FlatList
@@ -161,7 +158,7 @@ function NotificationListScreen({ navigation }) {
                                             <Text style={styles.cardLabel}>{item?.title}</Text>
                                             <Text style={styles.cardValue}>{item?.date_time ? moment(item?.date_time).format("DD-MMM-YY") : "-"}</Text>
                                         </View>
-                                        <Text style={[styles.cardValue, { width: '100%', marginLeft: 10, marginTop: 5, lineHeight: 20 }]}>{item?.description}</Text>
+                                        <Text style={[styles.cardValue, styles.cardValue2]}>{item?.description}</Text>
                                     </TouchableOpacity>
                                 </>
                             );
@@ -199,7 +196,7 @@ const styles = StyleSheet.create({
     mainSection: {
         height: "88%",
         width: "100%",
-        backgroundColor: "#F8F8F8",
+        backgroundColor: Colors.containerColor,
         position: "absolute",
         bottom: 0,
         borderTopLeftRadius: 40,
@@ -230,17 +227,17 @@ const styles = StyleSheet.create({
     titleTxt: {
         textAlign: "center",
         fontSize: 25,
-        color: "white",
+        color: Colors.whiteColor,
         fontWeight: "600",
         marginTop: -10,
     },
     cardView: {
         width: "90%",
-        backgroundColor: "white",
+        backgroundColor: Colors.whiteColor,
         alignSelf: "center",
         borderRadius: 26,
         borderWidth: 1,
-        borderColor: "#AEB2B4",
+        borderColor: Colors.cardBorder,
         paddingVertical: 10,
         marginTop: 10,
     },
@@ -256,7 +253,7 @@ const styles = StyleSheet.create({
     },
     cardLabel: {
         fontSize: 14,
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontWeight: "600",
         // marginLeft: 24,
         // width: "30%",
@@ -265,7 +262,7 @@ const styles = StyleSheet.create({
     },
     cardValue: {
         fontSize: 13,
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontWeight: "400",
         // marginLeft: 24,
         // width: "50%",
@@ -275,4 +272,15 @@ const styles = StyleSheet.create({
     listStyle: {
         marginTop: 5,
     },
+    emptyFlex: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    cardValue2: { 
+        width: '100%', 
+        marginLeft: 10, 
+        marginTop: 5, 
+        lineHeight: 20 
+    }
 });

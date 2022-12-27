@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Colors from '../config/Colors';
 
 const dataIntro = [
   {
@@ -53,7 +54,7 @@ const Intro = ({navigation}) => {
       <View style={styles.container}>
         <LinearGradient
           colors={['#0096C7', '#0077B6']}
-          style={{borderRadius: 50, margin: 10}}>
+          style={styles.slide}>
           <View style={{padding: 5}}>
             <FlatList
               horizontal
@@ -63,39 +64,20 @@ const Intro = ({navigation}) => {
               showsHorizontalScrollIndicator={false}
               renderItem={({item, index}) => {
                 return (
-                  <View style={{width: 350, height: 450, padding: 20}}>
+                  <View style={styles.imageView}>
                     <Image
                       source={item.image}
-                      style={{
-                        width: 282,
-                        height: 184,
-                        resizeMode: 'contain',
-                        marginBottom: 20,
-                      }}
+                      style={styles.img}
                     />
                     <Text
-                      style={{
-                        fontSize: 32,
-                        fontWeight: '700',
-                        color: 'white',
-                        marginBottom: 10,
-                        textAlign: 'center',
-                      }}>
+                      style={styles.imgTitle}>
                       {item.title}
                     </Text>
                     <View
                       style={[styles.line, {maxWidth: 300, marginBottom: 10}]}
                     />
                     <Text
-                      style={{
-                        fontSize: 18,
-                        fontWeight: '500',
-                        color: 'white',
-                        flexWrap: 'wrap',
-                        maxWidth: 300,
-                        textAlign: 'center',
-                        lineHeight: 27,
-                      }}>
+                      style={styles.imgDesc}>
                       {item.desc}
                     </Text>
                   </View>
@@ -105,15 +87,7 @@ const Intro = ({navigation}) => {
               ListFooterComponent={() => {}}
             />
             <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingLeft: 30,
-                paddingRight: 30,
-                paddingBottom: 5,
-              }}>
+              style={styles.footer}>
               <TouchableOpacity
                 onPress={() => {
                   navigation.reset({
@@ -121,7 +95,7 @@ const Intro = ({navigation}) => {
                     routes: [{name: 'Drawer'}],
                   });
                 }}>
-                <Text style={{fontSize: 24, fontWeight: '700', color: 'white'}}>
+                <Text style={styles.skip}>
                   Skip
                 </Text>
               </TouchableOpacity>
@@ -132,7 +106,7 @@ const Intro = ({navigation}) => {
                 }}>
                 <Image
                   source={require('./../assets/images/next.png')}
-                  style={{width: 18, height: 18, resizeMode: 'contain'}}
+                  style={styles.nextImg}
                 />
               </TouchableOpacity>
             </View>
@@ -154,7 +128,7 @@ const styles = StyleSheet.create({
     // paddingBottom: 20,
   },
   container: {
-    backgroundColor: '#F8F8F8',
+    backgroundColor: Colors.containerColor,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     position: 'absolute',
@@ -175,7 +149,7 @@ const styles = StyleSheet.create({
   line: {
     // flex: 1,
     height: 2,
-    backgroundColor: '#FF791F',
+    backgroundColor: Colors.introLineColor,
   },
   listStyle: {
     marginTop: 5,
@@ -186,8 +160,58 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     // borderRadius: 26,
     // borderWidth: 1,
-    borderColor: '#AEB2B4',
+    borderColor: Colors.cardBorder,
     // paddingVertical: 15,
     marginTop: 10,
   },
+  slide: {
+    borderRadius: 50, 
+    margin: 10
+  },
+  imageView: {
+    width: 350, 
+    height: 450, 
+    padding: 20
+  },
+  img: {
+    width: 282,
+    height: 184,
+    resizeMode: 'contain',
+    marginBottom: 20,
+  },
+  imgTitle: {
+    fontSize: 32,
+    fontWeight: '700',
+    color: Colors.whiteColor,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  imgDesc: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: Colors.whiteColor,
+    flexWrap: 'wrap',
+    maxWidth: 300,
+    textAlign: 'center',
+    lineHeight: 27,
+  },
+  footer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingBottom: 5,
+  },
+  skip: {
+    fontSize: 24, 
+    fontWeight: '700', 
+    color: Colors.whiteColor
+  },
+  nextImg: {
+    width: 18, 
+    height: 18, 
+    resizeMode: 'contain'
+  }
 });

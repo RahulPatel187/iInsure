@@ -24,6 +24,7 @@ import Indicator from "../../components/default/Indicator";
 import Constant from "../../utils/Constant";
 import moment from "moment";
 import GlobalStyle from "../../config/GlobalStyles";
+import Colors from "../../config/Colors";
 
 function HealthCard({ navigation }) {
     const viewRef = useRef([]);
@@ -45,6 +46,7 @@ function HealthCard({ navigation }) {
         (state) => state.login.isCallHealthCardApi
     );
     const [isRefreshing, setIsRefreshing] = useState(false);
+    const notificationCount = useSelector((state) => state.login.notificationCount);
 
     const dispatch = useDispatch();
 
@@ -198,11 +200,7 @@ function HealthCard({ navigation }) {
         if (!isLoading) {
             return (
                 <View
-                    style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
+                    style={styles.emptyFlex}
                 >
                     <Text style={GlobalStyle.noDataFoundStyle}>
                         {Constant.NO_DATA_FOUND}
@@ -225,7 +223,7 @@ function HealthCard({ navigation }) {
                 source={require("../../assets/images/headerBgImg.png")}
                 style={styles.headerBgImg}
             >
-                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+                <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>{"My "}</Text>
                     <Text style={styles.titleText2}>{"HealthCard"}</Text>
@@ -294,7 +292,7 @@ function HealthCard({ navigation }) {
                                         </View>
                                     </LinearGradient>
                                     <LinearGradient colors={['#005C84', '#03AAF4']} style={styles.footer}>
-                                        <TouchableOpacity style={[styles.footerBtn, { backgroundColor: '#315C84' }]} onPress={() => {
+                                        <TouchableOpacity style={[styles.footerBtn, { backgroundColor: Colors.downloadColor }]} onPress={() => {
                                             setLoading(true);
                                             setSelectedIndex(index);
                                             setTimeout(() => {
@@ -307,7 +305,7 @@ function HealthCard({ navigation }) {
                                         }}>
                                             <Text style={styles.infoText}>Download</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[styles.footerBtn, { backgroundColor: '#F58315' }]} onPress={() => {
+                                        <TouchableOpacity style={[styles.footerBtn, { backgroundColor: Colors.cliamBtnColor }]} onPress={() => {
                                             //is_claim:1 disable
                                             //is_claim:0 enble
                                             if (parseInt(item.is_claim) == 0) {
@@ -368,7 +366,7 @@ const styles = StyleSheet.create({
         // paddingBottom: 20,
     },
     container: {
-        backgroundColor: "#F8F8F8",
+        backgroundColor: Colors.containerColor,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         position: 'absolute',
@@ -392,7 +390,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         // borderRadius: 26,
         // borderWidth: 1,
-        borderColor: "#AEB2B4",
+        borderColor: Colors.cardBorder,
         // paddingVertical: 15,
         marginTop: 10,
     },
@@ -402,14 +400,14 @@ const styles = StyleSheet.create({
     },
     cardLabel: {
         fontSize: 12,
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontWeight: "600",
         marginLeft: 14,
         width: "30%",
     },
     cardValue: {
         fontSize: 12,
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontWeight: "400",
         marginLeft: 24,
         width: "50%",
@@ -430,7 +428,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '300',
-        color: '#FFFFFF'
+        color: Colors.whiteColor
     },
     titleText2: {
         display: 'flex',
@@ -438,7 +436,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '600',
-        color: '#FFFFFF'
+        color: Colors.whiteColor
     },
     cardHeader: {
         paddingVertical: 11,
@@ -450,7 +448,7 @@ const styles = StyleSheet.create({
     },
     infoText: {
         fontSize: 14,
-        color: 'white',
+        color: Colors.whiteColor,
         fontWeight: '600'
     },
     footerBtn: {
@@ -461,7 +459,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 20,
         borderWidth: 1,
-        borderColor: 'white'
+        borderColor: Colors.whiteColor
     },
     footer: {
         display: 'flex',
@@ -484,5 +482,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 1,
         marginBottom: 1
+    },
+    emptyFlex: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
     }
 });

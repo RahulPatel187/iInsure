@@ -1,10 +1,20 @@
-import React from "react";
-import { Image, ImageBackground, ScrollView, StyleSheet, Text, Dimensions, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Image, ImageBackground, ScrollView, StyleSheet, Text, Linking, Dimensions, TouchableOpacity, View } from "react-native";
 import BottomSection from "../../components/BottomSection/BottomSection";
 import SafeAreaView from "../../components/SafeAreaView";
 import Header from "../../components/default/Header";
 import Carousel from "react-native-snap-carousel";
+import Helpers from "../../utils/Helpers";
+import Constant from "../../utils/Constant";
+import axiosPostClient from "../../api/ApiClient";
+import ApiRequest from "../../api/ApiRequest";
+import { useDispatch } from "react-redux";
+import { SET_NOTIFICATION_COUNT } from "../../redux/types";
+import Colors from "../../config/Colors";
+
 const { width: screenWidth } = Dimensions.get('window');
+
+const contactUsUrl = "https://www.uptrust.co.in/contact.php";
 
 const imageData = [
   {
@@ -25,6 +35,64 @@ const imageData = [
 ]
 
 const HomeScreen = ({ navigation }) => {
+  const [userName, setUserName] = useState("");
+  const [notificationCount, setNotificationCount] = useState(0);
+  const dispatch = useDispatch();
+
+  const getUsetNameFromPref = async () => {
+    const name = await Helpers.getFromPref(Constant.PREF_USER_NAME, "");
+    setUserName(name);
+  };
+
+  useEffect(() => {
+    getUsetNameFromPref();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      callGetNotificationListApi();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const openContactUsPage = () => {
+    //Opening default browser and loading uptrust url
+    Linking.canOpenURL(contactUsUrl).then((supported) => {
+      if (supported) {
+        Linking.openURL(contactUsUrl);
+      } else {
+        Logger.log("Don't know how to open URI: " + contactUsUrl);
+      }
+    });
+  };
+
+  const callGetNotificationListApi = async () => {
+    if (await Helpers.checkInternet()) {
+      const userId = await Helpers.getFromPref(Constant.PREF_USER_ID, "");
+      const access_token = await Helpers.getFromPref(
+        Constant.PREF_ACCESS_TOKEN,
+        ""
+      );
+      var params = await ApiRequest.getInquiryListRequest(userId, access_token);
+      axiosPostClient()
+        .post(Constant.API_GET_NOTIFICATIONS, params)
+        .then((response) => {
+          if (response?.data && response?.data?.status == 200) {
+            setNotificationCount(response?.data?.data.length);
+            dispatch({
+              type: SET_NOTIFICATION_COUNT,
+              payload: response?.data?.data.length,
+            });
+          } else if (response?.data && response?.data?.status == 401) {
+          } else {
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    } else {
+    }
+  };
 
   const renderItem = ({ item, index }) => {
     return (
@@ -40,10 +108,10 @@ const HomeScreen = ({ navigation }) => {
         source={require("../../assets/images/headerBgImg.png")}
         style={styles.headerBgImg}
       >
-        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
-        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
+        <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+        <View style={styles.headerName}>
           <Text style={styles.headerText}>{"Hello,"}</Text>
-          <Text style={styles.headerText2}>{"User long name"}</Text>
+          <Text style={styles.headerText2}>{userName ? userName : "User long name"}</Text>
         </View>
       </ImageBackground>
 
@@ -63,19 +131,19 @@ const HomeScreen = ({ navigation }) => {
               </View>
               <Text style={styles.columntext}>Health Card</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.column}>
+            <TouchableOpacity style={styles.column} onPress={() => navigation.navigate('Inquiry')}>
               <View style={styles.columnImgView}>
                 <Image source={require("../../assets/images/Group.png")} style={styles.columnImg} />
               </View>
               <Text style={styles.columntext}>Inquiry</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.column}>
+            <TouchableOpacity style={styles.column} onPress={() => navigation.navigate('Reminder')}>
               <View style={styles.columnImgView}>
                 <Image source={require("../../assets/images/Group28.png")} style={styles.columnImg} />
               </View>
               <Text style={styles.columntext}>Reminder</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.column}>
+            <TouchableOpacity style={styles.column} onPress={() => openContactUsPage()}>
               <View style={styles.columnImgView}>
                 <Image source={require("../../assets/images/Frame(1).png")} style={styles.columnImg} />
               </View>
@@ -97,7 +165,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    backgroundColor: "white",
+    backgroundColor: Colors.whiteColor,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     height: '84%',
@@ -115,17 +183,17 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: '300',
-    color: '#FFFFFF'
+    color: Colors.whiteColor
   },
   headerText2: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: '600',
-    color: '#FFFFFF'
+    color: Colors.whiteColor
   },
   bannerImg: {
     height: 270,
@@ -134,7 +202,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly', 
+    justifyContent: 'space-evenly',
     // alignItems: 'center', 
     flexWrap: 'wrap',
     // marginLeft: 25,
@@ -155,17 +223,23 @@ const styles = StyleSheet.create({
   columntext: {
     fontSize: 14,
     fontWeight: '400',
-    color: 'black',
+    color: Colors.blackColor,
     paddingTop: 4
   },
   columnImgView: {
     borderRadius: 13,
     borderWidth: 1,
-    borderColor: '#0384BC',
+    borderColor: Colors.columnImgBorderColor,
     width: 132,
     height: 90,
     justifyContent: 'center',
     alignItems: 'center',
     // elevation: 3,
+  },
+  headerName: { 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    marginBottom: 10 
   }
 });

@@ -13,12 +13,32 @@ import Header from "../../components/default/Header";
 import CustomTextInput from "../../components/default/TextInput";
 import CustomButton from "../../components/default/Buttons";
 import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import Constant from "../../utils/Constant";
+import Indicator from "../../components/default/Indicator";
+import { SIGN_IN } from "../../redux/types";
+import CustomAlertDialog from "../../components/default/CustomAlertDialog";
+import Logger from "../../utils/Logger";
+import ApiRequest from "../../api/ApiRequest";
+import axiosPostClient from "../../api/ApiClient";
+import Helpers from "../../utils/Helpers";
+import Colors from "../../config/Colors";
 
 function GetAQuote({ navigation }) {
     const emailRef = useRef(null);
     const mobileNumberRef = useRef(null);
     const typeofInsuranceRef = useRef(null);
     const nameRef = useRef(null);
+
+    const [isLoading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const [showErrorDialog, setShowErrorDialog] = useState(false);
+    const [isSessionExpired, setSessionExpired] = useState(false);
+    const [quoteSuccess, setQuoteSuccess] = useState(false);
+    const notificationCount = useSelector((state) => state.login.notificationCount);
+    // const [email, setEmail] = useState('')
+
+    const dispatch = useDispatch();
 
     const {
         handleChange,
@@ -59,13 +79,80 @@ function GetAQuote({ navigation }) {
             //   callApi(values);
         },
     });
+
+    const callAddQuoteApi = async () => {
+        if (await Helpers.checkInternet()) {
+            setLoading(true);
+            Logger.log(
+                "Calling Add Quote Api:=>>" +
+                Constant.API_BASE_URL +
+                Constant.API_ADD_QUOTE
+            );
+            var params = await ApiRequest.getAddQuoteRequest(
+                values.fullName,
+                values.email,
+                values.insuranceType,
+                values.mobileNo
+            );
+            Logger.log("Params is" + JSON.stringify(params));
+            axiosPostClient()
+                .post(Constant.API_ADD_QUOTE, params)
+                .then((response) => {
+                    setLoading(false);
+                    Logger.log("response" + JSON.stringify(response?.data));
+                    if (response?.data && response?.data?.status == 200) {
+                        // sendLocalNotification();
+                        setMessage(response?.data?.message);
+                        setQuoteSuccess(true);
+                        setShowErrorDialog(false);
+                    } else if (response?.data && response?.data?.status == 401) {
+                        //Logout user if received 401 status code.
+                        setMessage(response?.data?.message);
+                        setSessionExpired(true);
+                        setQuoteSuccess(false);
+                    } else {
+                        setMessage(response?.data?.message);
+                        setShowErrorDialog(true);
+                        setQuoteSuccess(false);
+                    }
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    setShowErrorDialog(true);
+                    setQuoteSuccess(false);
+                    setMessage(JSON.stringify(error));
+                    Logger.log("error" + JSON.stringify(error));
+                });
+        } else {
+            setMessage(Constant.NO_INTERNET);
+            setShowErrorDialog(true);
+            setQuoteSuccess(false);
+        }
+    };
+    //Logout user if status code 401
+    const proceedLogout = async () => {
+        /*await Helpers.saveInPref(Constant.PREF_TOKEN, "")
+             await Helpers.removeFromPref(Constant.PREF_USER_INFO)
+             await Helpers.removeFromPref(Constant.PREF_ACCESS_TOKEN)
+             await Helpers.removeFromPref(Constant.PREF_USER_NAME)
+              dispatch({
+                 type: SIGN_IN,
+                 payload: ''
+             })*/
+        await Helpers.performLogout();
+        dispatch({
+            type: SIGN_IN,
+            payload: "",
+        });
+    };
+
     return (
         <>
             <ImageBackground
                 source={require("../../assets/images/headerBgImg.png")}
                 style={styles.headerBgImg}
             >
-                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+                <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>{"Get A "}</Text>
                     <Text style={styles.titleText2}>{"Quote"}</Text>
@@ -144,7 +231,7 @@ function GetAQuote({ navigation }) {
                 //   backgroundColor: Colors.inputColorNewBackground,
                 // }}
                 />
-                 <CustomButton
+                <CustomButton
                     text={"Submit"}
                     isLarge={true}
                     onPress={() => {
@@ -153,6 +240,22 @@ function GetAQuote({ navigation }) {
                     }}
                 />
             </View>
+            <Indicator showLoader={isLoading} />
+            <CustomAlertDialog
+                visible={showErrorDialog || isSessionExpired || quoteSuccess}
+                onCloseDialog={() => {
+                    if (isSessionExpired) {
+                        setSessionExpired(false);
+                        proceedLogout();
+                    } else if (quoteSuccess) {
+                        setQuoteSuccess(false);
+                        navigation.goBack();
+                    } else {
+                        setShowErrorDialog(false);
+                    }
+                }}
+                description={message}
+            />
         </>
     );
 }
@@ -167,7 +270,7 @@ const styles = StyleSheet.create({
         // paddingBottom: 20,
     },
     container: {
-        backgroundColor: "#F8F8F8",
+        backgroundColor: Colors.containerColor,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         position: 'absolute',
@@ -181,7 +284,7 @@ const styles = StyleSheet.create({
     titleTxt: {
         fontSize: 15,
         // alignSelf: "center",
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontWeight: "500",
         // textAlign: "center",
         marginTop: 10,
@@ -190,13 +293,13 @@ const styles = StyleSheet.create({
         width: "90%",
         height: 50,
         alignSelf: "center",
-        backgroundColor: "#F6861A",
+        backgroundColor: Colors.loginBtnColor,
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 50,
         marginTop: 25,
         marginBottom: 15,
-        shadowColor: "#000",
+        shadowColor: Colors.blackColor,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -208,7 +311,7 @@ const styles = StyleSheet.create({
     loginBtnTxt: {
         fontSize: 20,
         fontWeight: "600",
-        color: "#FFF",
+        color: Colors.whiteColor,
     },
     titleContainer: {
         display: 'flex',
@@ -223,7 +326,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '300',
-        color: '#FFFFFF'
+        color: Colors.whiteColor
     },
     titleText2: {
         display: 'flex',
@@ -231,13 +334,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '600',
-        color: '#FFFFFF'
+        color: Colors.whiteColor
     },
     textInput: {
         padding: 10,
         borderRadius: 5,
-        color: 'black',
-        backgroundColor: '#ffffff',
+        color: Colors.blackColor,
+        backgroundColor: Colors.whiteColor,
         marginTop: 5,
         fontSize: 15,
         fontWeight: '500'

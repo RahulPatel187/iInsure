@@ -16,7 +16,7 @@ import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import LinearGradient from "react-native-linear-gradient";
 import { useFormik } from "formik";
-// import CustomAlertDialog from "../../components/CustomAlertDialog";
+import CustomAlertDialog from "../../components/default/CustomAlertDialog";
 // import * as Yup from "yup";
 import axiosPostClient from "../../api/ApiClient";
 import { useSelector, useDispatch } from "react-redux";
@@ -62,8 +62,9 @@ function Reminder({ navigation }) {
     const [showErrorDialog, setShowErrorDialog] = useState(false);
     const [isSessionExpired, setSessionExpired] = useState(false);
     const [reminderList, setReminderList] = useState(reminderArray);
+    const notificationCount = useSelector((state) => state.login.notificationCount);
 
-    //   const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const {
         handleChange,
@@ -109,61 +110,61 @@ function Reminder({ navigation }) {
         },
     });
 
-    //   const callApi = async () => {
-    //     setLoading(true);
-    //     const userId = await Helpers.getFromPref(Constant.PREF_USER_ID, "");
-    //     const access_token = await Helpers.getFromPref(
-    //       Constant.PREF_ACCESS_TOKEN,
-    //       ""
-    //     );
-    //     let finalTimeArray = [];
-    //     for (let i in checkedBox) {
-    //       if (checkedBox[i] === true) {
-    //         if (i == 0) {
-    //           finalTimeArray.splice(i, 0, "1week");
-    //         } else if (i == 1) {
-    //           finalTimeArray.splice(i, 0, "2week");
-    //         } else if (i == 2) {
-    //           finalTimeArray.splice(i, 0, "1month");
-    //         }
-    //       }
-    //     }
-    //     let params = {
-    //       user_id: userId || "225",
-    //       access_token: access_token || "w9D2jwu0XT",
-    //       caption_name: values.name || "test",
-    //       policy_number: values.policyNo || "4016/X/202356510/02/000",
-    //       amount: values.amt || "22",
-    //       due_date:
-    //         (values.dueDate && moment(values.dueDate).format("DD-MM-yy")) ||
-    //         "21-02-22",
-    //       duration:
-    //         (finalTimeArray.length > 0 && finalTimeArray.join(" , ")) ||
-    //         "1week , 2week",
-    //     };
-    //     console.log("params", params);
-    //     axiosPostClient()
-    //       .post(Constant.API_SEND_REMINDERS, params)
-    //       .then((response) => {
-    //         console.log("response", response?.data);
-    //         setLoading(false);
-    //         if (response?.data && response?.data?.status == 200) {
-    //           setShowErrorDialog(true);
-    //         } else if (response?.data && response?.data?.status == 401) {
-    //           //Logout user if received 401 status code.
-    //           setMessage(response?.data?.message);
-    //           setSessionExpired(true);
-    //         } else {
-    //           setMessage(response?.data?.message);
-    //           setShowErrorDialog(true);
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         console.log("error", error);
-    //         setLoading(false);
-    //         setShowErrorDialog(true);
-    //       });
-    //   };
+    const callApi = async () => {
+        setLoading(true);
+        const userId = await Helpers.getFromPref(Constant.PREF_USER_ID, "");
+        const access_token = await Helpers.getFromPref(
+            Constant.PREF_ACCESS_TOKEN,
+            ""
+        );
+        let finalTimeArray = [];
+        for (let i in checkedBox) {
+            if (checkedBox[i] === true) {
+                if (i == 0) {
+                    finalTimeArray.splice(i, 0, "1week");
+                } else if (i == 1) {
+                    finalTimeArray.splice(i, 0, "2week");
+                } else if (i == 2) {
+                    finalTimeArray.splice(i, 0, "1month");
+                }
+            }
+        }
+        let params = {
+            user_id: userId || "225",
+            access_token: access_token || "w9D2jwu0XT",
+            caption_name: values.name || "test",
+            policy_number: values.policyNo || "4016/X/202356510/02/000",
+            amount: values.amt || "22",
+            due_date:
+                (values.dueDate && moment(values.dueDate).format("DD-MM-yy")) ||
+                "21-02-22",
+            duration:
+                (finalTimeArray.length > 0 && finalTimeArray.join(" , ")) ||
+                "1week , 2week",
+        };
+        console.log("params", params);
+        axiosPostClient()
+            .post(Constant.API_SEND_REMINDERS, params)
+            .then((response) => {
+                console.log("response", response?.data);
+                setLoading(false);
+                if (response?.data && response?.data?.status == 200) {
+                    setShowErrorDialog(true);
+                } else if (response?.data && response?.data?.status == 401) {
+                    //Logout user if received 401 status code.
+                    setMessage(response?.data?.message);
+                    setSessionExpired(true);
+                } else {
+                    setMessage(response?.data?.message);
+                    setShowErrorDialog(true);
+                }
+            })
+            .catch((error) => {
+                console.log("error", error);
+                setLoading(false);
+                setShowErrorDialog(true);
+            });
+    };
 
     const showDatePicker = () => {
         setDatePickerVisibile(true);
@@ -208,23 +209,13 @@ function Reminder({ navigation }) {
         console.log("finalDaysCnt", finalDaysCnt);
         return (
             <View
-                style={[
-                    {
-                        width: "100%",
-                        height: 38,
-                        justifyContent: "center",
-                    },
+                style={[styles.checkedBoxView,
                     index === 0 && { marginTop: 20 },
                 ]}
                 key={index}
             >
                 <View
-                    style={{
-                        flexDirection: "row",
-                        flex: 1,
-                        justifyContent: "space-between",
-                        marginHorizontal: 20,
-                    }}
+                    style={styles.checkedBoxViewRow}
                 >
                     <Text
                         style={{
@@ -267,7 +258,7 @@ function Reminder({ navigation }) {
                 source={require("../../assets/images/headerBgImg.png")}
                 style={styles.headerBgImg}
             >
-                <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+                <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>{"My "}</Text>
                     <Text style={styles.titleText2}>{"Reminder"}</Text>
@@ -385,19 +376,19 @@ function Reminder({ navigation }) {
                 </View>
                 {/* </KeyboardAwareScrollView> */}
                 <Indicator showLoader={isLoading} />
-                {/* <CustomAlertDialog
-          visible={showErrorDialog || isSessionExpired}
-          onCloseDialog={() => {
-            if (isSessionExpired) {
-              setSessionExpired(false);
-              proceedLogout();
-            } else {
-              setShowErrorDialog(false);
-              navigation.goBack();
-            }
-          }}
-          description={"Reminder set successfully."}
-        /> */}
+                <CustomAlertDialog
+                    visible={showErrorDialog || isSessionExpired}
+                    onCloseDialog={() => {
+                        if (isSessionExpired) {
+                            setSessionExpired(false);
+                            proceedLogout();
+                        } else {
+                            setShowErrorDialog(false);
+                            navigation.goBack();
+                        }
+                    }}
+                    description={"Reminder set successfully."}
+                />
                 {/* </View> */}
             </KeyboardAwareScrollView>
             {/* </SafeAreaView> */}
@@ -417,7 +408,7 @@ const styles = StyleSheet.create({
     container: {
         height: "87%",
         width: "100%",
-        backgroundColor: "#F8F8F8",
+        backgroundColor: Colors.containerColor,
         // position: "absolute",
         bottom: 0,
         borderTopLeftRadius: 40,
@@ -435,7 +426,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '300',
-        color: '#FFFFFF'
+        color: Colors.whiteColor
     },
     titleText2: {
         display: 'flex',
@@ -443,7 +434,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '600',
-        color: '#FFFFFF'
+        color: Colors.whiteColor
     },
     selectedTypeTextColor: {
         color: Colors.blackColor,
@@ -470,7 +461,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         borderWidth: 1,
-        borderColor: '#C7C7C7'
+        borderColor: Colors.unSelectTextColor
     },
     textUnSelectedExpiryDate: {
         // marginLeft: 16,
@@ -484,7 +475,7 @@ const styles = StyleSheet.create({
         // marginRight: 16,
         height: 23,
         width: 20,
-        tintColor: '#444444',
+        tintColor: Colors.labelTextColor,
     },
     checkBtn: {
         height: 20,
@@ -495,10 +486,10 @@ const styles = StyleSheet.create({
     checkBoxImg: {
         height: 20,
         width: 20,
-        tintColor: "#0077B6",
+        tintColor: Colors.titleTextColor,
     },
     textStyle: {
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontSize: Helpers.getDynamicSize(14),
         fontFamily: "Roboto-Bold",
         marginBottom: 5,
@@ -511,9 +502,20 @@ const styles = StyleSheet.create({
     },
     keyboardStyle: {
         marginTop: -35,
-        backgroundColor: '#F8F8F8',
+        backgroundColor: Colors.containerColor,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        height: "72%",
+        height: "70%",
     },
+    checkedBoxView: {
+        width: "100%",
+        height: 38,
+        justifyContent: "center",
+    },
+    checkedBoxViewRow: {
+        flexDirection: "row",
+        flex: 1,
+        justifyContent: "space-between",
+        marginHorizontal: 20,
+    }
 });

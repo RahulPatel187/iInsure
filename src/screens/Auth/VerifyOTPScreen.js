@@ -31,6 +31,7 @@ import axiosPostClient from "../../api/ApiClient";
 import ApiRequest from "../../api/ApiRequest";
 import CustomAlertDialog from "../../components/default/CustomAlertDialog";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Colors from '../../config/Colors';
 
 function VerifyOTPScreen({ route, navigation }) {
   const CELL_COUNT2 = 6;
@@ -51,6 +52,7 @@ function VerifyOTPScreen({ route, navigation }) {
     isEmailEnter,
     is_verified_phone,
     is_verified_email,
+    otp
   } = route.params;
 
   const ref2 = useBlurOnFulfill({
@@ -335,7 +337,7 @@ function VerifyOTPScreen({ route, navigation }) {
           <Text style={styles.titleTxt}>
             {'Please type the OTP as shared on your\n email:'}
             <Text style={{ fontWeight: '700' }}>
-              {' username@techforceglobal.com'}
+              {' username@techforceglobal.com'}{otp}
             </Text>
           </Text>
           <CodeField
@@ -359,7 +361,7 @@ function VerifyOTPScreen({ route, navigation }) {
                 style={[
                   styles.otpCellStyle,
                   isFocused && {
-                    borderColor: '#F6861A',
+                    borderColor: Colors.loginBtnColor,
                   },
                 ]}
                 onLayout={getCellOnLayoutHandler2(index)}>
@@ -382,7 +384,7 @@ function VerifyOTPScreen({ route, navigation }) {
                 {'Did’t received any code?'}
               </Text>
               <Text
-                style={[styles.resendCodeTip, { color: '#F6861A' }]}
+                style={[styles.resendCodeTip, { color: Colors.loginBtnColor }]}
                 onPress={() => onResendClick()}>
                 {'Resend OTP'}
               </Text>
@@ -413,7 +415,7 @@ const styles = StyleSheet.create({
   },
   errorStyle: {
     marginHorizontal: 16,
-    color: 'red',
+    color: Colors.redColor,
     marginTop: 8,
     alignSelf: "center",
     fontFamily: "Roboto-Regular",
@@ -423,7 +425,7 @@ const styles = StyleSheet.create({
     height: 136,
   },
   container: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.whiteColor,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     marginTop: -30,
@@ -434,14 +436,14 @@ const styles = StyleSheet.create({
   },
   keyboardStyle: {
     marginTop: -25,
-    backgroundColor: 'white',
+    backgroundColor: Colors.whiteColor,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
   titleTxt: {
     fontSize: 17,
     alignSelf: 'center',
-    color: '#444444',
+    color: Colors.labelTextColor,
     fontWeight: '400',
     textAlign: 'center',
     marginTop: 50,
@@ -456,16 +458,16 @@ const styles = StyleSheet.create({
   labelTxt: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#444444',
+    color: Colors.labelTextColor,
     paddingLeft: 5,
   },
   textBox: {
     width: '100%',
     height: 56,
-    backgroundColor: 'white',
+    backgroundColor: Colors.whiteColor,
     borderRadius: 50,
     marginTop: 10,
-    shadowColor: '#000',
+    shadowColor: Colors.blackColor,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -478,7 +480,7 @@ const styles = StyleSheet.create({
   orTxt: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#444444',
+    color: Colors.labelTextColor,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
@@ -488,13 +490,13 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 50,
     alignSelf: 'center',
-    backgroundColor: '#F6861A',
+    backgroundColor: Colors.loginBtnColor,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 50,
     marginTop: 25,
     marginBottom: 15,
-    shadowColor: '#000',
+    shadowColor: Colors.blackColor,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -506,7 +508,7 @@ const styles = StyleSheet.create({
   loginBtnTxt: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#FFF',
+    color: Colors.whiteColor,
   },
   timerView: {
     height: 180,
@@ -514,18 +516,18 @@ const styles = StyleSheet.create({
     borderRadius: 90,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: Colors.whiteColor,
   },
   timerTxt: {
     fontSize: 45,
     fontWeight: '600',
-    color: '#005C8C',
+    color: Colors.timerColor,
     marginBottom: 40,
   },
   otpTitleTxt: {
     fontSize: 25,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: Colors.whiteColor,
     top: 25,
   },
   backIconBtn: {
@@ -546,7 +548,7 @@ const styles = StyleSheet.create({
     // marginTop: 10,
     fontSize: 17,
     fontWeight: '400',
-    color: '#444444',
+    color: Colors.labelTextColor,
   },
   codeFieldStyle: {
     width: '90%',
@@ -561,10 +563,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     borderRadius: 8,
     textAlign: 'center',
-    backgroundColor: '#FFF',
-    color: '#000',
+    backgroundColor: Colors.whiteColor,
+    color: Colors.blackColor,
     overflow: 'hidden',
-    shadowColor: '#000',
+    shadowColor: Colors.blackColor,
     shadowOffset: {
       width: 0,
       height: 3,

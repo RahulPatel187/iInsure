@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
     View,
     Text,
@@ -32,6 +32,8 @@ import CustomButton from "../../components/default/Buttons";
 import Constant from "../../utils/Constant";
 // import DropDownComponent from "../../components/default/DropDownComponent";
 import Indicator from "../../components/default/Indicator";
+import CustomAlertDialog from "../../components/default/CustomAlertDialog";
+import CustomConfirmDialog from "../../components/default/CustomConfirmationDialog";
 
 var reminderArray = [
     {
@@ -48,22 +50,44 @@ var reminderArray = [
     },
 ];
 
-function Claim({ navigation }) {
+function Claim({ route, navigation }) {
+
     const nameRef = useRef(null);
     const policyNumberRef = useRef(null);
     const amt = useRef(null);
-
-    const [isLoading, setLoading] = useState(false);
-    const [expiryDateError, setExpiryDateError] = useState(false);
-    const [isDateSelected, setIsDateSelected] = useState(false);
+    const admitDateRef = useRef(null);
+    const mobilenoRef = useRef(null);
     const [isDatePickerVisible, setDatePickerVisibile] = useState(false);
-    const [checkedBox, setCheckedBox] = useState([true]);
-    const [refresh, setRefresh] = useState(false);
+    const [isDateSelected, setIsDateSelected] = useState(false);
+    const [isLoading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const [maxDate, setMaxDate] = useState("");
+    const [minDate, setMinDate] = useState("");
     const [showErrorDialog, setShowErrorDialog] = useState(false);
     const [isSessionExpired, setSessionExpired] = useState(false);
-    const [reminderList, setReminderList] = useState(reminderArray);
+    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+    const [claimSuccess, setClaimSuccess] = useState(false);
+
+    const [serverDate, setServerDate] = useState("");
+    const notificationCount = useSelector((state) => state.login.notificationCount);
+    const dispatch = useDispatch();
+
+    // var { data } = route?.params;
 
     //   const dispatch = useDispatch();
+
+    useEffect(() => {
+        var liveDate = new Date();
+        var currentDate = moment(liveDate);
+        var futureMonth = moment(currentDate).add(1, "M");
+        var perviousMonth = moment(currentDate).subtract(1, "M");
+        // if (data && moment(data?.to_dt).isBefore(moment(futureMonth))) {
+        //     setMaxDate(moment(data.to_dt));
+        // } else {
+            setMaxDate(futureMonth);
+        // }
+        setMinDate(perviousMonth);
+    }, []);
 
     const {
         handleChange,
@@ -75,95 +99,44 @@ function Claim({ navigation }) {
         resetForm,
         setFieldValue,
     } = useFormik({
-        //  validationSchema: InquirySchema,
         validate: (values) => {
             const errors = {};
-            if (!values.name) {
-                errors.name = "Caption name is required";
+            if (!values.doctorName) {
+                errors.doctorName = "Doctor Name is required";
             }
-            //else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-            //     errors.email = 'Invalid email address';
-            // }
-            if (!values.policyNo) {
-                errors.policyNo = "Policy number is required";
+            if (!values.hospitalName) {
+                errors.hospitalName = 'Hospital Name is required';
+            }
+            if (!values.diagnosisName) {
+                errors.diagnosisName = "Diagnosis Name is required";
             }
 
-            if (!values.amt) {
-                errors.amt = "Premium Amount is required";
+            if (!values.uhid) {
+                errors.uhid = "Your UHID is required";
             }
-            if (!values.dueDate) {
-                errors.dueDate = "Due date is required";
+            if (!values.summary) {
+                errors.summary = "Summary is required";
             }
             return errors;
         },
         validateOnChange: false,
-        //initialValues: { firstName: '', lastName: '', phoneNumber: '', email: '' },
-        initialValues: { name: "", policyNo: "", dueDate: "" },
+        initialValues: {
+            doctorName: "",
+            hospitalName: "",
+            diagnosisName: "",
+            admitDate: "",
+            mobileNo: "",
+        },
         onSubmit: (values) => {
-            if (checkedBox.includes(true) === false) {
-                console.log("1");
-                return;
-                // errors.dueDate = "Due date is required";
-            }
-            //   callApi(values);
+            // onLoginClick(values)
+            callConfirmDialog();
+            // callClaimApi()
         },
     });
 
-    //   const callApi = async () => {
-    //     setLoading(true);
-    //     const userId = await Helpers.getFromPref(Constant.PREF_USER_ID, "");
-    //     const access_token = await Helpers.getFromPref(
-    //       Constant.PREF_ACCESS_TOKEN,
-    //       ""
-    //     );
-    //     let finalTimeArray = [];
-    //     for (let i in checkedBox) {
-    //       if (checkedBox[i] === true) {
-    //         if (i == 0) {
-    //           finalTimeArray.splice(i, 0, "1week");
-    //         } else if (i == 1) {
-    //           finalTimeArray.splice(i, 0, "2week");
-    //         } else if (i == 2) {
-    //           finalTimeArray.splice(i, 0, "1month");
-    //         }
-    //       }
-    //     }
-    //     let params = {
-    //       user_id: userId || "225",
-    //       access_token: access_token || "w9D2jwu0XT",
-    //       caption_name: values.name || "test",
-    //       policy_number: values.policyNo || "4016/X/202356510/02/000",
-    //       amount: values.amt || "22",
-    //       due_date:
-    //         (values.dueDate && moment(values.dueDate).format("DD-MM-yy")) ||
-    //         "21-02-22",
-    //       duration:
-    //         (finalTimeArray.length > 0 && finalTimeArray.join(" , ")) ||
-    //         "1week , 2week",
-    //     };
-    //     console.log("params", params);
-    //     axiosPostClient()
-    //       .post(Constant.API_SEND_REMINDERS, params)
-    //       .then((response) => {
-    //         console.log("response", response?.data);
-    //         setLoading(false);
-    //         if (response?.data && response?.data?.status == 200) {
-    //           setShowErrorDialog(true);
-    //         } else if (response?.data && response?.data?.status == 401) {
-    //           //Logout user if received 401 status code.
-    //           setMessage(response?.data?.message);
-    //           setSessionExpired(true);
-    //         } else {
-    //           setMessage(response?.data?.message);
-    //           setShowErrorDialog(true);
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         console.log("error", error);
-    //         setLoading(false);
-    //         setShowErrorDialog(true);
-    //       });
-    //   };
+    const callConfirmDialog = () => {
+        setShowConfirmDialog(true);
+    };
 
     const showDatePicker = () => {
         setDatePickerVisibile(true);
@@ -173,33 +146,84 @@ function Claim({ navigation }) {
         setDatePickerVisibile(false);
     };
 
-    const handleConfirm = async (date) => {
-        let finalDaysCnt = await getDateDiff(values.dueDate);
-        if (finalDaysCnt < 14) {
-            checkedBox[1] = false;
-        }
-        if (finalDaysCnt < 30) {
-            checkedBox[2] = false;
-        }
-        setFieldValue("dueDate", date);
+    const handleConfirm = (date) => {
+        var formattedDate = format(date, "dd-MM-yyyy");
+        Logger.log("formatted date" + formattedDate);
+        setFieldValue("admitDate", formattedDate);
+
+        var serverDate = format(date, "yyyy-MM-dd");
+        Logger.log("server date" + serverDate);
+        setServerDate(serverDate);
         setIsDateSelected(true);
         hideDatePicker();
     };
 
-    const getDateDiff = (date) => {
-        let finalDaysCntX = null;
-        if (date) {
-            let selectedDate = moment(date).format("MM/DD/yyyy");
-            console.log('selectedDate', selectedDate);
-            var liveDate = new Date().getTime();
-            var futureMonth = new Date(date).getTime();
-            console.log('futureMonth', futureMonth);
-            var Difference_In_Time = futureMonth - liveDate;
-            var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-            finalDaysCntX = Difference_In_Days.toString().split(".")[0];
+    //Call claim card api.
+    const callClaimApi = async () => {
+        if (await Helpers.checkInternet()) {
+            const userId = await Helpers.getFromPref(Constant.PREF_USER_ID, "");
+            const access_token = await Helpers.getFromPref(
+                Constant.PREF_ACCESS_TOKEN,
+                ""
+            );
+            setLoading(true);
+            Logger.log(
+                "Calling Claim Api:=>>" + Constant.API_BASE_URL + Constant.API_CLAIM
+            );
+            var params = await ApiRequest.getClaimRequest(
+                userId,
+                access_token,
+                data.card_no,
+                values.doctorName,
+                values.hospitalName,
+                values.diagnosisName,
+                serverDate,
+                values.mobileNo
+            );
+            Logger.log("Params is" + JSON.stringify(params));
+            axiosPostClient()
+                .post(Constant.API_CLAIM, params)
+                .then((response) => {
+                    setLoading(false);
+                    Logger.log("response" + JSON.stringify(response?.data));
+                    if (response?.data && response?.data?.status == 200) {
+                        setMessage(response?.data?.message);
+                        setClaimSuccess(true);
+                    } else if (response?.data && response?.data?.status == 401) {
+                        //Logout user if received 401 status code.
+                        setMessage(response?.data?.message);
+                        setSessionExpired(true);
+                    } else {
+                        setMessage(response?.data?.message);
+                        setShowErrorDialog(true);
+                    }
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    setShowErrorDialog(true);
+                    setMessage(JSON.stringify(error));
+                    Logger.log("error" + JSON.stringify(error));
+                });
+        } else {
+            setMessage(Constant.NO_INTERNET);
+            setShowErrorDialog(true);
         }
-        console.log("finalDaysCnt", finalDaysCntX);
-        return finalDaysCntX;
+    };
+
+    const proceedLogout = async () => {
+        /*await Helpers.saveInPref(Constant.PREF_TOKEN, "")
+            await Helpers.removeFromPref(Constant.PREF_USER_INFO)
+            await Helpers.removeFromPref(Constant.PREF_ACCESS_TOKEN)
+            await Helpers.removeFromPref(Constant.PREF_USER_NAME)
+             dispatch({
+                type: SIGN_IN,
+                payload: ''
+            })*/
+        await Helpers.performLogout();
+        dispatch({
+            type: SIGN_IN,
+            payload: "",
+        });
     };
 
     return (
@@ -213,7 +237,7 @@ function Claim({ navigation }) {
                     source={require("../../assets/images/headerBgImg.png")}
                     style={styles.headerBgImg}
                 >
-                    <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+                    <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                     <View style={styles.titleContainer}>
                         <Text style={styles.titleText}>{"My "}</Text>
                         <Text style={styles.titleText2}>{"Claim"}</Text>
@@ -224,7 +248,7 @@ function Claim({ navigation }) {
                     showsVerticalScrollIndicator={false}
                     style={styles.keyboardStyle}>
                     <View style={styles.container}>
-                        <View style={{ marginHorizontal: 16, marginTop: 20, marginBottom: 10, backgroundColor: Colors.whiteColor, display: 'flex', flexDirection: 'row' }}>
+                        <View style={styles.claimReview}>
                             <View style={{ width: '60%' }}>
                                 <View style={styles.cardSubSec}>
                                     <Text style={styles.cardLabel}>{"Insured Name:"}</Text>
@@ -239,14 +263,14 @@ function Claim({ navigation }) {
                                     <Text style={styles.cardValue}>{"IL20414322100"}</Text>
                                 </View>
                             </View>
-                            <View style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={styles.claimReviewImg}>
                                 <Image
                                     source={require("../../assets/images/heart.png")}
                                     style={styles.heartImg}
                                 />
                             </View>
                         </View>
-                        <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
+                        <View style={styles.formControl}>
                             <CustomTextInput
                                 ref={nameRef}
                                 placeholder="Doctor Name"
@@ -258,7 +282,7 @@ function Claim({ navigation }) {
                                 errors={errors.name}
                             />
                         </View>
-                        <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
+                        <View style={styles.formControl}>
                             <CustomTextInput
                                 ref={policyNumberRef}
                                 placeholder="Hospital Name"
@@ -270,7 +294,7 @@ function Claim({ navigation }) {
                                 errors={errors.policyNo}
                             />
                         </View>
-                        <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
+                        <View style={styles.formControl}>
                             <CustomTextInput
                                 ref={amt}
                                 placeholder="Diagnosis"
@@ -309,12 +333,12 @@ function Claim({ navigation }) {
                         </Pressable>
                         {errors.dueDate ? (
                             <Text
-                                style={{ marginLeft: 23, marginTop: 5, color: Colors.redColor }}
+                                style={styles.dueDateError}
                             >
                                 {errors.dueDate}
                             </Text>
                         ) : null}
-                        <View style={{ marginHorizontal: 16, marginBottom: 10 }}>
+                        <View style={styles.formControl}>
                             <CustomTextInput
                                 ref={amt}
                                 placeholder="Hospital Contact Number"
@@ -335,20 +359,39 @@ function Claim({ navigation }) {
                         />
                     </View>
                 </KeyboardAwareScrollView>
+                <CustomAlertDialog
+                    visible={showErrorDialog || isSessionExpired || claimSuccess}
+                    onCloseDialog={() => {
+                        if (isSessionExpired) {
+                            setSessionExpired(false);
+                            proceedLogout();
+                        } else if (claimSuccess) {
+                            dispatch({
+                                type: SET_HEALTH_CARD_API,
+                                payload: true,
+                            });
+                            setClaimSuccess(false);
+                            navigation.goBack();
+                        } else {
+                            setShowErrorDialog(false);
+                        }
+                    }}
+                    description={message}
+                />
+                <CustomConfirmDialog
+                    visible={showConfirmDialog}
+                    onNoClick={() => {
+                        setShowConfirmDialog(false);
+                    }}
+                    onYesClick={() => {
+                        setShowConfirmDialog(false);
+                        callClaimApi();
+                        // handleSubmit()
+                    }}
+                    message={"Are you sure want to claim?"}
+                />
+
                 <Indicator showLoader={isLoading} />
-                {/* <CustomAlertDialog
-          visible={showErrorDialog || isSessionExpired}
-          onCloseDialog={() => {
-            if (isSessionExpired) {
-              setSessionExpired(false);
-              proceedLogout();
-            } else {
-              setShowErrorDialog(false);
-              navigation.goBack();
-            }
-          }}
-          description={"Reminder set successfully."}
-        /> */}
             </View>
         </SafeAreaView>
     );
@@ -373,7 +416,7 @@ const styles = StyleSheet.create({
     container: {
         height: "87%",
         width: "100%",
-        backgroundColor: "#F8F8F8",
+        backgroundColor: Colors.containerColor,
         // position: "absolute",
         bottom: 0,
         borderTopLeftRadius: 40,
@@ -391,7 +434,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '300',
-        color: '#FFFFFF'
+        color: Colors.whiteColor
     },
     titleText2: {
         display: 'flex',
@@ -399,13 +442,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '600',
-        color: '#FFFFFF'
+        color: Colors.whiteColor
     },
     selectedTypeTextColor: {
         color: Colors.blackColor,
     },
     unSelectedTypeTextColor: {
-        color: '#C7C7C7',
+        color: Colors.unSelectTextColor,
     },
     buttonExpiryDate: {
         // margin: 16,
@@ -427,7 +470,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginBottom: 10,
         borderWidth: 1,
-        borderColor: '#C7C7C7'
+        borderColor: Colors.unSelectTextColor
     },
     textUnSelectedExpiryDate: {
         // marginLeft: 16,
@@ -441,7 +484,7 @@ const styles = StyleSheet.create({
         // marginRight: 16,
         height: 23,
         width: 20,
-        tintColor: '#444444',
+        tintColor: Colors.labelTextColor,
     },
     checkBtn: {
         height: 20,
@@ -452,10 +495,10 @@ const styles = StyleSheet.create({
     checkBoxImg: {
         height: 20,
         width: 20,
-        tintColor: "#0077B6",
+        tintColor: Colors.checkBoxImgColor,
     },
     textStyle: {
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontSize: Helpers.getDynamicSize(14),
         fontFamily: "Roboto-Bold",
         marginBottom: 5,
@@ -468,14 +511,14 @@ const styles = StyleSheet.create({
     },
     cardLabel: {
         fontSize: 14,
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontWeight: "400",
         marginLeft: 24,
         width: "50%",
     },
     cardValue: {
         fontSize: 14,
-        color: "#444444",
+        color: Colors.labelTextColor,
         fontWeight: "700",
         marginLeft: 24,
         width: "50%",
@@ -483,8 +526,8 @@ const styles = StyleSheet.create({
     headerSec: {
         padding: 16,
         borderRadius: 5,
-        color: 'black',
-        backgroundColor: '#ffffff',
+        color: Colors.blackColor,
+        backgroundColor: Colors.whiteColor,
         marginTop: 10,
         fontSize: 15,
         fontWeight: '500'
@@ -495,9 +538,32 @@ const styles = StyleSheet.create({
     },
     keyboardStyle: {
         marginTop: -35,
-        backgroundColor: '#F8F8F8',
+        backgroundColor: Colors.containerColor,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        height: "72%",
+        height: "70%",
     },
+    claimReview: { 
+        marginHorizontal: 16, 
+        marginTop: 20, 
+        marginBottom: 10, 
+        backgroundColor: Colors.whiteColor, 
+        display: 'flex', 
+        flexDirection: 'row' 
+    },
+    claimReviewImg: { 
+        width: '50%', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center' 
+    },
+    formControl: { 
+        marginHorizontal: 16, 
+        marginBottom: 10 
+    },
+    dueDateError: { 
+        marginLeft: 23, 
+        marginTop: 5, 
+        color: Colors.redColor 
+    }
 });

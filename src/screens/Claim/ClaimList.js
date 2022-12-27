@@ -24,7 +24,7 @@ import Indicator from "../../components/default/Indicator";
 import GlobalStyle from "../../config/GlobalStyles";
 import moment from "moment";
 import { SIGN_IN } from "../../redux/types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function ClaimListScreen({ navigation }) {
   const [isLoading, setLoading] = useState(false);
@@ -35,6 +35,8 @@ function ClaimListScreen({ navigation }) {
   const [message, setMessage] = useState("");
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [isSessionExpired, setSessionExpired] = useState(false);
+
+  const notificationCount = useSelector((state) => state.login.notificationCount);
 
   const dispatch = useDispatch();
 
@@ -168,7 +170,7 @@ function ClaimListScreen({ navigation }) {
         source={require("../../assets/images/headerBgImg.png")}
         style={styles.headerBgImg}
       >
-        <Header isMenu={true} rightIcon={true} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+        <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
         <Text style={styles.titleTxt}>{"My Claims"}</Text>
         <View style={styles.mainSection}>
           <FlatList
@@ -276,7 +278,7 @@ const styles = StyleSheet.create({
   mainSection: {
     height: "88%",
     width: "100%",
-    backgroundColor: "#F8F8F8",
+    backgroundColor: Colors.containerColor,
     position: "absolute",
     bottom: 0,
     borderTopLeftRadius: 40,
@@ -307,17 +309,17 @@ const styles = StyleSheet.create({
   titleTxt: {
     textAlign: "center",
     fontSize: 25,
-    color: "white",
+    color: Colors.whiteColor,
     fontWeight: "600",
     marginTop: -10,
   },
   cardView: {
     width: "90%",
-    backgroundColor: "white",
+    backgroundColor: Colors.whiteColor,
     alignSelf: "center",
     borderRadius: 26,
     borderWidth: 1,
-    borderColor: "#AEB2B4",
+    borderColor: Colors.cardBorder,
     paddingVertical: 15,
     marginTop: 10,
   },
@@ -327,14 +329,14 @@ const styles = StyleSheet.create({
   },
   cardLabel: {
     fontSize: 14,
-    color: "#444444",
+    color: Colors.labelTextColor,
     fontWeight: "600",
     marginLeft: 24,
     width: "30%",
   },
   cardValue: {
     fontSize: 13,
-    color: "#444444",
+    color: Colors.labelTextColor,
     fontWeight: "400",
     marginLeft: 24,
     width: "50%",

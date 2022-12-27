@@ -22,6 +22,7 @@ import axiosPostClient from "../../api/ApiClient";
 import ApiRequest from "../../api/ApiRequest";
 import Indicator from '../../components/default/Indicator';
 import CustomTextInput from '../../components/default/TextInput';
+import Colors from '../../config/Colors';
 
 const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 const regexPhonenoDigit = /^[6-9]\d{9}$/;
@@ -104,7 +105,7 @@ function LoginScreen({ navigation }) {
             Logger.log("response" + JSON.stringify(response?.data));
             if (response?.data && response?.data?.status == 200) {
               var otp = response?.data?.data?.otp;
-              proceedLogin(isEmailEnter);
+              proceedLogin(isEmailEnter, otp);
             } else {
               setError(response?.data?.message);
               setShowErrorDialog(true);
@@ -151,7 +152,7 @@ function LoginScreen({ navigation }) {
     }
   };
 
-  const proceedLogin = async (isEmailEnter) => {
+  const proceedLogin = async (isEmailEnter,otp) => {
     Logger.log("isEmailEnter===>" + isEmailEnter);
     navigation.navigate("Otp", {
       email: email,
@@ -159,6 +160,7 @@ function LoginScreen({ navigation }) {
       isEmailEnter: isEmailEnter,
       is_verified_phone: "0",
       is_verified_email: "0",
+      otp: otp
     });
   };
 
@@ -268,7 +270,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 50,
-    backgroundColor: 'white',
+    backgroundColor: Colors.whiteColor,
   },
   timerView: {
     alignItems: 'center',
@@ -283,7 +285,7 @@ const styles = StyleSheet.create({
   line: {
     flex: 1,
     height: 1,
-    backgroundColor: '#737373',
+    backgroundColor: Colors.lineColor,
   },
   logoImg: {
     width: 170,
@@ -298,7 +300,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   container: {
-    backgroundColor: '#F8F8F8',
+    backgroundColor: Colors.containerColor,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     marginTop: -30,
@@ -309,7 +311,7 @@ const styles = StyleSheet.create({
   },
   keyboardStyle: {
     marginTop: -35,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: Colors.containerColor,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
@@ -317,7 +319,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     alignSelf: 'center',
     marginVertical: Platform.OS === 'ios' ? 30 : 10,
-    color: '#0077B6',
+    color: Colors.titleTextColor,
     fontWeight: '600',
   },
   mainBox: {
@@ -330,17 +332,17 @@ const styles = StyleSheet.create({
   labelTxt: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#444444',
+    color: Colors.labelTextColor,
     paddingLeft: 5,
   },
   textBox: {
     width: '100%',
     height: 56,
-    backgroundColor: 'white',
+    backgroundColor: Colors.whiteColor,
     borderRadius: 50,
     marginTop: 10,
-    color: '#444444',
-    shadowColor: '#000',
+    color: Colors.labelTextColor,
+    shadowColor: Colors.blackColor,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -355,18 +357,18 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     textAlign: 'center',
-    color: '#444444',
+    color: Colors.labelTextColor,
   },
   loginBtn: {
     width: '90%',
     height: 50,
     alignSelf: 'center',
-    backgroundColor: '#F6861A',
+    backgroundColor: Colors.loginBtnColor,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 50,
     marginVertical: 25,
-    shadowColor: '#000',
+    shadowColor: Colors.blackColor,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -378,6 +380,6 @@ const styles = StyleSheet.create({
   loginBtnTxt: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#FFF',
+    color: Colors.whiteColor,
   },
 });
