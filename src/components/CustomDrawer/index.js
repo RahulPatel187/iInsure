@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -14,14 +14,14 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import LinearGradient from 'react-native-linear-gradient';
-import { useDispatch } from 'react-redux';
-import Helpers from "../../utils/Helpers";
-import Constant from "../../utils/Constant";
+import {useDispatch} from 'react-redux';
+import Helpers from '../../utils/Helpers';
+import Constant from '../../utils/Constant';
 import CustomLogoutDialog from '../default/CustomLogoutDialog';
-import axiosPostClient from "../../api/ApiClient";
-import ApiRequest from "../../api/ApiRequest";
+import axiosPostClient from '../../api/ApiClient';
+import ApiRequest from '../../api/ApiRequest';
 import Indicator from '../default/Indicator';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const drawerList = [
   {
@@ -71,7 +71,7 @@ const CustomDrawer = props => {
       props.navigation.closeDrawer();
       props.navigation.reset({
         index: 0,
-        routes: [{ name: 'Home' }],
+        routes: [{name: 'Home'}],
       });
     } else if (slug == 'profile') {
       props.navigation.closeDrawer();
@@ -122,7 +122,7 @@ const CustomDrawer = props => {
   };
 
   const getUsetNameFromPref = async () => {
-    let name = await Helpers.getFromPref(Constant.PREF_USER_INFO, "");
+    let name = await Helpers.getFromPref(Constant.PREF_USER_INFO, '');
     setUser(JSON.parse(name));
   };
 
@@ -141,24 +141,28 @@ const CustomDrawer = props => {
             auth().signOut()
         }*/
     await AsyncStorage.clear();
-    await Helpers.performLogout();
-    dispatch({
-      type: SIGN_IN,
-      payload: "",
+    // await Helpers.performLogout();
+    // dispatch({
+    //   type: SIGN_IN,
+    //   payload: "",
+    // });
+    props.navigation.reset({
+      index: 0,
+      routes: [{name: 'Login'}],
     });
-    props.navigation.navigate('Login');
+    // props.navigation.navigate('Login');
   };
 
   const callLogoutApi = async () => {
     if (await Helpers.checkInternet()) {
-      const userId = await Helpers.getFromPref(Constant.PREF_USER_ID, "");
-      const access_token = await Helpers.getFromPref("");
+      const userId = await Helpers.getFromPref(Constant.PREF_USER_ID, '');
+      const access_token = await Helpers.getFromPref('');
       setLoading(true);
       var params = await ApiRequest.logoutRequest(userId, access_token);
       axiosPostClient()
         .post(Constant.API_LOGOUT, params)
-        .then((response) => {
-          console.log("response--", response);
+        .then(response => {
+          console.log('response--', response);
           setLoading(false);
           if (response?.status == 200) {
             onLogoutYesClick();
@@ -169,18 +173,17 @@ const CustomDrawer = props => {
             // setMessage(response?.data?.message);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           setLoading(false);
           // setMessage(JSON.stringify(error));
-          Logger.log("error" + JSON.stringify(error));
+          Logger.log('error' + JSON.stringify(error));
         });
     } else {
       // setMessage(Constant.NO_INTERNET);
     }
   };
 
-
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({item, index}) => {
     return indexs == index ? (
       <TouchableOpacity
         onPress={() => {
@@ -189,7 +192,7 @@ const CustomDrawer = props => {
         style={styles.tabContainer}>
         <LinearGradient
           colors={['#0077B6', '#0096C7', '#0077B6']}
-          style={{ flex: 1, borderRadius: 10 }}>
+          style={{flex: 1, borderRadius: 10}}>
           <View style={styles.tab}>
             <Image source={getIcon(item.slug)} style={styles.imageActive} />
             <Text style={styles.textActive}>{item.title}</Text>
@@ -227,16 +230,18 @@ const CustomDrawer = props => {
             <View style={styles.mobEmail}>
               <Image
                 source={require('../../assets/images/emailIcon.png')}
-                style={[styles.mobEmailPic, { tintColor: '#0090C3' }]}
+                style={[styles.mobEmailPic, {tintColor: '#0090C3'}]}
               />
               <Text style={styles.mobEmailText}>{user?.email}</Text>
             </View>
           </View>
-          <View style={{ width: '30%' }}>
+          <View style={{width: '30%'}}>
             <ImageBackground
               source={require('../../assets/images/userBack1.png')}
               style={styles.userPic}>
-              <Text style={styles.userPictext}>{user?.name.charAt(0).toUpperCase()}</Text>
+              <Text style={styles.userPictext}>
+                {user?.name.charAt(0).toUpperCase()}
+              </Text>
             </ImageBackground>
           </View>
         </View>
@@ -246,7 +251,7 @@ const CustomDrawer = props => {
             keyExtractor={(item, index) => index.toString()}
             data={drawerList}
             renderItem={renderItem}
-            style={{ padding: 5 }}
+            style={{padding: 5}}
           />
         </View>
       </DrawerContentScrollView>
@@ -255,7 +260,7 @@ const CustomDrawer = props => {
           source={require('../../assets/images/comn.png')}
           style={styles.footerLogo}
         />
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{flexDirection: 'row'}}>
           <Text style={styles.textV}>Version</Text>
           <Text style={styles.textVersion}>1.0</Text>
         </View>
@@ -270,7 +275,7 @@ const CustomDrawer = props => {
           callLogoutApi();
           // onLogoutYesClick();
         }}
-        message={"Are you sure you want to logout?"}
+        message={'Are you sure you want to logout?'}
       />
       <Indicator showLoader={isLoading} />
     </View>
@@ -316,7 +321,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginRight: 5,
     fontWeight: '400',
-    maxWidth: 150
+    maxWidth: 150,
   },
   mobEmail: {
     flexDirection: 'row',
@@ -334,7 +339,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#444444',
     marginLeft: 10,
-    maxWidth: 160
+    maxWidth: 160,
   },
   textV: {
     fontSize: 16,
