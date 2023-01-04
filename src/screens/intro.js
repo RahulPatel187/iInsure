@@ -1,5 +1,6 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
+  Dimensions,
   FlatList,
   Image,
   ImageBackground,
@@ -10,6 +11,8 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../config/Colors';
+
+const { width: screenWidth } = Dimensions.get('window');
 
 const dataIntro = [
   {
@@ -38,80 +41,116 @@ const dataIntro = [
   },
 ];
 
-const Intro = ({navigation}) => {
+const Intro = ({ navigation }) => {
   let flatListRef = useRef();
   const [listIndex, setListIndex] = useState(1);
   function scrollTheList(index) {
     if (flatListRef.current) {
-      flatListRef.current.scrollToIndex({animated: true, index: index});
+      flatListRef.current.scrollToIndex({ animated: true, index: index });
     }
   }
   return (
     <>
-      <ImageBackground
+      {/* <ImageBackground
         source={require('./../assets/images/headerBgImg.png')}
-        style={styles.headerBgImg}></ImageBackground>
+        style={styles.headerBgImg}></ImageBackground> */}
       <View style={styles.container}>
-        <LinearGradient
+        {/* <LinearGradient
           colors={['#0096C7', '#0077B6']}
-          style={styles.slide}>
-          <View style={{padding: 5}}>
-            <FlatList
-              horizontal
-              ref={flatListRef}
-              scrollEnabled={false}
-              data={dataIntro}
-              showsHorizontalScrollIndicator={false}
-              renderItem={({item, index}) => {
-                return (
-                  <View style={styles.imageView}>
-                    <Image
-                      source={item.image}
-                      style={styles.img}
-                    />
-                    <Text
-                      style={styles.imgTitle}>
-                      {item.title}
-                    </Text>
+          style={styles.slide}
+          > */}
+        <View style={{ padding: 15 }}>
+          <FlatList
+            horizontal
+            ref={flatListRef}
+            scrollEnabled={false}
+            data={dataIntro}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item, index }) => {
+              return (
+                <View style={styles.imageView}>
+                  <Image
+                    source={item.image}
+                    style={styles.img}
+                  />
+                  <View style={{flexDirection: 'row'}}>
+                  <FlatList
+                    horizontal
+                    ref={flatListRef}
+                    scrollEnabled={false}
+                    data={dataIntro}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item, index }) => {
+                      <View
+                        style={[styles.line, { maxWidth: 50, marginBottom: 10 }]}
+                      />
+                    }}
+                    keyExtractor={(item, index) => index+2}
+                    ListFooterComponent={() => { }}
+                  />
+                  {dataIntro.map((data) => (
                     <View
-                      style={[styles.line, {maxWidth: 300, marginBottom: 10}]}
+                      style={[styles.line, { maxWidth: 50, marginBottom: 10 }]}
                     />
-                    <Text
-                      style={styles.imgDesc}>
-                      {item.desc}
-                    </Text>
+                  ))}
                   </View>
-                );
-              }}
-              keyExtractor={(item, index) => index}
-              ListFooterComponent={() => {}}
-            />
-            <View
-              style={styles.footer}>
-              <TouchableOpacity
-                onPress={() => {
+                  <Text
+                    style={styles.imgTitle}>
+                    {item.title}
+                  </Text>
+                  {/* <View
+                    style={[styles.line, { maxWidth: 300, marginBottom: 10 }]}
+                  /> */}
+                  <Text
+                    style={styles.imgDesc}>
+                    {item.desc}
+                  </Text>
+                </View>
+              );
+            }}
+            keyExtractor={(item, index) => index}
+            ListFooterComponent={() => { }}
+          />
+          <View
+            style={styles.footer}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Drawer' }],
+                });
+              }}>
+              <Text style={styles.skip}>
+                Skip
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                scrollTheList(listIndex);
+                if(listIndex === 3){
                   navigation.reset({
                     index: 0,
-                    routes: [{name: 'Drawer'}],
+                    routes: [{ name: 'Drawer' }],
                   });
-                }}>
-                <Text style={styles.skip}>
-                  Skip
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  scrollTheList(listIndex);
-                  setListIndex(listIndex === 3 ? 0 : listIndex + 1);
-                }}>
-                <Image
+                }
+                setListIndex(listIndex === 3 ? 0 : listIndex + 1);
+              }}>
+              {/* <Image
                   source={require('./../assets/images/next.png')}
                   style={styles.nextImg}
-                />
-              </TouchableOpacity>
-            </View>
+                /> */}
+              <LinearGradient
+                colors={['#0096C7', '#0077B6']}
+                style={styles.slide}
+              >
+                <Text style={styles.next}>
+                  Next
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
-        </LinearGradient>
+        </View>
+        {/* </LinearGradient> */}
       </View>
     </>
   );
@@ -129,15 +168,13 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: Colors.containerColor,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    position: 'absolute',
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    // borderTopLeftRadius: 40,
+    // borderTopRightRadius: 40,
+    // position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
     bottom: 0,
-    padding: 10,
-    width: '100%',
-    height: '90%',
+    paddingTop: 20,
   },
   heartImg: {
     width: 95,
@@ -148,7 +185,7 @@ const styles = StyleSheet.create({
   },
   line: {
     // flex: 1,
-    height: 2,
+    height: 4,
     backgroundColor: Colors.introLineColor,
   },
   listStyle: {
@@ -165,34 +202,36 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   slide: {
-    borderRadius: 50, 
-    margin: 10
+    borderRadius: 10,
+    // margin: 10,
+    padding: 10,
+    paddingLeft: 25,
+    paddingRight: 25
   },
   imageView: {
-    width: 350, 
-    height: 450, 
+    width: screenWidth,
     padding: 20
   },
   img: {
-    width: 282,
-    height: 184,
+    width: 340,
+    height: 300,
     resizeMode: 'contain',
     marginBottom: 20,
   },
   imgTitle: {
     fontSize: 32,
     fontWeight: '700',
-    color: Colors.whiteColor,
+    color: Colors.blackColor,
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   imgDesc: {
     fontSize: 18,
     fontWeight: '500',
-    color: Colors.whiteColor,
+    color: Colors.blackColor,
     flexWrap: 'wrap',
     maxWidth: 300,
-    textAlign: 'center',
+    textAlign: 'left',
     lineHeight: 27,
   },
   footer: {
@@ -202,16 +241,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 30,
     paddingRight: 30,
-    paddingBottom: 5,
+    paddingBottom: 15,
   },
   skip: {
-    fontSize: 24, 
-    fontWeight: '700', 
+    fontSize: 24,
+    fontWeight: '700',
+    color: Colors.blackColor
+  },
+  next: {
+    fontSize: 24,
+    fontWeight: '700',
     color: Colors.whiteColor
   },
   nextImg: {
-    width: 18, 
-    height: 18, 
+    width: 18,
+    height: 18,
     resizeMode: 'contain'
   }
 });

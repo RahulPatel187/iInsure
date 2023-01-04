@@ -71,6 +71,21 @@ function Claim({ route, navigation }) {
     const [serverDate, setServerDate] = useState("");
     const notificationCount = useSelector((state) => state.login.notificationCount);
     const dispatch = useDispatch();
+    const [keyboardStatus, setKeyboardStatus] = useState(false);
+
+    useEffect(() => {
+        const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+            setKeyboardStatus(true);
+        });
+        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardStatus(false);
+        });
+
+        return () => {
+            showSubscription.remove();
+            hideSubscription.remove();
+        };
+    }, []);
 
     // var { data } = route?.params;
 
@@ -235,7 +250,7 @@ function Claim({ route, navigation }) {
             >
                 <ImageBackground
                     source={require("../../assets/images/headerBgImg.png")}
-                    style={styles.headerBgImg}
+                    style={[styles.headerBgImg, { ...(keyboardStatus && { paddingBottom: 55 }) }]}
                 >
                     <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                     <View style={styles.titleContainer}>
@@ -246,7 +261,7 @@ function Claim({ route, navigation }) {
                 <KeyboardAwareScrollView
                     contentContainerStyle={styles.keyboardViewStyle}
                     showsVerticalScrollIndicator={false}
-                    style={styles.keyboardStyle}>
+                    style={[styles.keyboardStyle, { ...(keyboardStatus && { marginTop: -18 }) }]}>
                     <View style={styles.container}>
                         <View style={styles.claimReview}>
                             <View style={{ width: '60%' }}>

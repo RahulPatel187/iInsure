@@ -1,15 +1,31 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Image, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, TouchableOpacity, Image, Keyboard, Text } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 export default (props) => {
   console.log('props', props);
   const navigation = props.navigation;
-  const [selected, setSelected] = useState(1)
+  const [selected, setSelected] = useState(1);
+  const [keyboardStatus, setKeyboardStatus] = useState(false);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardStatus(true);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardStatus(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
   return (
     <>
-      <LinearGradient colors={["#0077B6", "#0096C7", "#0077B6"]} style={[styles.bottomSec, props.containerStyle]}>
+      <LinearGradient colors={["#0077B6", "#0096C7", "#0077B6"]} style={[styles.bottomSec, props.containerStyle, {...(keyboardStatus && {display: 'none'})}]}>
         {/* <View style={[styles.bottomSec, props.containerStyle]}> */}
         <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Home'), setSelected(1) }}>
           <Image source={require("../../assets/images/home3.png")} style={[styles.tabImg, selected === 1 && { tintColor: '#FFFFFF' }]} />

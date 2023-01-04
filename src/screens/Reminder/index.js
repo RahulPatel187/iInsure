@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
     View,
     Text,
@@ -63,6 +63,21 @@ function Reminder({ navigation }) {
     const [isSessionExpired, setSessionExpired] = useState(false);
     const [reminderList, setReminderList] = useState(reminderArray);
     const notificationCount = useSelector((state) => state.login.notificationCount);
+    const [keyboardStatus, setKeyboardStatus] = useState(false);
+
+    useEffect(() => {
+        const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+            setKeyboardStatus(true);
+        });
+        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardStatus(false);
+        });
+
+        return () => {
+            showSubscription.remove();
+            hideSubscription.remove();
+        };
+    }, []);
 
     const dispatch = useDispatch();
 
@@ -210,7 +225,7 @@ function Reminder({ navigation }) {
         return (
             <View
                 style={[styles.checkedBoxView,
-                    index === 0 && { marginTop: 20 },
+                index === 0 && { marginTop: 20 },
                 ]}
                 key={index}
             >
@@ -253,145 +268,145 @@ function Reminder({ navigation }) {
 
     return (
         <>
-            {/* // <SafeAreaView> */}
-            <ImageBackground
-                source={require("../../assets/images/headerBgImg.png")}
-                style={styles.headerBgImg}
-            >
-                <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
-                <View style={styles.titleContainer}>
-                    <Text style={styles.titleText}>{"My "}</Text>
-                    <Text style={styles.titleText2}>{"Reminder"}</Text>
-                </View>
-            </ImageBackground>
-            <KeyboardAwareScrollView
-                contentContainerStyle={styles.keyboardViewStyle}
-                showsVerticalScrollIndicator={false}
-                style={styles.keyboardStyle}>
-                {/* <View
+            <SafeAreaView>
+                <ImageBackground
+                    source={require("../../assets/images/headerBgImg.png")}
+                    style={[styles.headerBgImg, { ...(keyboardStatus && { paddingBottom: 55 }) }]}
+                >
+                    <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.titleText}>{"My "}</Text>
+                        <Text style={styles.titleText2}>{"Reminder"}</Text>
+                    </View>
+                </ImageBackground>
+                <KeyboardAwareScrollView
+                    contentContainerStyle={styles.keyboardViewStyle}
+                    showsVerticalScrollIndicator={false}
+                    style={[styles.keyboardStyle, { ...(keyboardStatus && { marginTop: -18 }) }]}>
+                    {/* <View
                     style={{
                         // flex: 1,
                     }}
                 > */}
-                {/* <KeyboardAwareScrollView
+                    {/* <KeyboardAwareScrollView
                     contentContainerStyle={styles.container}
                     keyboardShouldPersistTaps="handled"
                 > */}
-                <View style={styles.container}>
-                    <View style={{ marginHorizontal: 16, marginTop: 12 }}>
-                        <Text style={styles.textStyle}>Caption Name</Text>
-                        <CustomTextInput
-                            ref={nameRef}
-                            placeholder="Enter Your Caption Name"
-                            onChangeText={handleChange("name")}
-                            value={values.name}
-                            returnKeyType="next"
-                            onSubmitEditing={() => policyNumberRef.current?.focus()}
-                            showPasswordIcon={false}
-                            errors={errors.name}
-                        />
-                    </View>
-                    <View style={{ marginHorizontal: 16 }}>
-                        <Text style={styles.textStyle}>Policy Number</Text>
-                        <CustomTextInput
-                            ref={policyNumberRef}
-                            placeholder="Enter Your Policy Number"
-                            onChangeText={handleChange("policyNo")}
-                            value={values.policyNo}
-                            returnKeyType="next"
-                            onSubmitEditing={() => showDatePicker()}
-                            showPasswordIcon={false}
-                            errors={errors.policyNo}
-                        />
-                    </View>
-                    <View style={{ marginHorizontal: 16 }}>
-                        <Text style={styles.textStyle}>Premium Amount</Text>
-                        <CustomTextInput
-                            ref={amt}
-                            placeholder="Enter Your Premium Amount"
-                            onChangeText={handleChange("amt")}
-                            value={values.amt}
-                            type={"decimal-pad"}
-                            returnKeyType="next"
-                            onSubmitEditing={() => showDatePicker()}
-                            showPasswordIcon={false}
-                            errors={errors.amt}
-                        />
-                    </View>
-                    <Text style={[styles.textStyle, { marginHorizontal: 16 }]}>
-                        Due Date
-                    </Text>
-                    <Pressable onPress={() => showDatePicker()} style={styles.buttonExpiryDate}>
-                        <Text
-                            style={
-                                isDateSelected
-                                    ? styles.textSelectedExpiryDate
-                                    : styles.textUnSelectedExpiryDate
-                            }
-                        >
-                            {`Due Date: ${values.dueDate && moment(values.dueDate).format("DD-MM-yyyy")
-                                }`}
+                    <View style={styles.container}>
+                        <View style={{ marginHorizontal: 16, marginTop: 12 }}>
+                            <Text style={styles.textStyle}>Caption Name</Text>
+                            <CustomTextInput
+                                ref={nameRef}
+                                placeholder="Enter Your Caption Name"
+                                onChangeText={handleChange("name")}
+                                value={values.name}
+                                returnKeyType="next"
+                                onSubmitEditing={() => policyNumberRef.current?.focus()}
+                                showPasswordIcon={false}
+                                errors={errors.name}
+                            />
+                        </View>
+                        <View style={{ marginHorizontal: 16 }}>
+                            <Text style={styles.textStyle}>Policy Number</Text>
+                            <CustomTextInput
+                                ref={policyNumberRef}
+                                placeholder="Enter Your Policy Number"
+                                onChangeText={handleChange("policyNo")}
+                                value={values.policyNo}
+                                returnKeyType="next"
+                                onSubmitEditing={() => showDatePicker()}
+                                showPasswordIcon={false}
+                                errors={errors.policyNo}
+                            />
+                        </View>
+                        <View style={{ marginHorizontal: 16 }}>
+                            <Text style={styles.textStyle}>Premium Amount</Text>
+                            <CustomTextInput
+                                ref={amt}
+                                placeholder="Enter Your Premium Amount"
+                                onChangeText={handleChange("amt")}
+                                value={values.amt}
+                                type={"decimal-pad"}
+                                returnKeyType="next"
+                                onSubmitEditing={() => showDatePicker()}
+                                showPasswordIcon={false}
+                                errors={errors.amt}
+                            />
+                        </View>
+                        <Text style={[styles.textStyle, { marginHorizontal: 16 }]}>
+                            Due Date
                         </Text>
-                        <DateTimePickerModal
-                            isVisible={isDatePickerVisible}
-                            mode="date"
-                            onConfirm={handleConfirm}
-                            onCancel={hideDatePicker}
-                            headerTextIOS="Due Date"
-                            minimumDate={new Date()}
-                        />
-                        <Image
-                            style={styles.calanderImage}
-                            source={require("../../assets/images/cal.png")}
-                        />
-                    </Pressable>
-                    {errors.dueDate ? (
-                        <Text
-                            style={{ marginLeft: 23, marginTop: 5, color: Colors.redColor }}
-                        >
-                            {errors.dueDate}
-                        </Text>
-                    ) : null}
+                        <Pressable onPress={() => showDatePicker()} style={styles.buttonExpiryDate}>
+                            <Text
+                                style={
+                                    isDateSelected
+                                        ? styles.textSelectedExpiryDate
+                                        : styles.textUnSelectedExpiryDate
+                                }
+                            >
+                                {`Due Date: ${values.dueDate && moment(values.dueDate).format("DD-MM-yyyy")
+                                    }`}
+                            </Text>
+                            <DateTimePickerModal
+                                isVisible={isDatePickerVisible}
+                                mode="date"
+                                onConfirm={handleConfirm}
+                                onCancel={hideDatePicker}
+                                headerTextIOS="Due Date"
+                                minimumDate={new Date()}
+                            />
+                            <Image
+                                style={styles.calanderImage}
+                                source={require("../../assets/images/cal.png")}
+                            />
+                        </Pressable>
+                        {errors.dueDate ? (
+                            <Text
+                                style={{ marginLeft: 23, marginTop: 5, color: Colors.redColor }}
+                            >
+                                {errors.dueDate}
+                            </Text>
+                        ) : null}
 
-                    {reminderList && reminderList.length > 0
-                        ? reminderList.map((item, index) => {
-                            return renderItem(item, index);
-                        })
-                        : null}
-                    {!checkedBox.includes(true) ? (
-                        <Text
-                            style={{ margin: 16, marginTop: 0, color: Colors.redColor }}
-                        >
-                            {"At least select 1 reminder"}
-                        </Text>
-                    ) : null}
-                    <CustomButton
-                        text={"Submit"}
-                        isLarge={true}
-                        onPress={() => {
-                            Keyboard.dismiss();
-                            handleSubmit();
+                        {reminderList && reminderList.length > 0
+                            ? reminderList.map((item, index) => {
+                                return renderItem(item, index);
+                            })
+                            : null}
+                        {!checkedBox.includes(true) ? (
+                            <Text
+                                style={{ margin: 16, marginTop: 0, color: Colors.redColor }}
+                            >
+                                {"At least select 1 reminder"}
+                            </Text>
+                        ) : null}
+                        <CustomButton
+                            text={"Submit"}
+                            isLarge={true}
+                            onPress={() => {
+                                Keyboard.dismiss();
+                                handleSubmit();
+                            }}
+                        />
+                    </View>
+                    {/* </KeyboardAwareScrollView> */}
+                    <Indicator showLoader={isLoading} />
+                    <CustomAlertDialog
+                        visible={showErrorDialog || isSessionExpired}
+                        onCloseDialog={() => {
+                            if (isSessionExpired) {
+                                setSessionExpired(false);
+                                proceedLogout();
+                            } else {
+                                setShowErrorDialog(false);
+                                navigation.goBack();
+                            }
                         }}
+                        description={"Reminder set successfully."}
                     />
-                </View>
-                {/* </KeyboardAwareScrollView> */}
-                <Indicator showLoader={isLoading} />
-                <CustomAlertDialog
-                    visible={showErrorDialog || isSessionExpired}
-                    onCloseDialog={() => {
-                        if (isSessionExpired) {
-                            setSessionExpired(false);
-                            proceedLogout();
-                        } else {
-                            setShowErrorDialog(false);
-                            navigation.goBack();
-                        }
-                    }}
-                    description={"Reminder set successfully."}
-                />
-                {/* </View> */}
-            </KeyboardAwareScrollView>
-            {/* </SafeAreaView> */}
+                    {/* </View> */}
+                </KeyboardAwareScrollView>
+            </SafeAreaView>
         </>
     );
 }

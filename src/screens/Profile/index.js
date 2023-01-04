@@ -47,9 +47,9 @@ function Profile({ navigation }) {
             />
           </ImageBackground>
         </View>
-        <View style={styles.titleContainer}>
+        <View style={styles.titleContainer2}>
           <Text style={[styles.titleText, { color: Colors.blackColor }]}>{'Hello, '}</Text>
-          <Text style={[styles.titleText2, , { color: Colors.blackColor }]}>{'User'}</Text>
+          <Text style={[styles.titleText2, , { color: Colors.blackColor }]}>{userInfo ? userInfo.name : 'User'}</Text>
         </View>
         <Text style={styles.titleTxt}>{'Registered details'}</Text>
         <Text style={styles.textStyle}>{userInfo ? userInfo.name : 'UserName'}</Text>
@@ -124,6 +124,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
+  titleContainer2: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
   titleText: {
     display: 'flex',
     justifyContent: 'center',
@@ -139,6 +146,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '600',
     color: Colors.whiteColor,
+    flexWrap: 'wrap'
   },
   textStyle: {
     padding: 16,

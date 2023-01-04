@@ -3,6 +3,7 @@ import {
     StyleSheet,
     View,
     Text,
+    Keyboard,
     ImageBackground,
     Image,
     TextInput,
@@ -23,6 +24,7 @@ import ApiRequest from "../../api/ApiRequest";
 import axiosPostClient from "../../api/ApiClient";
 import Helpers from "../../utils/Helpers";
 import Colors from "../../config/Colors";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function GetAQuote({ navigation }) {
     const emailRef = useRef(null);
@@ -39,6 +41,22 @@ function GetAQuote({ navigation }) {
     // const [email, setEmail] = useState('')
 
     const dispatch = useDispatch();
+    const [keyboardStatus, setKeyboardStatus] = useState(false);
+
+    useEffect(() => {
+        const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+            setKeyboardStatus(true);
+        });
+        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardStatus(false);
+        });
+
+        return () => {
+            showSubscription.remove();
+            hideSubscription.remove();
+        };
+    }, []);
+
 
     const {
         handleChange,
@@ -150,7 +168,7 @@ function GetAQuote({ navigation }) {
         <>
             <ImageBackground
                 source={require("../../assets/images/headerBgImg.png")}
-                style={styles.headerBgImg}
+                style={[styles.headerBgImg, { ...(keyboardStatus && { paddingBottom: 55 }) }]}
             >
                 <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                 <View style={styles.titleContainer}>
@@ -158,104 +176,110 @@ function GetAQuote({ navigation }) {
                     <Text style={styles.titleText2}>{"Quote"}</Text>
                 </View>
             </ImageBackground>
-            <View style={styles.container}>
-                <Text style={styles.titleTxt}>
-                    {
-                        "Your Full Name"
-                    }
-                </Text>
-                <CustomTextInput
-                    ref={nameRef}
-                    placeholder="Enter Your Full Name"
-                    onChangeText={handleChange("fullName")}
-                    value={values.name}
-                    returnKeyType="next"
-                    onSubmitEditing={() => emailRef.current?.focus()}
-                    showPasswordIcon={false}
-                    errors={errors.name}
-                />
-                <Text style={styles.titleTxt}>
-                    {
-                        "Your Email"
-                    }
-                </Text>
-                <CustomTextInput
-                    ref={emailRef}
-                    placeholder="Enter Your E-mail"
-                    onChangeText={handleChange("email")}
-                    value={values.email}
-                    returnKeyType="next"
-                    showPasswordIcon={false}
-                    errors={errors.email}
-                />
-                <Text style={styles.titleTxt}>
-                    {
-                        "Your Summary"
-                    }
-                </Text>
-                <CustomTextInput
-                    ref={typeofInsuranceRef}
-                    placeholder="Enter Your Summary"
-                    onChangeText={handleChange("insuranceType")}
-                    value={values.summary}
-                    returnKeyType="next"
-                    onSubmitEditing={() => mobileNumberRef.current?.focus()}
-                    showPasswordIcon={false}
-                    errors={errors.summary}
+            <KeyboardAwareScrollView
+                contentContainerStyle={styles.keyboardViewStyle}
+                showsVerticalScrollIndicator={false}
+                style={[styles.keyboardStyle, { ...(keyboardStatus && { marginTop: -18 }) }]}>
+                <View style={styles.container}>
+                    <Text style={styles.titleTxt}>
+                        {
+                            "Your Full Name"
+                        }
+                    </Text>
+                    <CustomTextInput
+                        ref={nameRef}
+                        placeholder="Enter Your Full Name"
+                        onChangeText={handleChange("fullName")}
+                        value={values.name}
+                        returnKeyType="next"
+                        onSubmitEditing={() => emailRef.current?.focus()}
+                        showPasswordIcon={false}
+                        errors={errors.name}
+                    />
+                    <Text style={styles.titleTxt}>
+                        {
+                            "Your Email"
+                        }
+                    </Text>
+                    <CustomTextInput
+                        ref={emailRef}
+                        placeholder="Enter Your E-mail"
+                        onChangeText={handleChange("email")}
+                        value={values.email}
+                        returnKeyType="next"
+                        showPasswordIcon={false}
+                        errors={errors.email}
+                    />
+                    <Text style={styles.titleTxt}>
+                        {
+                            "Your Summary"
+                        }
+                    </Text>
+                    <CustomTextInput
+                        ref={typeofInsuranceRef}
+                        placeholder="Enter Your Summary"
+                        onChangeText={handleChange("insuranceType")}
+                        value={values.summary}
+                        returnKeyType="next"
+                        onSubmitEditing={() => mobileNumberRef.current?.focus()}
+                        showPasswordIcon={false}
+                        errors={errors.summary}
+                        // containerStyle={{
+                        //   backgroundColor: Colors.inputColorNewBackground,
+                        // }}
+                        numberOfLines={6}
+                        multiline={true}
+                        minHeight={100}
+                        maxHeight={150}
+                    />
+                    <Text style={styles.titleTxt}>
+                        {
+                            "Your Mobile Number"
+                        }
+                    </Text>
+                    <CustomTextInput
+                        ref={mobileNumberRef}
+                        placeholder="Mobile No."
+                        onChangeText={handleChange("mobileNo")}
+                        value={values.mobileNo}
+                        // returnKeyType="done"
+                        onSubmitEditing={() => { }}
+                        showPasswordIcon={false}
+                        errors={errors.mobileNo}
+                        // keyboardType="phone-pad"
+                        keyboardType="number-pad"
+                        maxLength={10}
                     // containerStyle={{
                     //   backgroundColor: Colors.inputColorNewBackground,
                     // }}
-                    numberOfLines={6}
-                    multiline={true}
-                    minHeight={100}
-                    maxHeight={150}
-                />
-                <Text style={styles.titleTxt}>
-                    {
-                        "Your Mobile Number"
-                    }
-                </Text>
-                <CustomTextInput
-                    ref={mobileNumberRef}
-                    placeholder="Mobile No."
-                    onChangeText={handleChange("mobileNo")}
-                    value={values.mobileNo}
-                    // returnKeyType="done"
-                    onSubmitEditing={() => { }}
-                    showPasswordIcon={false}
-                    errors={errors.mobileNo}
-                    // keyboardType="phone-pad"
-                    keyboardType="number-pad"
-                    maxLength={10}
-                // containerStyle={{
-                //   backgroundColor: Colors.inputColorNewBackground,
-                // }}
-                />
-                <CustomButton
-                    text={"Submit"}
-                    isLarge={true}
-                    onPress={() => {
-                        // Keyboard.dismiss();
-                        handleSubmit();
+                    />
+                    <CustomButton
+                        text={"Submit"}
+                        isLarge={true}
+                        onPress={() => {
+                            // Keyboard.dismiss();
+                            handleSubmit();
+                        }}
+                    />
+                </View>
+
+                <Indicator showLoader={isLoading} />
+                <CustomAlertDialog
+                    visible={showErrorDialog || isSessionExpired || quoteSuccess}
+                    onCloseDialog={() => {
+                        if (isSessionExpired) {
+                            setSessionExpired(false);
+                            proceedLogout();
+                        } else if (quoteSuccess) {
+                            setQuoteSuccess(false);
+                            navigation.goBack();
+                        } else {
+                            setShowErrorDialog(false);
+                        }
                     }}
+                    description={message}
                 />
-            </View>
-            <Indicator showLoader={isLoading} />
-            <CustomAlertDialog
-                visible={showErrorDialog || isSessionExpired || quoteSuccess}
-                onCloseDialog={() => {
-                    if (isSessionExpired) {
-                        setSessionExpired(false);
-                        proceedLogout();
-                    } else if (quoteSuccess) {
-                        setQuoteSuccess(false);
-                        navigation.goBack();
-                    } else {
-                        setShowErrorDialog(false);
-                    }
-                }}
-                description={message}
-            />
+            </KeyboardAwareScrollView>
         </>
     );
 }
@@ -273,7 +297,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.containerColor,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
-        position: 'absolute',
+        // position: 'absolute',
         // justifyContent: 'center',
         // alignItems: 'center',
         bottom: 0,
@@ -344,5 +368,16 @@ const styles = StyleSheet.create({
         marginTop: 5,
         fontSize: 15,
         fontWeight: '500'
+    },
+    keyboardViewStyle: {
+        borderTopLeftRadius: 70,
+        borderTopRightRadius: 70,
+    },
+    keyboardStyle: {
+        marginTop: -35,
+        backgroundColor: Colors.containerColor,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        height: "70%",
     },
 });

@@ -142,11 +142,7 @@ function ClaimListScreen({ navigation }) {
     if (!isLoading) {
       return (
         <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          style={styles.emptyFlex}
         >
           <Text style={GlobalStyle.noDataFoundStyle}>
             {Constant.NO_DATA_FOUND}
@@ -348,11 +344,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    right: 10,
+    right: 20,
     width: 44,
     height: 44,
     position: 'absolute',
-    bottom: 20
+    bottom: 25
   },
   btnlinear: {
     display: 'flex',
@@ -367,4 +363,10 @@ const styles = StyleSheet.create({
     height: 41,
     resizeMode: 'contain'
   },
+  emptyFlex: {
+    display: 'flex',
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 20
+  }
 });

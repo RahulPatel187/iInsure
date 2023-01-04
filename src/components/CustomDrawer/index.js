@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import LinearGradient from 'react-native-linear-gradient';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Helpers from '../../utils/Helpers';
 import Constant from '../../utils/Constant';
 import CustomLogoutDialog from '../default/CustomLogoutDialog';
@@ -71,7 +71,7 @@ const CustomDrawer = props => {
       props.navigation.closeDrawer();
       props.navigation.reset({
         index: 0,
-        routes: [{name: 'Home'}],
+        routes: [{ name: 'Home' }],
       });
     } else if (slug == 'profile') {
       props.navigation.closeDrawer();
@@ -148,7 +148,7 @@ const CustomDrawer = props => {
     // });
     props.navigation.reset({
       index: 0,
-      routes: [{name: 'Login'}],
+      routes: [{ name: 'Login' }],
     });
     // props.navigation.navigate('Login');
   };
@@ -183,7 +183,7 @@ const CustomDrawer = props => {
     }
   };
 
-  const renderItem = ({item, index}) => {
+  const renderItem = ({ item, index }) => {
     return indexs == index ? (
       <TouchableOpacity
         onPress={() => {
@@ -192,7 +192,7 @@ const CustomDrawer = props => {
         style={styles.tabContainer}>
         <LinearGradient
           colors={['#0077B6', '#0096C7', '#0077B6']}
-          style={{flex: 1, borderRadius: 10}}>
+          style={{ flex: 1, borderRadius: 10 }}>
           <View style={styles.tab}>
             <Image source={getIcon(item.slug)} style={styles.imageActive} />
             <Text style={styles.textActive}>{item.title}</Text>
@@ -220,22 +220,8 @@ const CustomDrawer = props => {
           <View>
             <Text style={styles.textHello}>Hello,</Text>
             <Text style={styles.textName}>{user?.name}</Text>
-            <View style={styles.mobEmail}>
-              <Image
-                source={require('../../assets/images/call.png')}
-                style={styles.mobEmailPic}
-              />
-              <Text style={styles.mobEmailText}>+91 {user?.phone}</Text>
-            </View>
-            <View style={styles.mobEmail}>
-              <Image
-                source={require('../../assets/images/emailIcon.png')}
-                style={[styles.mobEmailPic, {tintColor: '#0090C3'}]}
-              />
-              <Text style={styles.mobEmailText}>{user?.email}</Text>
-            </View>
           </View>
-          <View style={{width: '30%'}}>
+          <View style={{ width: '30%' }}>
             <ImageBackground
               source={require('../../assets/images/userBack1.png')}
               style={styles.userPic}>
@@ -245,13 +231,29 @@ const CustomDrawer = props => {
             </ImageBackground>
           </View>
         </View>
+        <View style={styles.mobEmailView}>
+          <View style={styles.mobEmail}>
+            <Image
+              source={require('../../assets/images/call.png')}
+              style={styles.mobEmailPic}
+            />
+            <Text style={styles.mobEmailText}>+91 {user?.phone}</Text>
+          </View>
+          <View style={styles.mobEmail}>
+            <Image
+              source={require('../../assets/images/emailIcon.png')}
+              style={[styles.mobEmailPic, { tintColor: '#0090C3' }]}
+            />
+            <Text style={styles.mobEmailText}>{user?.email}</Text>
+          </View>
+        </View>
         <View style={styles.flatlist}>
           {/* <DrawerItemList {...props} /> */}
           <FlatList
             keyExtractor={(item, index) => index.toString()}
             data={drawerList}
             renderItem={renderItem}
-            style={{padding: 5}}
+            style={{ padding: 5 }}
           />
         </View>
       </DrawerContentScrollView>
@@ -260,7 +262,7 @@ const CustomDrawer = props => {
           source={require('../../assets/images/comn.png')}
           style={styles.footerLogo}
         />
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <Text style={styles.textV}>Version</Text>
           <Text style={styles.textVersion}>1.0</Text>
         </View>
@@ -339,7 +341,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#444444',
     marginLeft: 10,
-    maxWidth: 160,
+    // maxWidth: 160,
   },
   textV: {
     fontSize: 16,
@@ -403,4 +405,10 @@ const styles = StyleSheet.create({
     height: 40,
     resizeMode: 'stretch',
   },
+  mobEmailView: {
+    display: 'flex', 
+    justifyContent: 'flex-start', 
+    paddingLeft: 10, 
+    paddingRight: 10
+  }
 });

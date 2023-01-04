@@ -288,11 +288,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    right: 10,
+    right: 20,
     width: 44,
     height: 44,
     position: 'absolute',
-    bottom: 20
+    bottom: 25
   },
   btnlinear: {
     display: 'flex',
@@ -308,8 +308,9 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   emptyFlex: {
-    flex: 1,
+    display: 'flex',
     justifyContent: "center",
     alignItems: "center",
+    margin: 20
   }
 });

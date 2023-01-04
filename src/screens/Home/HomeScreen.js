@@ -117,10 +117,14 @@ const HomeScreen = ({ navigation }) => {
 
       <View style={styles.container}>
         <ScrollView>
-          <Carousel layout={'default'}
+          <Carousel
+            style={{ marginLeft: 20 }}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={screenWidth}
+            loop
+            autoplay
+            autoplayDelay={1000}
             data={imageData}
             renderItem={renderItem} />
 
@@ -205,7 +209,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     // alignItems: 'center', 
     flexWrap: 'wrap',
-    // marginLeft: 25,
+    width: '95%',
+    marginLeft: 12,
     // marginBottom: 30,
     // marginTop: -20
   },
@@ -236,10 +241,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // elevation: 3,
   },
-  headerName: { 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    marginBottom: 10 
+  headerName: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10
   }
 });

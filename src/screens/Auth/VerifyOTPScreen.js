@@ -337,7 +337,7 @@ function VerifyOTPScreen({ route, navigation }) {
           <Text style={styles.titleTxt}>
             {'Please type the OTP as shared on your\n email:'}
             <Text style={{ fontWeight: '700' }}>
-              {' username@techforceglobal.com'}{otp}
+              {email}{otp}
             </Text>
           </Text>
           <CodeField

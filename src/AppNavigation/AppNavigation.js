@@ -30,11 +30,14 @@ const BottomTabNavigator = () => {
       tabBar={props => <BottomSection {...props} />}
       screenOptions={{
         headerShown: false,
+        tabBarHideOnKeyboard: true,
       }}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="ReminderList" component={RemindersListScreen} />
-      <Tab.Screen name="Reminder" component={Reminder} />
+      <Tab.Screen name="Reminder" options={{
+        tabBarHideOnKeyboard: true,
+      }} component={Reminder} />
       <Tab.Screen name="InquiryList" component={InquiryListScreen} />
       <Tab.Screen name="Inquiry" component={Inquiry} />
       <Tab.Screen name="Claim" component={Claim} />
