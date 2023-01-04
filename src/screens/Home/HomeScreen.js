@@ -118,7 +118,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.container}>
         <ScrollView>
           <Carousel
-            style={{ marginLeft: 20 }}
+            // style={{ marginLeft: 20, width: screenWidth }}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={screenWidth}
@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   },
   bannerImg: {
     height: 270,
+    width: screenWidth-20,
     resizeMode: 'stretch'
   },
   bottomContainer: {
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center', 
     flexWrap: 'wrap',
     width: '95%',
-    marginLeft: 12,
+    marginLeft: 10,
     // marginBottom: 30,
     // marginTop: -20
   },

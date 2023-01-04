@@ -73,26 +73,26 @@ const Intro = ({ navigation }) => {
                     source={item.image}
                     style={styles.img}
                   />
-                  <View style={{flexDirection: 'row'}}>
-                  <FlatList
-                    horizontal
-                    ref={flatListRef}
-                    scrollEnabled={false}
-                    data={dataIntro}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({ item, index }) => {
+                  <View style={{ flexDirection: 'row' }}>
+                    <FlatList
+                      horizontal
+                      ref={flatListRef}
+                      scrollEnabled={false}
+                      data={dataIntro}
+                      showsHorizontalScrollIndicator={false}
+                      renderItem={({ item, index }) => {
+                        <View
+                          style={[styles.line, { maxWidth: 50, marginBottom: 10 }]}
+                        />
+                      }}
+                      keyExtractor={(item, index) => index + 2}
+                      ListFooterComponent={() => { }}
+                    />
+                    {dataIntro.map((data) => (
                       <View
                         style={[styles.line, { maxWidth: 50, marginBottom: 10 }]}
                       />
-                    }}
-                    keyExtractor={(item, index) => index+2}
-                    ListFooterComponent={() => { }}
-                  />
-                  {dataIntro.map((data) => (
-                    <View
-                      style={[styles.line, { maxWidth: 50, marginBottom: 10 }]}
-                    />
-                  ))}
+                    ))}
                   </View>
                   <Text
                     style={styles.imgTitle}>
@@ -126,14 +126,15 @@ const Intro = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                scrollTheList(listIndex);
-                if(listIndex === 3){
+                if (listIndex === 4) {
                   navigation.reset({
                     index: 0,
                     routes: [{ name: 'Drawer' }],
                   });
+                } else {
+                  scrollTheList(listIndex);
+                  setListIndex(listIndex === 4 ? 0 : listIndex + 1);
                 }
-                setListIndex(listIndex === 3 ? 0 : listIndex + 1);
               }}>
               {/* <Image
                   source={require('./../assets/images/next.png')}
@@ -209,11 +210,11 @@ const styles = StyleSheet.create({
     paddingRight: 25
   },
   imageView: {
-    width: screenWidth,
+    width: screenWidth - 20,
     padding: 20
   },
   img: {
-    width: 340,
+    width: screenWidth - 50,
     height: 300,
     resizeMode: 'contain',
     marginBottom: 20,

@@ -7,6 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "apk": "cd android && ./gradlew assembleRelease",
+    "androidClean": "cd android && ./gradlew clean",
     "test": "jest",
     "lint": "eslint ."
   },
