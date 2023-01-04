@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -12,7 +12,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../config/Colors';
 
-const { width: screenWidth } = Dimensions.get('window');
+const {width: screenWidth} = Dimensions.get('window');
 
 const dataIntro = [
   {
@@ -41,12 +41,12 @@ const dataIntro = [
   },
 ];
 
-const Intro = ({ navigation }) => {
+const Intro = ({navigation}) => {
   let flatListRef = useRef();
   const [listIndex, setListIndex] = useState(1);
   function scrollTheList(index) {
     if (flatListRef.current) {
-      flatListRef.current.scrollToIndex({ animated: true, index: index });
+      flatListRef.current.scrollToIndex({animated: true, index: index});
     }
   }
   return (
@@ -59,19 +59,20 @@ const Intro = ({ navigation }) => {
           colors={['#0096C7', '#0077B6']}
           style={styles.slide}
           > */}
-        <View style={{ padding: 15 }}>
+        <View style={{padding: 15}}>
           <FlatList
             horizontal
             ref={flatListRef}
             scrollEnabled={false}
             data={dataIntro}
             showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => {
+            renderItem={({item, index}) => {
               return (
                 <View style={styles.imageView}>
                   <Image
                     source={item.image}
                     style={styles.img}
+                    resizeMode={'center'}
                   />
                   <View style={{ flexDirection: 'row' }}>
                     <FlatList
@@ -109,27 +110,24 @@ const Intro = ({ navigation }) => {
               );
             }}
             keyExtractor={(item, index) => index}
-            ListFooterComponent={() => { }}
+            ListFooterComponent={() => {}}
           />
-          <View
-            style={styles.footer}>
+          <View style={styles.footer}>
             <TouchableOpacity
               onPress={() => {
                 navigation.reset({
                   index: 0,
-                  routes: [{ name: 'Drawer' }],
+                  routes: [{name: 'Drawer'}],
                 });
               }}>
-              <Text style={styles.skip}>
-                Skip
-              </Text>
+              <Text style={styles.skip}>Skip</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 if (listIndex === 4) {
                   navigation.reset({
                     index: 0,
-                    routes: [{ name: 'Drawer' }],
+                    routes: [{name: 'Drawer'}],
                   });
                 } else {
                   scrollTheList(listIndex);
@@ -142,11 +140,8 @@ const Intro = ({ navigation }) => {
                 /> */}
               <LinearGradient
                 colors={['#0096C7', '#0077B6']}
-                style={styles.slide}
-              >
-                <Text style={styles.next}>
-                  Next
-                </Text>
+                style={styles.slide}>
+                <Text style={styles.next}>Next</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -203,20 +198,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   slide: {
-    borderRadius: 10,
-    // margin: 10,
-    padding: 10,
-    paddingLeft: 25,
-    paddingRight: 25
+    borderRadius: 6,
+    height: 44,
+    width: 120,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   imageView: {
-    width: screenWidth - 20,
-    padding: 20
+    width: screenWidth,
+    padding: 20,
   },
   img: {
-    width: screenWidth - 50,
-    height: 300,
-    resizeMode: 'contain',
+    width: '90%',
+    height: '50%',
     marginBottom: 20,
   },
   imgTitle: {
@@ -225,15 +219,17 @@ const styles = StyleSheet.create({
     color: Colors.blackColor,
     marginBottom: 10,
     textAlign: 'left',
+    marginTop: 20,
+    fontFamily: 'Roboto-Bold',
   },
   imgDesc: {
-    fontSize: 18,
-    fontWeight: '500',
+    fontSize: 15,
+    // fontWeight: '500',
     color: Colors.blackColor,
-    flexWrap: 'wrap',
-    maxWidth: 300,
     textAlign: 'left',
-    lineHeight: 27,
+    lineHeight: 24,
+    width: '90%',
+    fontFamily: 'Roboto-Regular',
   },
   footer: {
     display: 'flex',
@@ -245,18 +241,18 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   skip: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: Colors.blackColor
+    fontSize: 18,
+    fontWeight: '600',
+    color: Colors.blackColor,
   },
   next: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: Colors.whiteColor
+    fontSize: 20,
+    fontWeight: '500',
+    color: Colors.whiteColor,
   },
   nextImg: {
     width: 18,
     height: 18,
-    resizeMode: 'contain'
-  }
+    resizeMode: 'contain',
+  },
 });

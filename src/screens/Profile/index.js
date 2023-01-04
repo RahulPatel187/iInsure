@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -9,21 +9,27 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import BottomSection from '../../components/BottomSection/BottomSection';
-import Header from "../../components/default/Header";
+import Header from '../../components/default/Header';
 import Colors from '../../config/Colors';
 
-function Profile({ navigation }) {
-  const userInfo = useSelector((state) => state.login.userInfo);
-  const notificationCount = useSelector((state) => state.login.notificationCount);
+function Profile({navigation}) {
+  const userInfo = useSelector(state => state.login.userInfo);
+  const notificationCount = useSelector(state => state.login.notificationCount);
 
   return (
     <>
       <ImageBackground
         source={require('../../assets/images/headerBgImg.png')}
         style={styles.headerBgImg}>
-        <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+        <Header
+          isMenu={true}
+          rightIcon={true}
+          notificationCnt={notificationCount ? notificationCount : null}
+          rightIconImage={require('../../assets/images/Notificationbell.png')}
+          navigation={navigation}
+        />
         <View style={styles.titleContainer}>
           <Image
             source={require('../../assets/images/userScreen.png')}
@@ -36,8 +42,7 @@ function Profile({ navigation }) {
         </View>
       </ImageBackground>
       <View style={styles.container}>
-        <View
-          style={styles.flex}>
+        <View style={styles.flex}>
           <ImageBackground
             source={require('../../assets/images/userBack.png')}
             style={styles.flexImgBg}>
@@ -48,13 +53,23 @@ function Profile({ navigation }) {
           </ImageBackground>
         </View>
         <View style={styles.titleContainer2}>
-          <Text style={[styles.titleText, { color: Colors.blackColor }]}>{'Hello, '}</Text>
-          <Text style={[styles.titleText2, , { color: Colors.blackColor }]}>{userInfo ? userInfo.name : 'User'}</Text>
+          <Text style={[styles.titleText, {color: Colors.blackColor}]}>
+            {'Hello, '}
+          </Text>
+          <Text style={[styles.nameTxt, , {color: Colors.blackColor}]}>
+            {userInfo ? userInfo.name : 'User'}
+          </Text>
         </View>
         <Text style={styles.titleTxt}>{'Registered details'}</Text>
-        <Text style={styles.textStyle}>{userInfo ? userInfo.name : 'UserName'}</Text>
-        <Text style={styles.textStyle}>{userInfo ? userInfo.phone : '9876543210'}</Text>
-        <Text style={styles.textStyle}>{userInfo ? userInfo.email : 'user@techforceglobal.com'}</Text>
+        <Text style={styles.textStyle}>
+          {userInfo ? userInfo.name : 'UserName'}
+        </Text>
+        <Text style={styles.textStyle}>
+          {userInfo ? userInfo.phone : '9876543210'}
+        </Text>
+        <Text style={styles.textStyle}>
+          {userInfo ? userInfo.email : 'user@techforceglobal.com'}
+        </Text>
       </View>
     </>
   );
@@ -146,7 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '600',
     color: Colors.whiteColor,
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   textStyle: {
     padding: 16,
@@ -157,7 +172,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     borderWidth: 1,
-    borderColor: Colors.unSelectTextColor
+    borderColor: Colors.unSelectTextColor,
   },
   flex: {
     display: 'flex',
@@ -171,8 +186,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  flexImg: { 
-    width: 22, 
-    height: 22 
-  }
+  flexImg: {
+    width: 22,
+    height: 22,
+  },
+  nameTxt: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    fontWeight: '600',
+    color: Colors.whiteColor,
+    textAlign: 'center',
+    marginVertical: 8,
+  },
 });
