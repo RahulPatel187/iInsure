@@ -168,19 +168,22 @@ function Claim({ route, navigation }) {
     };
 
     const handleConfirm = (date) => {
+        console.log('====================================');
+        console.log(date);
+        console.log('====================================');
         var formattedDate = format(date, "dd-MM-yyyy");
         Logger.log("formatted date" + formattedDate);
-        console.log('====================================');
-        console.log(formattedDate);
-        console.log('====================================');
-        setFieldValue("admitDate", formattedDate);
+        setFieldValue("admitDate", date);
 
-        var serverDate = format(date, "yyyy-MM-dd");
+        var serverDate = moment(date).format('dd-MM-yyyy');
         Logger.log("server date" + serverDate);
         setServerDate(serverDate);
         setIsDateSelected(true);
         hideDatePicker();
     };
+    console.log('====================================');
+    console.log(values.admitDate, moment(values.admitDate).format('DD-MM-yyyy'));
+    console.log('====================================');
 
     //Call claim card api.
     const callClaimApi = async () => {
