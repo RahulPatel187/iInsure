@@ -21,7 +21,7 @@ import { useFormik } from "formik";
 import axiosPostClient from "../../api/ApiClient";
 import { useSelector, useDispatch } from "react-redux";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-// import { format } from "date-fns";
+import { format } from "date-fns";
 // import messaging from "@react-native-firebase/messaging";
 import SafeAreaView from "../../components/default/SafeAreaView";
 import Header from "../../components/default/Header";
@@ -399,6 +399,7 @@ function Claim({ route, navigation }) {
                                 payload: true,
                             });
                             setClaimSuccess(false);
+                            resetForm();
                             navigation.goBack();
                         } else {
                             setShowErrorDialog(false);

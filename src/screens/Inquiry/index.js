@@ -270,6 +270,7 @@ function Inquiry({ navigation }) {
                         proceedLogout();
                     } else if (inquirySuccess) {
                         setInquirySuccess(false);
+                        resetForm();
                         navigation.goBack();
                     } else {
                         setShowErrorDialog(false);

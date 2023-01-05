@@ -148,7 +148,7 @@ function NotificationListScreen({ navigation }) {
                                     <TouchableOpacity
                                         style={[
                                             styles.cardView,
-                                            index === 2 && { marginBottom: 40 },
+                                            index === notificationList.length-1 && { marginBottom: 40 },
                                         ]}
                                         onPress={() => {
                                             navigation.navigate("RemindersList");

@@ -268,6 +268,7 @@ function GetAQuote({ navigation }) {
                             proceedLogout();
                         } else if (quoteSuccess) {
                             setQuoteSuccess(false);
+                            resetForm();
                             navigation.goBack();
                         } else {
                             setShowErrorDialog(false);

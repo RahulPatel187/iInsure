@@ -149,7 +149,7 @@ function RemindersListScreen({ navigation }) {
                   <View
                     style={[
                       styles.cardView,
-                      index === 4 && { marginBottom: 40 },
+                      index === reminderList.length-1 && { marginBottom: 40 },
                     ]}
                   >
                     <View style={[styles.cardSubSec, { marginTop: 0 }]}>

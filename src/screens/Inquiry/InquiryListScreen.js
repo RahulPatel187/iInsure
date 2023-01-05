@@ -165,7 +165,7 @@ function InquiryListScreen({ navigation }) {
                   <TouchableOpacity
                     style={[
                       styles.cardView,
-                      index === 2 && { marginBottom: 40 },
+                      index === inquiryList.length-1 && { marginBottom: 40 },
                     ]}
                     onPress={() => {
                       navigation.navigate("RemindersList");

@@ -416,6 +416,7 @@ function Reminder({navigation}) {
                 proceedLogout();
               } else {
                 setShowErrorDialog(false);
+                resetForm();
                 navigation.goBack();
               }
             }}
