@@ -79,6 +79,14 @@ function Reminder({navigation}) {
     };
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      resetForm();
+      setCheckedBox([true]);
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   const dispatch = useDispatch();
 
   const {
@@ -121,7 +129,7 @@ function Reminder({navigation}) {
         return;
         // errors.dueDate = "Due date is required";
       }
-        callApi(values);
+      callApi(values);
     },
   });
 
@@ -191,12 +199,21 @@ function Reminder({navigation}) {
 
   const handleConfirm = async date => {
     let finalDaysCnt = await getDateDiff(values.dueDate);
+    console.log('finalDaysCnt', finalDaysCnt);
     if (finalDaysCnt < 14) {
-      checkedBox[1] = false;
+      if (checkedBox[1]) {
+        checkedBox[1] = false;
+      }
+      if (checkedBox[2]) {
+        checkedBox[2] = false;
+      }
     }
     if (finalDaysCnt < 30) {
-      checkedBox[2] = false;
+      if (checkedBox[2]) {
+        checkedBox[2] = false;
+      }
     }
+    setRefresh(!refresh);
     setFieldValue('dueDate', date);
     setIsDateSelected(true);
     hideDatePicker();
@@ -209,12 +226,10 @@ function Reminder({navigation}) {
       console.log('selectedDate', selectedDate);
       var liveDate = new Date().getTime();
       var futureMonth = new Date(date).getTime();
-      console.log('futureMonth', futureMonth);
       var Difference_In_Time = futureMonth - liveDate;
       var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       finalDaysCntX = Difference_In_Days.toString().split('.')[0];
     }
-    console.log('finalDaysCnt', finalDaysCntX);
     return finalDaysCntX;
   };
 
@@ -242,7 +257,6 @@ function Reminder({navigation}) {
             }
             onPress={() => {
               checkedBox[index] = !checkedBox[index];
-              console.log('checkedBox', checkedBox);
               setCheckedBox(checkedBox);
               setRefresh(!refresh);
             }}>
@@ -407,21 +421,21 @@ function Reminder({navigation}) {
           {/* </KeyboardAwareScrollView> */}
           {/* </View> */}
         </KeyboardAwareScrollView>
-          <Indicator showLoader={isLoading} />
-          <CustomAlertDialog
-            visible={showErrorDialog || isSessionExpired}
-            onCloseDialog={() => {
-              if (isSessionExpired) {
-                setSessionExpired(false);
-                proceedLogout();
-              } else {
-                setShowErrorDialog(false);
-                resetForm();
-                navigation.goBack();
-              }
-            }}
-            description={'Reminder set successfully.'}
-          />
+        <Indicator showLoader={isLoading} />
+        <CustomAlertDialog
+          visible={showErrorDialog || isSessionExpired}
+          onCloseDialog={() => {
+            if (isSessionExpired) {
+              setSessionExpired(false);
+              proceedLogout();
+            } else {
+              setShowErrorDialog(false);
+              resetForm();
+              navigation.goBack();
+            }
+          }}
+          description={'Reminder set successfully.'}
+        />
       </SafeAreaView>
     </>
   );

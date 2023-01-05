@@ -1,24 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
-import { useSelector } from "react-redux";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, Text, Image} from 'react-native';
+import {useSelector} from 'react-redux';
 
-function SplashScreen({ navigation }) {
-  const isLoading = useSelector((state) => state.login.loading);
-  const userToken = useSelector((state) => state.login.userToken);
+function SplashScreen({navigation}) {
+  const isLoading = useSelector(state => state.login.loading);
+  const userToken = useSelector(state => state.login.userToken);
   useEffect(() => {
+    authenticateUser();
+  }, []);
+
+  async function authenticateUser() {
+    let loginStatus = await AsyncStorage.getItem('isUserLoggedIn');
+    console.log('loginStatus', loginStatus);
     setTimeout(() => {
-      if (userToken) {
-        navigation.navigate("Drawer");
+      if (loginStatus) {
+        navigation.navigate('Drawer');
       } else {
-        navigation.navigate("Login");
+        navigation.navigate('Login');
       }
     }, 1000);
-  }, []);
+  }
 
   return (
     <View style={styles.container}>
       <Image
-        source={require("../assets/images/Splash.png")}
+        source={require('../assets/images/Splash.png')}
         style={styles.headerBgImg}
       />
     </View>
@@ -32,10 +39,10 @@ const styles = StyleSheet.create({
     margin: -20,
   },
   headerBgImg: {
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-    resizeMode: 'stretch'
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    resizeMode: 'stretch',
   },
 });

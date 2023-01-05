@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -17,33 +17,33 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import moment from 'moment';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import SafeAreaView from '../../components/SafeAreaView';
 import AuthBottomSection from '../../components/AuthBottomSection';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import CustomButton from '../../components/default/Buttons';
-import Constant from "../../utils/Constant";
-import Logger from "../../utils/Logger";
-import Helpers from "../../utils/Helpers";
-import Indicator from "../../components/default/Indicator";
-import { SIGN_IN, SET_USER_INFO } from "../../redux/types";
-import axiosPostClient from "../../api/ApiClient";
-import ApiRequest from "../../api/ApiRequest";
-import CustomAlertDialog from "../../components/default/CustomAlertDialog";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import Constant from '../../utils/Constant';
+import Logger from '../../utils/Logger';
+import Helpers from '../../utils/Helpers';
+import Indicator from '../../components/default/Indicator';
+import {SIGN_IN, SET_USER_INFO} from '../../redux/types';
+import axiosPostClient from '../../api/ApiClient';
+import ApiRequest from '../../api/ApiRequest';
+import CustomAlertDialog from '../../components/default/CustomAlertDialog';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors from '../../config/Colors';
 
-function VerifyOTPScreen({ route, navigation }) {
+function VerifyOTPScreen({route, navigation}) {
   const CELL_COUNT2 = 6;
   const [isLoading, setLoading] = useState(false);
   const [counter, setCounter] = useState(30);
   const [startTimer, setStartTimer] = useState(true);
   const [otpInputValue, setOtpValue] = useState('');
-  const [error, setError] = useState("");
-  const [token, setToken] = useState("");
+  const [error, setError] = useState('');
+  const [token, setToken] = useState('');
   const dispatch = useDispatch();
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [showErrorDialog, setShowErrorDialog] = useState(false);
 
   var {
@@ -52,7 +52,7 @@ function VerifyOTPScreen({ route, navigation }) {
     isEmailEnter,
     is_verified_phone,
     is_verified_email,
-    otp
+    otp,
   } = route.params;
 
   const ref2 = useBlurOnFulfill({
@@ -97,11 +97,11 @@ function VerifyOTPScreen({ route, navigation }) {
         This is for go back to previous screen(AddPhoneEmail Screen) when user backpress from this screen.
         */
     const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
+      'hardwareBackPress',
       () => {
         navigation.goBack();
         return true;
-      }
+      },
     );
     return () => backHandler.remove();
   }, []);
@@ -113,17 +113,17 @@ function VerifyOTPScreen({ route, navigation }) {
       if (isEmailEnter) {
         setLoading(true);
         Logger.log(
-          "Calling SendOtpWithEmailApi:=>>" +
-          Constant.API_BASE_URL +
-          Constant.API_SEND_OTP_WITH_EMAIL
+          'Calling SendOtpWithEmailApi:=>>' +
+            Constant.API_BASE_URL +
+            Constant.API_SEND_OTP_WITH_EMAIL,
         );
         var params = await ApiRequest.getSendOtpWithEmailRequest(email);
-        Logger.log("Params is" + JSON.stringify(params));
+        Logger.log('Params is' + JSON.stringify(params));
         axiosPostClient()
           .post(Constant.API_SEND_OTP_WITH_EMAIL, params)
-          .then((response) => {
+          .then(response => {
             setLoading(false);
-            Logger.log("response" + JSON.stringify(response?.data));
+            Logger.log('response' + JSON.stringify(response?.data));
             if (response?.data && response?.data?.status == 200) {
               //  var emailOtp = response?.data?.data?.otp
               setStartTimer(true);
@@ -135,26 +135,26 @@ function VerifyOTPScreen({ route, navigation }) {
               setShowErrorDialog(true);
             }
           })
-          .catch((error) => {
+          .catch(error => {
             setLoading(false);
             setShowErrorDialog(true);
             setMessage(JSON.stringify(error));
-            Logger.log("error" + JSON.stringify(error));
+            Logger.log('error' + JSON.stringify(error));
           });
       } else {
         setLoading(true);
         Logger.log(
-          "Calling SendOtpWithPhoneApi:=>>" +
-          Constant.API_BASE_URL +
-          Constant.API_SEND_OTP_WITH_Phone
+          'Calling SendOtpWithPhoneApi:=>>' +
+            Constant.API_BASE_URL +
+            Constant.API_SEND_OTP_WITH_Phone,
         );
         var params = await ApiRequest.getSendOtpWithPhoneRequest(phoneNumber);
-        Logger.log("Params is" + JSON.stringify(params));
+        Logger.log('Params is' + JSON.stringify(params));
         axiosPostClient()
           .post(Constant.API_SEND_OTP_WITH_Phone, params)
-          .then((response) => {
+          .then(response => {
             setLoading(false);
-            Logger.log("response" + JSON.stringify(response?.data));
+            Logger.log('response' + JSON.stringify(response?.data));
             if (response?.data && response?.data?.status == 200) {
               // var emailOtp = response?.data?.data?.otp
               setStartTimer(true);
@@ -166,11 +166,11 @@ function VerifyOTPScreen({ route, navigation }) {
               setShowErrorDialog(true);
             }
           })
-          .catch((error) => {
+          .catch(error => {
             setLoading(false);
             setShowErrorDialog(true);
             setMessage(JSON.stringify(error));
-            Logger.log("error" + JSON.stringify(error));
+            Logger.log('error' + JSON.stringify(error));
           });
       }
     } else {
@@ -185,15 +185,15 @@ function VerifyOTPScreen({ route, navigation }) {
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
     if (enabled) {
-      console.log("Authorization status:", authStatus);
+      console.log('Authorization status:', authStatus);
       await messaging().registerDeviceForRemoteMessages();
       await messaging()
         .getToken()
-        .then((fcmToken) => {
+        .then(fcmToken => {
           if (fcmToken) {
-            console.log("fcmToken is--", fcmToken);
+            console.log('fcmToken is--', fcmToken);
             setToken(fcmToken);
-            AsyncStorage.setItem("fcmToken", fcmToken.toString());
+            AsyncStorage.setItem('fcmToken', fcmToken.toString());
           }
         });
     }
@@ -203,9 +203,9 @@ function VerifyOTPScreen({ route, navigation }) {
     if (await Helpers.checkInternet()) {
       setLoading(true);
       Logger.log(
-        "Calling callVerifyOtpApi:=>>" +
-        Constant.API_BASE_URL +
-        Constant.API_VERIFY_OTP
+        'Calling callVerifyOtpApi:=>>' +
+          Constant.API_BASE_URL +
+          Constant.API_VERIFY_OTP,
       );
       var params = await ApiRequest.getVerifyOtpRequest(
         otpInputValue,
@@ -213,18 +213,18 @@ function VerifyOTPScreen({ route, navigation }) {
         phoneNumber,
         is_verified_phone,
         is_verified_email,
-        token
+        token,
       );
       /*
             if email is verified and when you verfiy phone no. at that time pass is_verified_email="1".
             Backend team need this flag.
             */
-      Logger.log("Params is" + JSON.stringify(params));
+      Logger.log('Params is' + JSON.stringify(params));
       axiosPostClient()
         .post(Constant.API_VERIFY_OTP, params)
-        .then((response) => {
+        .then(response => {
           setLoading(false);
-          Logger.log("response" + JSON.stringify(response?.data));
+          Logger.log('response' + JSON.stringify(response?.data));
           if (response?.data && response?.data?.status == 200) {
             if (
               parseInt(response?.data?.data?.verified_phone) == 1 &&
@@ -246,11 +246,11 @@ function VerifyOTPScreen({ route, navigation }) {
             setShowErrorDialog(true);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           setLoading(false);
           setShowErrorDialog(true);
           setMessage(JSON.stringify(error));
-          Logger.log("error" + JSON.stringify(error));
+          Logger.log('error' + JSON.stringify(error));
         });
     } else {
       setMessage(Constant.NO_INTERNET);
@@ -258,12 +258,12 @@ function VerifyOTPScreen({ route, navigation }) {
     }
   };
 
-  const proceedLogin = async (userData) => {
+  const proceedLogin = async userData => {
     //  setLoading(false)
-    await Helpers.saveInPref(Constant.PREF_TOKEN, "123");
+    await Helpers.saveInPref(Constant.PREF_TOKEN, '123');
     await Helpers.saveInPref(
       Constant.PREF_ACCESS_TOKEN,
-      userData?.access_token
+      userData?.access_token,
     );
     await Helpers.saveInPref(Constant.PREF_USER_NAME, userData?.name);
     await Helpers.saveInPref(Constant.PREF_USER_ID, userData?.id);
@@ -274,9 +274,10 @@ function VerifyOTPScreen({ route, navigation }) {
     });
     dispatch({
       type: SIGN_IN,
-      payload: "123",
+      payload: '123',
     });
-    navigation.navigate("Loader");
+    AsyncStorage.setItem('isUserLoggedIn', '1');
+    navigation.navigate('Loader');
   };
 
   const validateScreen = () => {
@@ -284,16 +285,15 @@ function VerifyOTPScreen({ route, navigation }) {
 
     if (!otpInputValue || otpInputValue.length < 6) {
       var isValid = false;
-      setError("Please enter valid otp");
+      setError('Please enter valid otp');
     }
 
     if (isValid) {
-      setError("");
+      setError('');
       //proceedLogin()
       callVerifyOtpApi();
     }
   };
-
 
   const onResendClick = () => {
     if (!startTimer) {
@@ -336,8 +336,9 @@ function VerifyOTPScreen({ route, navigation }) {
         <View style={styles.container}>
           <Text style={styles.titleTxt}>
             {'Please type the OTP as shared on your\n email:'}
-            <Text style={{ fontWeight: '700' }}>
-              {email}{otp}
+            <Text style={{fontWeight: '700'}}>
+              {email}
+              {otp}
             </Text>
           </Text>
           <CodeField
@@ -355,7 +356,7 @@ function VerifyOTPScreen({ route, navigation }) {
             rootStyle={styles.codeFieldStyle}
             keyboardType="number-pad"
             textContentType="oneTimeCode"
-            renderCell={({ index, symbol, isFocused }) => (
+            renderCell={({index, symbol, isFocused}) => (
               <Text
                 key={index}
                 style={[
@@ -371,7 +372,7 @@ function VerifyOTPScreen({ route, navigation }) {
           />
           {error ? <Text style={styles.errorStyle}>{error}</Text> : null}
           <CustomButton
-            text={"Submit"}
+            text={'Submit'}
             onPress={() => {
               // Keyboard.dismiss();
               validateScreen();
@@ -384,7 +385,7 @@ function VerifyOTPScreen({ route, navigation }) {
                 {'Did’t received any code?'}
               </Text>
               <Text
-                style={[styles.resendCodeTip, { color: Colors.loginBtnColor }]}
+                style={[styles.resendCodeTip, {color: Colors.loginBtnColor}]}
                 onPress={() => onResendClick()}>
                 {'Resend OTP'}
               </Text>
@@ -417,8 +418,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     color: Colors.redColor,
     marginTop: 8,
-    alignSelf: "center",
-    fontFamily: 'Poppins-Regular'
+    alignSelf: 'center',
+    fontFamily: 'Poppins-Regular',
   },
   logoImg: {
     width: 139,
@@ -447,7 +448,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     textAlign: 'center',
     marginTop: 50,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   mainBox: {
     width: '90%',
@@ -461,7 +462,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.labelTextColor,
     paddingLeft: 5,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
   textBox: {
     width: '100%',
@@ -478,7 +479,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4,
     paddingLeft: 10,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
   orTxt: {
     fontSize: 15,
@@ -488,7 +489,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     marginTop: 20,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
   loginBtn: {
     width: '90%',
@@ -508,13 +509,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
   loginBtnTxt: {
     fontSize: 20,
     fontWeight: '600',
     color: Colors.whiteColor,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
   timerView: {
     height: 180,
@@ -529,14 +530,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.timerColor,
     marginBottom: 40,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   otpTitleTxt: {
     fontSize: 25,
     fontWeight: '600',
     color: Colors.whiteColor,
     top: 25,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
   backIconBtn: {
     height: 50,
@@ -557,7 +558,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '400',
     color: Colors.labelTextColor,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   codeFieldStyle: {
     width: '90%',
@@ -584,6 +585,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 6,
     borderWidth: Platform.OS === 'android' ? 0 : 1,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
 });
