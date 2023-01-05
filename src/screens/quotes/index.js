@@ -77,8 +77,8 @@ function GetAQuote({ navigation }) {
             if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address';
             }
-            if (!values.policyNo) {
-                errors.policyNo = "Mobile number is required";
+            if (!values.mobileNo) {
+                errors.mobileNo = "Mobile number is required";
             }
             if (!values.summary) {
                 errors.summary = "Summary is required";
@@ -89,12 +89,7 @@ function GetAQuote({ navigation }) {
         //initialValues: { firstName: '', lastName: '', phoneNumber: '', email: '' },
         initialValues: { email: "", mobileNo: "", name: "", summary: "" },
         onSubmit: (values) => {
-            if (checkedBox.includes(true) === false) {
-                console.log("1");
-                return;
-                // errors.dueDate = "Due date is required";
-            }
-            //   callApi(values);
+              callAddQuoteApi(values);
         },
     });
 
@@ -189,7 +184,7 @@ function GetAQuote({ navigation }) {
                     <CustomTextInput
                         ref={nameRef}
                         placeholder="Enter Your Full Name"
-                        onChangeText={handleChange("fullName")}
+                        onChangeText={handleChange("name")}
                         value={values.name}
                         returnKeyType="next"
                         onSubmitEditing={() => emailRef.current?.focus()}
@@ -218,7 +213,7 @@ function GetAQuote({ navigation }) {
                     <CustomTextInput
                         ref={typeofInsuranceRef}
                         placeholder="Enter Your Summary"
-                        onChangeText={handleChange("insuranceType")}
+                        onChangeText={handleChange("summary")}
                         value={values.summary}
                         returnKeyType="next"
                         onSubmitEditing={() => mobileNumberRef.current?.focus()}
@@ -263,6 +258,7 @@ function GetAQuote({ navigation }) {
                     />
                 </View>
 
+            </KeyboardAwareScrollView>
                 <Indicator showLoader={isLoading} />
                 <CustomAlertDialog
                     visible={showErrorDialog || isSessionExpired || quoteSuccess}
@@ -279,7 +275,6 @@ function GetAQuote({ navigation }) {
                     }}
                     description={message}
                 />
-            </KeyboardAwareScrollView>
         </>
     );
 }

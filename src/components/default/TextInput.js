@@ -45,7 +45,7 @@ const TextInputCustom = forwardRef(({onChangeText, value, ...props}, ref) => {
               textAlignVertical: 'top',
               borderRadius: 5,
             },
-            {width: '90%'},
+            {width: props.textStyle ? '100%' :'90%'},
           ]}
           onChangeText={text => onChangeText(text)}
           value={value}

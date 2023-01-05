@@ -121,7 +121,7 @@ function Reminder({navigation}) {
         return;
         // errors.dueDate = "Due date is required";
       }
-      //   callApi(values);
+        callApi(values);
     },
   });
 
@@ -405,6 +405,8 @@ function Reminder({navigation}) {
             />
           </View>
           {/* </KeyboardAwareScrollView> */}
+          {/* </View> */}
+        </KeyboardAwareScrollView>
           <Indicator showLoader={isLoading} />
           <CustomAlertDialog
             visible={showErrorDialog || isSessionExpired}
@@ -419,8 +421,6 @@ function Reminder({navigation}) {
             }}
             description={'Reminder set successfully.'}
           />
-          {/* </View> */}
-        </KeyboardAwareScrollView>
       </SafeAreaView>
     </>
   );

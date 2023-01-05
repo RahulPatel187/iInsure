@@ -94,12 +94,7 @@ function Inquiry({ navigation }) {
         //initialValues: { firstName: '', lastName: '', phoneNumber: '', email: '' },
         initialValues: { email: "", policyNo: "", uhid: "", summary: "" },
         onSubmit: (values) => {
-            if (checkedBox.includes(true) === false) {
-                console.log("1");
-                return;
-                // errors.dueDate = "Due date is required";
-            }
-            //   callApi(values);
+            callAddInquiryApi();
         },
     });
 

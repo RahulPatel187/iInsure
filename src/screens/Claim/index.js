@@ -52,11 +52,11 @@ var reminderArray = [
 
 function Claim({ route, navigation }) {
 
-    const nameRef = useRef(null);
-    const policyNumberRef = useRef(null);
-    const amt = useRef(null);
+    const doctorNameRef = useRef(null);
+    const hospitalNameRef = useRef(null);
+    const diagnosisNameRef = useRef(null);
     const admitDateRef = useRef(null);
-    const mobilenoRef = useRef(null);
+    const mobileNoRef = useRef(null);
     const [isDatePickerVisible, setDatePickerVisibile] = useState(false);
     const [isDateSelected, setIsDateSelected] = useState(false);
     const [isLoading, setLoading] = useState(false);
@@ -132,11 +132,11 @@ function Claim({ route, navigation }) {
                 errors.diagnosisName = "Diagnosis Name is required";
             }
 
-            if (!values.uhid) {
-                errors.uhid = "Your UHID is required";
+            if (!values.admitDate) {
+                errors.admitDate = "Your admitDate is required";
             }
-            if (!values.summary) {
-                errors.summary = "Summary is required";
+            if (!values.mobileNo) {
+                errors.mobileNo = " Hospital Contact No. is required";
             }
             return errors;
         },
@@ -170,6 +170,9 @@ function Claim({ route, navigation }) {
     const handleConfirm = (date) => {
         var formattedDate = format(date, "dd-MM-yyyy");
         Logger.log("formatted date" + formattedDate);
+        console.log('====================================');
+        console.log(formattedDate);
+        console.log('====================================');
         setFieldValue("admitDate", formattedDate);
 
         var serverDate = format(date, "yyyy-MM-dd");
@@ -293,39 +296,38 @@ function Claim({ route, navigation }) {
                         </View>
                         <View style={styles.formControl}>
                             <CustomTextInput
-                                ref={nameRef}
+                                ref={doctorNameRef}
                                 placeholder="Doctor Name"
-                                onChangeText={handleChange("name")}
-                                value={values.name}
+                                onChangeText={handleChange("doctorName")}
+                                value={values.doctorName}
                                 returnKeyType="next"
-                                onSubmitEditing={() => policyNumberRef.current?.focus()}
+                                onSubmitEditing={() => hospitalNameRef.current?.focus()}
                                 showPasswordIcon={false}
-                                errors={errors.name}
+                                errors={errors.doctorName}
                             />
                         </View>
                         <View style={styles.formControl}>
                             <CustomTextInput
-                                ref={policyNumberRef}
+                                ref={hospitalNameRef}
                                 placeholder="Hospital Name"
-                                onChangeText={handleChange("policyNo")}
-                                value={values.policyNo}
+                                onChangeText={handleChange("hospitalName")}
+                                value={values.hospitalName}
                                 returnKeyType="next"
                                 onSubmitEditing={() => showDatePicker()}
                                 showPasswordIcon={false}
-                                errors={errors.policyNo}
+                                errors={errors.hospitalName}
                             />
                         </View>
                         <View style={styles.formControl}>
                             <CustomTextInput
-                                ref={amt}
+                                ref={diagnosisNameRef}
                                 placeholder="Diagnosis"
-                                onChangeText={handleChange("amt")}
-                                value={values.amt}
-                                type={"decimal-pad"}
+                                onChangeText={handleChange("diagnosisName")}
+                                value={values.diagnosisName}
                                 returnKeyType="next"
                                 onSubmitEditing={() => showDatePicker()}
                                 showPasswordIcon={false}
-                                errors={errors.amt}
+                                errors={errors.diagnosisName}
                             />
                         </View>
                         <Pressable onPress={() => showDatePicker()} style={styles.buttonExpiryDate}>
@@ -336,7 +338,7 @@ function Claim({ route, navigation }) {
                                         : styles.textUnSelectedExpiryDate
                                 }
                             >
-                                {`Admit Date: ${values.dueDate && moment(values.dueDate).format("DD-MM-yyyy")
+                                {`Admit Date: ${values.admitDate && moment(values.admitDate).format("DD-MM-yyyy")
                                     }`}
                             </Text>
                             <DateTimePickerModal
@@ -345,29 +347,34 @@ function Claim({ route, navigation }) {
                                 onConfirm={handleConfirm}
                                 onCancel={hideDatePicker}
                                 headerTextIOS="Admit Date"
-                                minimumDate={new Date()}
+                                maximumDate={new Date(maxDate)}
+                                minimumDate={new Date(minDate)}
                             />
                             <Image
                                 style={styles.calanderImage}
                                 source={require("../../assets/images/cal.png")}
                             />
                         </Pressable>
-                        {errors.dueDate ? (
+                        {errors.admitDate ? (
                             <Text
                                 style={styles.dueDateError}
                             >
-                                {errors.dueDate}
+                                {errors.admitDate}
                             </Text>
                         ) : null}
                         <View style={styles.formControl}>
                             <CustomTextInput
-                                ref={amt}
+                                ref={mobileNoRef}
                                 placeholder="Hospital Contact Number"
-                                onChangeText={handleChange("amt")}
-                                value={values.amt}
-                                returnKeyType="next"
+                                onChangeText={handleChange("mobileNo")}
+                                value={values.mobileNo}
+                                returnKeyType="done"
+                                onSubmitEditing={() => { }}
                                 showPasswordIcon={false}
-                                errors={errors.amt}
+                                errors={errors.mobileNo}
+                                // keyboardType="phone-pad"
+                                keyboardType="number-pad"
+                                maxLength={10}
                             />
                         </View>
                         <CustomButton
@@ -590,7 +597,8 @@ const styles = StyleSheet.create({
     },
     dueDateError: {
         marginLeft: 23,
-        marginTop: 5,
+        marginBottom: 10,
+        marginTop: -5,
         color: Colors.redColor,
         fontFamily: 'Poppins-Regular'
     }
