@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
   btnTxt: {
     color: Colors.whiteColor,
     fontSize: 18,
+    fontFamily: 'Poppins-Regular'
     // textTransform: "uppercase",
   },
 });

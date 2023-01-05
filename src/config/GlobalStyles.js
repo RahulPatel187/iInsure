@@ -11,6 +11,7 @@ export default StyleSheet.create({
     },
     noDataFoundStyle: {
         color: Colors.blackColor,
-        fontSize: Helpers.getDynamicSize(18)
+        fontSize: Helpers.getDynamicSize(18),
+        fontFamily: 'Poppins-Regular'
     }
 });

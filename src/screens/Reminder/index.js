@@ -235,6 +235,7 @@ function Reminder({ navigation }) {
                     <Text
                         style={{
                             color: Colors.blackColor,
+                            fontFamily: 'Poppins-Regular'
                         }}
                     >
                         {item.title}
@@ -362,7 +363,7 @@ function Reminder({ navigation }) {
                         </Pressable>
                         {errors.dueDate ? (
                             <Text
-                                style={{ marginLeft: 23, marginTop: 5, color: Colors.redColor }}
+                                style={{ marginLeft: 23, marginTop: 5, color: Colors.redColor, fontFamily: 'Poppins-Regular' }}
                             >
                                 {errors.dueDate}
                             </Text>
@@ -375,7 +376,7 @@ function Reminder({ navigation }) {
                             : null}
                         {!checkedBox.includes(true) ? (
                             <Text
-                                style={{ margin: 16, marginTop: 0, color: Colors.redColor }}
+                                style={{ margin: 16, marginTop: 0, color: Colors.redColor, fontFamily: 'Poppins-Regular' }}
                             >
                                 {"At least select 1 reminder"}
                             </Text>
@@ -441,7 +442,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '300',
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        fontFamily: 'Poppins-Regular'
     },
     titleText2: {
         display: 'flex',
@@ -449,7 +451,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '600',
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        fontFamily: 'Poppins-SemiBold'
     },
     selectedTypeTextColor: {
         color: Colors.blackColor,
@@ -469,7 +472,7 @@ const styles = StyleSheet.create({
         color: Colors.blackColor,
         // flex: 1,
         borderRadius: 10,
-        fontFamily: "Roboto-Regular",
+        fontFamily: 'Poppins-Regular',
         borderColor: Colors.grayColor,
         marginHorizontal: 16,
         flexDirection: "row",
@@ -481,10 +484,12 @@ const styles = StyleSheet.create({
     textUnSelectedExpiryDate: {
         // marginLeft: 16,
         color: Colors.grayColor,
+        fontFamily: 'Poppins-Regular'
     },
     textSelectedExpiryDate: {
         // marginLeft: 16,
         color: Colors.blackColor,
+        fontFamily: 'Poppins-Regular'
     },
     calanderImage: {
         // marginRight: 16,
@@ -506,7 +511,7 @@ const styles = StyleSheet.create({
     textStyle: {
         color: Colors.labelTextColor,
         fontSize: Helpers.getDynamicSize(14),
-        fontFamily: "Roboto-Bold",
+        fontFamily: 'Poppins-SemiBold',
         marginBottom: 5,
         marginTop: 10,
         fontWeight: "700",

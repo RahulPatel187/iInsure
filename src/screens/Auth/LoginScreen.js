@@ -321,6 +321,7 @@ const styles = StyleSheet.create({
     marginVertical: Platform.OS === 'ios' ? 30 : 10,
     color: Colors.titleTextColor,
     fontWeight: '600',
+    fontFamily: 'Poppins-Bold'
   },
   mainBox: {
     width: '90%',
@@ -334,6 +335,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.labelTextColor,
     paddingLeft: 5,
+    fontFamily: 'Poppins-Bold'
   },
   textBox: {
     width: '100%',
@@ -351,6 +353,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4,
     paddingLeft: 20,
+    fontFamily: 'Poppins-Bold'
   },
   orTxt: {
     width: 50,
@@ -358,6 +361,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     color: Colors.labelTextColor,
+    fontFamily: 'Poppins-Bold'
   },
   loginBtn: {
     width: '90%',
@@ -381,5 +385,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     color: Colors.whiteColor,
+    fontFamily: 'Poppins-Bold'
   },
 });

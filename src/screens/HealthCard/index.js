@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
     },
     cardSubSec: {
         flexDirection: "row",
-        marginTop: 5,
+        marginTop: 2,
     },
     cardLabel: {
         fontSize: 12,
@@ -404,6 +404,7 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         marginLeft: 14,
         width: "30%",
+        fontFamily: 'Poppins-SemiBold'
     },
     cardValue: {
         fontSize: 12,
@@ -411,6 +412,7 @@ const styles = StyleSheet.create({
         fontWeight: "400",
         marginLeft: 24,
         width: "50%",
+        fontFamily: 'Poppins-Regular'
     },
     listStyle: {
         marginTop: 5,
@@ -428,7 +430,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '300',
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        fontFamily: 'Poppins-Regular'
     },
     titleText2: {
         display: 'flex',
@@ -436,7 +439,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '600',
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        fontFamily: 'Poppins-SemiBold'
     },
     cardHeader: {
         paddingVertical: 11,
@@ -449,7 +453,8 @@ const styles = StyleSheet.create({
     infoText: {
         fontSize: 14,
         color: Colors.whiteColor,
-        fontWeight: '600'
+        fontWeight: '600',
+        fontFamily: 'Poppins-SemiBold'
     },
     footerBtn: {
         padding: 4,

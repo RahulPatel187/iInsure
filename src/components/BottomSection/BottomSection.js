@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '400',
     color: 'white',
-    paddingTop: 5
+    paddingTop: 5,
+    fontFamily: 'Poppins-Regular'
   },
   tabImg: {
     width: 22,

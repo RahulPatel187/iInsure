@@ -63,6 +63,7 @@ function Claim({ route, navigation }) {
     const [message, setMessage] = useState("");
     const [maxDate, setMaxDate] = useState("");
     const [minDate, setMinDate] = useState("");
+    const [claimInfo, setClaimInfo] = useState();
     const [showErrorDialog, setShowErrorDialog] = useState(false);
     const [isSessionExpired, setSessionExpired] = useState(false);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -86,6 +87,11 @@ function Claim({ route, navigation }) {
             hideSubscription.remove();
         };
     }, []);
+    useEffect(() => {
+        if (route?.params) {
+            setClaimInfo(route?.params?.data);
+        }
+    }, [])
 
     // var { data } = route?.params;
 
@@ -99,7 +105,7 @@ function Claim({ route, navigation }) {
         // if (data && moment(data?.to_dt).isBefore(moment(futureMonth))) {
         //     setMaxDate(moment(data.to_dt));
         // } else {
-            setMaxDate(futureMonth);
+        setMaxDate(futureMonth);
         // }
         setMinDate(perviousMonth);
     }, []);
@@ -267,15 +273,15 @@ function Claim({ route, navigation }) {
                             <View style={{ width: '60%' }}>
                                 <View style={styles.cardSubSec}>
                                     <Text style={styles.cardLabel}>{"Insured Name:"}</Text>
-                                    <Text style={styles.cardValue}>{"User Name"}</Text>
+                                    <Text style={styles.cardValue}>{claimInfo ? claimInfo.name : "User Name"}</Text>
                                 </View>
                                 <View style={styles.cardSubSec}>
                                     <Text style={styles.cardLabel}>{"Policy Number:"}</Text>
-                                    <Text style={styles.cardValue}>{"TITANIUM0011"}</Text>
+                                    <Text style={styles.cardValue}>{claimInfo ? claimInfo.policy_no : "TITANIUM0011"}</Text>
                                 </View>
                                 <View style={styles.cardSubSec}>
                                     <Text style={styles.cardLabel}>{"UHID Number:"}</Text>
-                                    <Text style={styles.cardValue}>{"IL20414322100"}</Text>
+                                    <Text style={styles.cardValue}>{claimInfo ? claimInfo.card_no : "IL20414322100"}</Text>
                                 </View>
                             </View>
                             <View style={styles.claimReviewImg}>
@@ -449,7 +455,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '300',
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        fontFamily: 'Poppins-Regular'
     },
     titleText2: {
         display: 'flex',
@@ -457,7 +464,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '600',
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        fontFamily: 'Poppins-SemiBold'
     },
     selectedTypeTextColor: {
         color: Colors.blackColor,
@@ -477,7 +485,7 @@ const styles = StyleSheet.create({
         color: Colors.blackColor,
         // flex: 1,
         borderRadius: 10,
-        fontFamily: "Roboto-Regular",
+        fontFamily: 'Poppins-Regular',
         borderColor: Colors.grayColor,
         marginHorizontal: 16,
         flexDirection: "row",
@@ -490,10 +498,12 @@ const styles = StyleSheet.create({
     textUnSelectedExpiryDate: {
         // marginLeft: 16,
         color: Colors.grayColor,
+        fontFamily: 'Poppins-Regular'
     },
     textSelectedExpiryDate: {
         // marginLeft: 16,
         color: Colors.blackColor,
+        fontFamily: 'Poppins-Regular'
     },
     calanderImage: {
         // marginRight: 16,
@@ -515,28 +525,30 @@ const styles = StyleSheet.create({
     textStyle: {
         color: Colors.labelTextColor,
         fontSize: Helpers.getDynamicSize(14),
-        fontFamily: "Roboto-Bold",
+        fontFamily: 'Poppins-SemiBold',
         marginBottom: 5,
         marginTop: 10,
         fontWeight: "500",
     },
     cardSubSec: {
         flexDirection: "row",
-        marginTop: 10,
+        marginTop: 5,
     },
     cardLabel: {
-        fontSize: 14,
+        fontSize: 13,
         color: Colors.labelTextColor,
         fontWeight: "400",
         marginLeft: 24,
         width: "50%",
+        fontFamily: 'Poppins-Regular'
     },
     cardValue: {
-        fontSize: 14,
+        fontSize: 13,
         color: Colors.labelTextColor,
         fontWeight: "700",
         marginLeft: 24,
         width: "50%",
+        fontFamily: 'Poppins-SemiBold'
     },
     headerSec: {
         padding: 16,
@@ -558,27 +570,28 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         height: "70%",
     },
-    claimReview: { 
-        marginHorizontal: 16, 
-        marginTop: 20, 
-        marginBottom: 10, 
-        backgroundColor: Colors.whiteColor, 
-        display: 'flex', 
-        flexDirection: 'row' 
+    claimReview: {
+        marginHorizontal: 16,
+        marginTop: 20,
+        marginBottom: 10,
+        backgroundColor: Colors.whiteColor,
+        display: 'flex',
+        flexDirection: 'row'
     },
-    claimReviewImg: { 
-        width: '50%', 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center' 
+    claimReviewImg: {
+        width: '50%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    formControl: { 
-        marginHorizontal: 16, 
-        marginBottom: 10 
+    formControl: {
+        marginHorizontal: 16,
+        marginBottom: 10
     },
-    dueDateError: { 
-        marginLeft: 23, 
-        marginTop: 5, 
-        color: Colors.redColor 
+    dueDateError: {
+        marginLeft: 23,
+        marginTop: 5,
+        color: Colors.redColor,
+        fontFamily: 'Poppins-Regular'
     }
 });

@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
     color: Colors.redColor,
     marginTop: 8,
     alignSelf: "center",
-    fontFamily: "Roboto-Regular",
+    fontFamily: 'Poppins-Regular'
   },
   logoImg: {
     width: 139,
@@ -447,6 +447,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     textAlign: 'center',
     marginTop: 50,
+    fontFamily: 'Poppins-Regular'
   },
   mainBox: {
     width: '90%',
@@ -460,6 +461,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.labelTextColor,
     paddingLeft: 5,
+    fontFamily: 'Poppins-Bold'
   },
   textBox: {
     width: '100%',
@@ -476,6 +478,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4,
     paddingLeft: 10,
+    fontFamily: 'Poppins-Bold'
   },
   orTxt: {
     fontSize: 15,
@@ -485,6 +488,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     marginTop: 20,
+    fontFamily: 'Poppins-Bold'
   },
   loginBtn: {
     width: '90%',
@@ -504,11 +508,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    fontFamily: 'Poppins-Bold'
   },
   loginBtnTxt: {
     fontSize: 20,
     fontWeight: '600',
     color: Colors.whiteColor,
+    fontFamily: 'Poppins-Bold'
   },
   timerView: {
     height: 180,
@@ -523,12 +529,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.timerColor,
     marginBottom: 40,
+    fontFamily: 'Poppins-Regular'
   },
   otpTitleTxt: {
     fontSize: 25,
     fontWeight: '600',
     color: Colors.whiteColor,
     top: 25,
+    fontFamily: 'Poppins-Bold'
   },
   backIconBtn: {
     height: 50,
@@ -549,6 +557,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '400',
     color: Colors.labelTextColor,
+    fontFamily: 'Poppins-Regular'
   },
   codeFieldStyle: {
     width: '90%',
@@ -575,5 +584,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 6,
     borderWidth: Platform.OS === 'android' ? 0 : 1,
+    fontFamily: 'Poppins-Regular'
   },
 });

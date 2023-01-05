@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
     textStyle: {
         color: Colors.labelTextColor,
         fontSize: Helpers.getDynamicSize(14),
-        fontFamily: "Roboto-Bold",
+        fontFamily: 'Poppins-SemiBold',
         marginBottom: 5,
         fontWeight: "700",
         marginTop: 10
@@ -360,7 +360,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '300',
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        fontFamily: 'Poppins-Regular'
     },
     titleText2: {
         display: 'flex',
@@ -368,7 +369,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '600',
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        fontFamily: 'Poppins-SemiBold'
     },
     textInput: {
         padding: 10,

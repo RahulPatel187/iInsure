@@ -122,5 +122,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: Colors.whiteColor,
+    fontFamily: 'Poppins-SemiBold'
   },
 });

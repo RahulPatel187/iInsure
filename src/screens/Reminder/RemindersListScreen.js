@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
     color: Colors.whiteColor,
     fontWeight: "600",
     marginTop: -10,
+    fontFamily: 'Poppins-SemiBold'
   },
   cardView: {
     width: "90%",
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
   },
   cardSubSec: {
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 2,
   },
   cardLabel: {
     fontSize: 14,
@@ -273,6 +274,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginLeft: 24,
     width: "35%",
+    fontFamily: 'Poppins-SemiBold'
   },
   cardValue: {
     fontSize: 13,
@@ -280,6 +282,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     marginLeft: 24,
     width: "50%",
+    fontFamily: 'Poppins-Regular'
   },
   listStyle: {
     marginTop: 5,

@@ -317,6 +317,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 14,
     fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold'
   },
   textName: {
     color: '#000',
@@ -324,6 +325,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontWeight: '400',
     maxWidth: 150,
+    fontFamily: 'Poppins-Regular'
   },
   mobEmail: {
     flexDirection: 'row',
@@ -341,17 +343,20 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#444444',
     marginLeft: 10,
+    fontFamily: 'Poppins-Regular'
     // maxWidth: 160,
   },
   textV: {
     fontSize: 16,
     marginLeft: 5,
     color: 'black',
+    fontFamily: 'Poppins-Regular'
   },
   textVersion: {
     fontSize: 16,
     marginLeft: 5,
     color: '#F27C22',
+    fontFamily: 'Poppins-Regular'
   },
   flatlist: {
     flex: 1,
@@ -380,6 +385,7 @@ const styles = StyleSheet.create({
     paddingStart: 10,
     fontSize: 16,
     fontWeight: '500',
+    fontFamily: 'Poppins-SemiBold'
   },
   imageTab: {
     // tintColor: "white",
@@ -393,6 +399,7 @@ const styles = StyleSheet.create({
     paddingStart: 10,
     fontSize: 16,
     fontWeight: '500',
+    fontFamily: 'Poppins-SemiBold'
   },
   footer: {
     padding: 10,

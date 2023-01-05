@@ -89,12 +89,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     borderRadius: 6,
-    fontFamily: "Roboto-Regular",
+    fontFamily: 'Poppins-Regular',
+    textAlignVertical: "center",
   },
   errorStyle: {
     margin: RFValue(5),
     color: Colors.redColor,
-    fontFamily: "Roboto-Regular",
+    fontFamily: 'Poppins-Regular',
   },
   showHidePassword: {
     position: "absolute",

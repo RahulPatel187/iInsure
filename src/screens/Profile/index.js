@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     // textAlign: "center",
     marginTop: 10,
+    fontFamily: 'Poppins-SemiBold'
   },
   mainBox: {
     width: '90%',
@@ -153,6 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '300',
     color: Colors.whiteColor,
+    fontFamily: 'Poppins-Regular'
   },
   titleText2: {
     display: 'flex',
@@ -162,6 +164,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.whiteColor,
     flexWrap: 'wrap',
+    fontFamily: 'Poppins-SemiBold'
   },
   textStyle: {
     padding: 16,
@@ -173,6 +176,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     borderWidth: 1,
     borderColor: Colors.unSelectTextColor,
+    fontFamily: 'Poppins-SemiBold'
   },
   flex: {
     display: 'flex',
@@ -197,6 +201,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.whiteColor,
     textAlign: 'center',
-    marginVertical: 8,
+    // marginVertical: 4,
+    fontFamily: 'Poppins-SemiBold'
   },
 });

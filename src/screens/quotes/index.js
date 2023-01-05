@@ -312,6 +312,7 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         // textAlign: "center",
         marginTop: 10,
+        fontFamily: 'Poppins-SemiBold'
     },
     loginBtn: {
         width: "90%",
@@ -350,7 +351,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '300',
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        fontFamily: 'Poppins-Regular'
     },
     titleText2: {
         display: 'flex',
@@ -358,7 +360,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25,
         fontWeight: '600',
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        fontFamily: 'Poppins-SemiBold'
     },
     textInput: {
         padding: 10,

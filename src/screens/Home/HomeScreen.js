@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '300',
     color: Colors.whiteColor,
+    fontFamily: 'Poppins-Regular'
   },
   headerText2: {
     justifyContent: 'center',
@@ -243,6 +244,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: Colors.whiteColor,
+    fontFamily: 'Poppins-SemiBold'
   },
   bannerImg: {
     height: screenWidth - 50,
@@ -272,6 +274,7 @@ const styles = StyleSheet.create({
     color: Colors.blackColor,
     marginTop: 8,
     textAlign: 'center',
+    fontFamily: 'Poppins-Regular'
   },
   columnImgView: {
     borderRadius: 13,

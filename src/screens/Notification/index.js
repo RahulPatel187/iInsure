@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
         color: Colors.whiteColor,
         fontWeight: "600",
         marginTop: -10,
+        fontFamily: 'Poppins-SemiBold'
     },
     cardView: {
         width: "90%",
@@ -258,7 +259,8 @@ const styles = StyleSheet.create({
         // marginLeft: 24,
         // width: "30%",
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 10,
+        fontFamily: 'Poppins-SemiBold'
     },
     cardValue: {
         fontSize: 13,
@@ -267,7 +269,8 @@ const styles = StyleSheet.create({
         // marginLeft: 24,
         // width: "50%",
         paddingLeft: 10,
-        paddingRight: 15
+        paddingRight: 15,
+        fontFamily: 'Poppins-Regular'
     },
     listStyle: {
         marginTop: 5,

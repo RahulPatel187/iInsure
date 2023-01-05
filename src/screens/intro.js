@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'left',
     marginTop: 20,
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'Poppins-Bold'
   },
   imgDesc: {
     fontSize: 15,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     lineHeight: 24,
     width: '90%',
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins-Regular'
   },
   footer: {
     display: 'flex',
@@ -244,11 +244,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: Colors.blackColor,
+    fontFamily: 'Poppins-SemiBold'
   },
   next: {
     fontSize: 20,
     fontWeight: '500',
     color: Colors.whiteColor,
+    fontFamily: 'Poppins-SemiBold'
   },
   nextImg: {
     width: 18,
