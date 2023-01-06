@@ -21,6 +21,8 @@ import ApiRequest from '../../api/ApiRequest';
 import {useDispatch} from 'react-redux';
 import {SET_NOTIFICATION_COUNT} from '../../redux/types';
 import Colors from '../../config/Colors';
+import PushNotification from "react-native-push-notification";
+import messaging from "@react-native-firebase/messaging";
 
 const {width: screenWidth, height} = Dimensions.get('window');
 
@@ -59,11 +61,79 @@ const HomeScreen = ({navigation}) => {
   }, []);
 
   useEffect(() => {
+    requestUserPermission();
+  }, []);
+
+  PushNotification.configure({
+    // (optional) Called when Token is generated (iOS and Android)
+    onRegister: function (token) {
+      console.log("TOKEN:", token);
+    },
+
+    // (required) Called when a remote is received or opened, or local notification is opened
+    onNotification: function (notification) {
+      console.log("NOTIFICATION:", notification);
+    },
+
+    // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
+    onAction: function (notification) {
+      console.log("ACTION:", notification.action);
+      console.log("NOTIFICATION:", notification);
+
+      // process the action
+    },
+
+    // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
+    onRegistrationError: function (err) {
+      console.error(err.message, err);
+    },
+
+    // IOS ONLY (optional): default: all - Permissions to register.
+    permissions: {
+      alert: true,
+      badge: true,
+      sound: true,
+    },
+
+    // Should the initial notification be popped automatically
+    // default: true
+    popInitialNotification: true,
+
+    /**
+     * (optional) default: true
+     * - Specified if permissions (ios) and token (android and ios) will requested or not,
+     * - if not, you must call PushNotificationsHandler.requestPermissions() later
+     * - if you are not using remote notification or do not have Firebase installed, use this:
+     *     requestPermissions: Platform.OS === 'ios'
+     */
+    requestPermissions: true,
+  });
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       callGetNotificationListApi();
     });
     return unsubscribe;
   }, [navigation]);
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    if (enabled) {
+      console.log("Authorization status:", authStatus);
+      await messaging().registerDeviceForRemoteMessages();
+      await messaging()
+        .getToken()
+        .then((fcmToken) => {
+          if (fcmToken) {
+            console.log("fcmToken is--", fcmToken);
+            AsyncStorage.setItem("fcmToken", fcmToken.toString());
+          }
+        });
+    }
+  }
 
   const openContactUsPage = () => {
     //Opening default browser and loading uptrust url

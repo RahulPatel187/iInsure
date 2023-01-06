@@ -17,6 +17,9 @@ const windowWidth = Dimensions.get("window").width;
 function Header(props) {
 
   const userInfo = useSelector(state => state.login.userInfo);
+  if(!userInfo){
+    props.navigation.navigate("Login");
+  }
   const renderLeftIcon = () => {
     if (props.isBack) {
       return (

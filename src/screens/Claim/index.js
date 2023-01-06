@@ -37,6 +37,7 @@ import CustomConfirmDialog from '../../components/default/CustomConfirmationDial
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ApiRequest from '../../api/ApiRequest';
 import Logger from '../../utils/Logger';
+import { SIGN_IN, SET_HEALTH_CARD_API } from "../../redux/types";
 
 var reminderArray = [
     {
@@ -220,7 +221,7 @@ function Claim({ route, navigation }) {
             var params = await ApiRequest.getClaimRequest(
                 userId,
                 access_token,
-                // data.card_no,
+                claimInfo.card_no,
                 values.doctorName,
                 values.hospitalName,
                 values.diagnosisName,

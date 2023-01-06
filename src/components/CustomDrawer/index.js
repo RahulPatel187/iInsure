@@ -221,7 +221,7 @@ const CustomDrawer = props => {
             <Text style={styles.textHello}>Hello,</Text>
             <Text style={styles.textName}>{user?.name}</Text>
           </View>
-          <View style={{ width: '30%' }}>
+          <View style={{ width: '40%', height: '100%' }}>
             <ImageBackground
               source={require('../../assets/images/userBack1.png')}
               style={styles.userPic}>
@@ -300,12 +300,15 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   userPic: {
-    height: 80,
-    width: 80,
-    borderRadius: 40,
-    marginBottom: 10,
+    height: 80.9,
+    width: 80.8,
+    // borderRadius: 50,
+    margin: 5,
+    // marginBottom: 8,
+    // paddingBottom: 15,
     alignItems: 'center',
     justifyContent: 'center',
+    display: 'flex'
   },
   userPictext: {
     fontSize: 50,

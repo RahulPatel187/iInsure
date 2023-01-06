@@ -223,15 +223,15 @@ function ClaimListScreen({ navigation }) {
                       <>
                         <View style={styles.cardSubSec}>
                           <Text style={styles.cardLabel}>{"Total amount:"}</Text>
-                          <Text style={styles.cardValue}>{item?.total_amount ? item?.total_amount : "-"}</Text>
+                          <Text style={styles.cardValue}>₹ {item?.total_amount ? item?.total_amount : "-"}</Text>
                         </View>
                         <View style={styles.cardSubSec}>
                           <Text style={styles.cardLabel}>{"Approved amount:"}</Text>
-                          <Text style={styles.cardValue}>{item?.approved_amount ? item?.approved_amount : "-"}</Text>
+                          <Text style={styles.cardValue}>₹ {item?.approved_amount ? item?.approved_amount : "-"}</Text>
                         </View>
                         <View style={styles.cardSubSec}>
                           <Text style={styles.cardLabel}>{"Deducted amount:"}</Text>
-                          <Text style={styles.cardValue}>{item?.deducted_amount ? item?.deducted_amount : "-"}</Text>
+                          <Text style={styles.cardValue}>₹ {item?.deducted_amount ? item?.deducted_amount : "-"}</Text>
                         </View>
                       </>
                     ) : null}

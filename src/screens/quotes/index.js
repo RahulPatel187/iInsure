@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Constant from "../../utils/Constant";
 import Indicator from "../../components/default/Indicator";
 import { SIGN_IN } from "../../redux/types";
+import PushNotification from "react-native-push-notification";
 import CustomAlertDialog from "../../components/default/CustomAlertDialog";
 import Logger from "../../utils/Logger";
 import ApiRequest from "../../api/ApiRequest";
@@ -93,6 +94,29 @@ function GetAQuote({ navigation }) {
         },
     });
 
+    const sendLocalNotification = () => {
+        PushNotification.localNotification({
+          /* Android Only Properties */
+          channelId: "iEnsure",
+          showWhen: true,
+          autoCancel: true,
+          largeIcon: "ic_launcher",
+          bigLargeIcon: "ic_launcher",
+          vibrate: true,
+          vibration: 300,
+          priority: "high",
+          visibility: "private",
+          onlyAlertOnce: false,
+          /* iOS and Android properties */
+          id: 0,
+          title: "iEnsure",
+          message:
+            "Thank you for reaching out. iEnsure team will get back to you in next 2 business days.",
+          playSound: false,
+          soundName: "default",
+        });
+      };
+
     const callAddQuoteApi = async () => {
         if (await Helpers.checkInternet()) {
             setLoading(true);
@@ -102,9 +126,9 @@ function GetAQuote({ navigation }) {
                 Constant.API_ADD_QUOTE
             );
             var params = await ApiRequest.getAddQuoteRequest(
-                values.fullName,
+                values.name,
                 values.email,
-                values.insuranceType,
+                values.summary,
                 values.mobileNo
             );
             Logger.log("Params is" + JSON.stringify(params));
@@ -114,7 +138,7 @@ function GetAQuote({ navigation }) {
                     setLoading(false);
                     Logger.log("response" + JSON.stringify(response?.data));
                     if (response?.data && response?.data?.status == 200) {
-                        // sendLocalNotification();
+                        sendLocalNotification();
                         setMessage(response?.data?.message);
                         setQuoteSuccess(true);
                         setShowErrorDialog(false);

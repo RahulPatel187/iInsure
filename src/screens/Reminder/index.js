@@ -32,6 +32,7 @@ import CustomButton from '../../components/default/Buttons';
 import Constant from '../../utils/Constant';
 // import DropDownComponent from "../../components/default/DropDownComponent";
 import Indicator from '../../components/default/Indicator';
+import { SIGN_IN } from "../../redux/types";
 
 var reminderArray = [
   {
@@ -198,8 +199,8 @@ function Reminder({navigation}) {
   };
 
   const handleConfirm = async date => {
-    let finalDaysCnt = await getDateDiff(values.dueDate);
-    console.log('finalDaysCnt', finalDaysCnt);
+    let finalDaysCnt = await getDateDiff(date);
+    console.log('finalDaysCnt handle', finalDaysCnt, checkedBox);
     if (finalDaysCnt < 14) {
       if (checkedBox[1]) {
         checkedBox[1] = false;
@@ -231,6 +232,21 @@ function Reminder({navigation}) {
       finalDaysCntX = Difference_In_Days.toString().split('.')[0];
     }
     return finalDaysCntX;
+  };
+  const proceedLogout = async () => {
+    /*await Helpers.saveInPref(Constant.PREF_TOKEN, "")
+         await Helpers.removeFromPref(Constant.PREF_USER_INFO)
+         await Helpers.removeFromPref(Constant.PREF_ACCESS_TOKEN)
+         await Helpers.removeFromPref(Constant.PREF_USER_NAME)
+          dispatch({
+             type: SIGN_IN,
+             payload: ''
+         })*/
+    await Helpers.performLogout();
+    dispatch({
+      type: SIGN_IN,
+      payload: "",
+    });
   };
 
   const renderItem = (item, index) => {
