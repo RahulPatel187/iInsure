@@ -7,6 +7,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
+import { useSelector } from "react-redux";
 
 import Colors from "../../config/Colors";
 import Helpers from "../../utils/Helpers";
@@ -14,6 +15,8 @@ import Helpers from "../../utils/Helpers";
 const windowWidth = Dimensions.get("window").width;
 
 function Header(props) {
+
+  const userInfo = useSelector(state => state.login.userInfo);
   const renderLeftIcon = () => {
     if (props.isBack) {
       return (
@@ -127,7 +130,7 @@ function Header(props) {
     <View style={styles.headerView}>
       <View style={styles.icon}>
         {renderLeftIcon()}
-        {renderRightIcon()}
+        {userInfo && renderRightIcon()}
       </View>
 
       {renderTitle()}

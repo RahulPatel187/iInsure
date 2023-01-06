@@ -55,6 +55,8 @@ function VerifyOTPScreen({route, navigation}) {
     otp,
   } = route.params;
 
+  console.log(email, isEmailEnter);
+
   const ref2 = useBlurOnFulfill({
     value: otpInputValue,
     cellCount: CELL_COUNT2,
@@ -335,10 +337,9 @@ function VerifyOTPScreen({route, navigation}) {
         </ImageBackground>
         <View style={styles.container}>
           <Text style={styles.titleTxt}>
-            {'Please type the OTP as shared on your\n email:'}
-            <Text style={{fontWeight: '700'}}>
-              {email}
-              {otp}
+            {'Please type the OTP as shared on your\n'}{isEmailEnter ? 'email: ' : 'mobile: ' }
+            <Text style={{ fontWeight: '700' }}>
+              {isEmailEnter ? email: phoneNumber}{otp}
             </Text>
           </Text>
           <CodeField

@@ -141,7 +141,7 @@ const Intro = ({navigation}) => {
               <LinearGradient
                 colors={['#0096C7', '#0077B6']}
                 style={styles.slide}>
-                <Text style={styles.next}>Next</Text>
+                <Text style={styles.next}>{listIndex === 4 ? 'Finish' : 'Next'}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>

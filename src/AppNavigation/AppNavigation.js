@@ -43,7 +43,6 @@ const BottomTabNavigator = () => {
       <Tab.Screen name="Claim" component={Claim} />
       <Tab.Screen name="ClaimList" component={ClaimListScreen} />
       <Tab.Screen name="NotificationList" component={NotificationListScreen} />
-      <Tab.Screen name="GetAQotes" component={GetAQuote} />
       <Tab.Screen name="HealthCard" component={HealthCard} />
     </Tab.Navigator>
   );
@@ -78,6 +77,7 @@ export default AppNavigation = () => {
       <Stack.Screen name="Loader" component={Loading} />
       <Stack.Screen name="Intro" component={Intro} />
       <Stack.Screen name="Drawer" component={MyDrawer} />
+      <Stack.Screen name="GetAQotes" component={GetAQuote} />
     </Stack.Navigator>
   );
 };

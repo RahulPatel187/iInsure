@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
     footer: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         flexDirection: 'row',
         padding: 5,
         borderBottomLeftRadius: 50,

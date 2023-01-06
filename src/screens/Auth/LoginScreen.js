@@ -245,11 +245,11 @@ function LoginScreen({ navigation }) {
         <View style={[styles.orView, { marginTop: 30 }]}>
           <View style={[styles.line, { marginLeft: 35 }]} />
           <View>
-            <Text style={[styles.orTxt, { width: 100 }]}>{'Sign up Via'}</Text>
+            <Text style={[styles.orTxt, { width: 100 }]}>{'Help Center'}</Text>
           </View>
           <View style={[styles.line, { marginRight: 35 }]} />
         </View>
-        <AuthBottomSection containerStyle={{ marginTop: 50 }} />
+        <AuthBottomSection containerStyle={{ marginTop: 50 }} navigation={navigation} />
       </KeyboardAwareScrollView>
       <Indicator showLoader={isLoading} />
       <CustomAlertDialog

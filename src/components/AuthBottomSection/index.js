@@ -1,6 +1,9 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Image, Linking } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
+
+const contactNo = "919879208610";
+const supportEmail = "hello@uptrust.co.in";
 
 export default (props) => (
   <>
@@ -14,14 +17,18 @@ export default (props) => (
           },
         ]}
       >
-        <TouchableOpacity style={styles.middleBtn}>
+        <TouchableOpacity style={styles.middleBtn} onPress={() => {
+          Linking.openURL(`mailto:${supportEmail}`);
+        }}>
           <Image
             style={styles.middleIcon}
             source={require("../../assets/images/email.png")}
           />
         </TouchableOpacity>
       </LinearGradient>
-      <TouchableOpacity style={styles.middleBtn}>
+      <TouchableOpacity style={styles.middleBtn} onPress={() => props.navigation.navigate('GetAQotes', {
+        isBack: false,
+      })}>
         <Image
           style={[styles.middleIcon, { marginTop: -60, width: 76, height: 76 }]}
           source={require("../../assets/images/i-ensure.png")}
@@ -36,7 +43,9 @@ export default (props) => (
           },
         ]}
       >
-        <TouchableOpacity style={styles.middleBtn}>
+        <TouchableOpacity style={styles.middleBtn} onPress={() => {
+          Linking.openURL(`tel:${contactNo}`);
+        }}>
           <Image
             style={styles.middleIcon}
             source={require("../../assets/images/call2.png")}

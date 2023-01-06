@@ -1,4 +1,4 @@
-import React, {useState, forwardRef} from 'react';
+import React, { useState, forwardRef } from 'react';
 import {
   TextInput,
   View,
@@ -7,19 +7,19 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import Colors from '../../config/Colors';
 import Helpers from '../../utils/Helpers';
 
-const TextInputCustom = forwardRef(({onChangeText, value, ...props}, ref) => {
+const TextInputCustom = forwardRef(({ onChangeText, value, ...props }, ref) => {
   const [secureTextEntry, setSecureTextEntry] = useState(
     props.showPasswordIcon ? props.showPasswordIcon : false,
   );
   const changePwdType = () => {
     setSecureTextEntry(prevState => !prevState);
   };
-  const {containerStyle, showIcon} = props;
+  const { containerStyle, showIcon } = props;
 
   return (
     <View>
@@ -39,13 +39,13 @@ const TextInputCustom = forwardRef(({onChangeText, value, ...props}, ref) => {
           ref={ref}
           style={[
             props.textStyle ? props.textStyle : styles.textInput,
-            props.showPasswordIcon ? {marginEnd: 35} : null,
-            showIcon && {borderWidth: 0, borderColor: 'white'},
+            props.showPasswordIcon ? { marginEnd: 35 } : null,
+            showIcon && { borderWidth: 0, borderColor: 'white' },
             props.placeholder === 'Enter Your Summary' && {
               textAlignVertical: 'top',
-              borderRadius: 5,
+              borderRadius: 10,
             },
-            {width: props.textStyle ? '100%' :'90%'},
+            { width: props.textStyle ? '100%' : '100%', marginRight: -15 },
           ]}
           onChangeText={text => onChangeText(text)}
           value={value}
@@ -60,7 +60,7 @@ const TextInputCustom = forwardRef(({onChangeText, value, ...props}, ref) => {
               changePwdType();
             }}
             style={styles.showHidePassword}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
             <Image
               source={
                 secureTextEntry
@@ -88,12 +88,13 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
   },
   textInput: {
-    padding: 10,
-    borderRadius: 5,
+    paddingVertical: 10,
+    paddingLeft: 10,
+    borderRadius: 10,
     color: 'black',
     backgroundColor: '#ffffff',
     // marginTop: 5,
-    marginLeft: 5,
+    paddingLeft: 15,
     fontSize: 15,
     fontWeight: '500',
     fontFamily: 'Poppins-Regular',

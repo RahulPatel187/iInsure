@@ -165,7 +165,7 @@ function GetAQuote({ navigation }) {
                 source={require("../../assets/images/headerBgImg.png")}
                 style={[styles.headerBgImg, { ...(keyboardStatus && { paddingBottom: 55 }) }]}
             >
-                <Header isMenu={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
+                <Header isMenu={false} isBack={true} rightIcon={true} notificationCnt={notificationCount ? notificationCount : null} rightIconImage={require("../../assets/images/Notificationbell.png")} navigation={navigation} />
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>{"Get A "}</Text>
                     <Text style={styles.titleText2}>{"Quote"}</Text>
