@@ -25,7 +25,7 @@ export default (props) => {
 
   return (
     <>
-      <LinearGradient colors={["#0077B6", "#0096C7", "#0077B6"]} style={[styles.bottomSec, props.containerStyle, {...(keyboardStatus && {display: 'none'})}]}>
+      <LinearGradient colors={["#0077B6", "#0096C7", "#0077B6"]} style={[styles.bottomSec, props.containerStyle, { ...(keyboardStatus && { display: 'none' }) }]}>
         {/* <View style={[styles.bottomSec, props.containerStyle]}> */}
         <TouchableOpacity style={styles.bottomBtn} onPress={() => { navigation.navigate('Home'), setSelected(1) }}>
           <Image source={require("../../assets/images/home3.png")} style={[styles.tabImg, selected === 1 && { tintColor: '#FFFFFF' }]} />
@@ -35,7 +35,9 @@ export default (props) => {
           <Image source={require("../../assets/images/Vectorrem.png")} style={[styles.tabImg, selected === 2 && { tintColor: '#FFFFFF' }]} />
           <Text style={styles.tabText}>Reminders</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.middleBtn}>
+        <TouchableOpacity style={styles.middleBtn} onPress={() => navigation.navigate('GetAQotes', {
+          isBack: false,
+        })}>
           <Image
             style={[styles.middleIcon, { marginTop: -60 }]}
             source={require("../../assets/images/i-ensure.png")}

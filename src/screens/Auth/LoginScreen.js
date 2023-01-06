@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4,
     paddingLeft: 20,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Regular'
   },
   orTxt: {
     width: 50,

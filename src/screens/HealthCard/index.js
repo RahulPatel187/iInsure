@@ -240,6 +240,7 @@ function HealthCard({ navigation }) {
                                 <View
                                     style={[
                                         styles.cardView,
+                                        index === healthCardList.length-1 && { marginBottom: 40 },
                                     ]}
                                 >
                                     <LinearGradient colors={['#005C84', '#04B2FF']} style={styles.cardHeader}>
