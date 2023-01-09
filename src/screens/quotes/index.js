@@ -72,16 +72,16 @@ function GetAQuote({ navigation }) {
         //  validationSchema: InquirySchema,
         validate: (values) => {
             const errors = {};
-            if (!values.name) {
+            if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.name)) {
                 errors.name = "Your name is required";
             }
             if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address';
             }
-            if (!values.mobileNo) {
+            if (!/^(\+\d{1,3}[- ]?)?\d{10}$/.test(values.mobileNo)) {
                 errors.mobileNo = "Mobile number is required";
             }
-            if (!values.summary) {
+            if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.summary)) {
                 errors.summary = "Summary is required";
             }
             return errors;

@@ -93,7 +93,7 @@ function Inquiry({navigation}) {
       if (!values.uhid) {
         errors.uhid = 'Your UHID is required';
       }
-      if (!values.summary) {
+      if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.summary)) {
         errors.summary = 'Summary is required';
       }
       return errors;

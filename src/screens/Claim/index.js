@@ -152,20 +152,20 @@ function Claim({route, navigation}) {
   } = useFormik({
     validate: values => {
       const errors = {};
-      if (!values.doctorName) {
+      if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.doctorName)) {
         errors.doctorName = 'Doctor Name is required';
       }
-      if (!values.hospitalName) {
+      if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.hospitalName)) {
         errors.hospitalName = 'Hospital Name is required';
       }
-      if (!values.diagnosisName) {
+      if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.diagnosisName)) {
         errors.diagnosisName = 'Diagnosis Name is required';
       }
 
       if (!values.admitDate) {
         errors.admitDate = 'Your admitDate is required';
       }
-      if (!values.mobileNo) {
+      if (!/^(\+\d{1,3}[- ]?)?\d{10}$/.test(values.mobileNo)) {
         errors.mobileNo = ' Hospital Contact No. is required';
       }
       return errors;

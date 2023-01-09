@@ -103,7 +103,7 @@ function Reminder({ navigation }) {
     //  validationSchema: InquirySchema,
     validate: values => {
       const errors = {};
-      if (!values.name) {
+      if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.name)) {
         errors.name = 'Caption name is required';
       }
       //else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
