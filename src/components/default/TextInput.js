@@ -120,6 +120,10 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     marginStart: 16,
+    marginVertical: 5,
+    paddingVertical: 10,
+    position: 'absolute',
+    zIndex: 99999,
     height: RFValue(20),
     width: RFValue(20),
     resizeMode: 'contain',

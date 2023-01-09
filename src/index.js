@@ -58,9 +58,9 @@ function App() {
     };
   }, []);
 
-  if(!userToken){
-    <SplashScreen />
-  }
+  // if(!userToken){
+  //   <SplashScreen />
+  // }
   
   return (
     <SafeAreaProvider>

@@ -23,6 +23,7 @@ import {SET_NOTIFICATION_COUNT} from '../../redux/types';
 import Colors from '../../config/Colors';
 import PushNotification from "react-native-push-notification";
 import messaging from "@react-native-firebase/messaging";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {width: screenWidth, height} = Dimensions.get('window');
 

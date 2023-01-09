@@ -260,6 +260,19 @@ function VerifyOTPScreen({route, navigation}) {
     }
   };
 
+  const gotoEnterPhoneEmailScreen = () => {
+    /*
+        If email or phone not exist then redirect user to AddPhoneEmail screen.
+        */
+    navigation.navigate("AddPhoneEmail", {
+      email: email,
+      phoneNumber: phoneNumber,
+      isEmailEnter: isEmailEnter,
+      // is_verified_phone: isEmailEnter == true ? "0" : "1",
+      // is_verified_email: isEmailEnter == true ? "1" : "0"
+    });
+  };
+
   const proceedLogin = async userData => {
     //  setLoading(false)
     await Helpers.saveInPref(Constant.PREF_TOKEN, '123');

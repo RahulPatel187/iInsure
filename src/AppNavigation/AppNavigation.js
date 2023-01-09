@@ -21,6 +21,7 @@ import ClaimListScreen from '../screens/Claim/ClaimList';
 import NotificationListScreen from '../screens/Notification';
 import Loading from '../screens/Loading';
 import Intro from '../screens/intro';
+import AddPhoneEmailScreen from '../screens/Auth/AddPhoneEmailScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -78,6 +79,7 @@ export default AppNavigation = () => {
       <Stack.Screen name="Intro" component={Intro} />
       <Stack.Screen name="Drawer" component={MyDrawer} />
       <Stack.Screen name="GetAQotes" component={GetAQuote} />
+      <Stack.Screen name="AddPhoneEmail" component={AddPhoneEmailScreen} />
     </Stack.Navigator>
   );
 };
