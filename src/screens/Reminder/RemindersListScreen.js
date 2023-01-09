@@ -102,6 +102,10 @@ function RemindersListScreen({ navigation }) {
              payload: ''
          })*/
     await Helpers.performLogout();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
     dispatch({
       type: SIGN_IN,
       payload: "",
@@ -149,7 +153,7 @@ function RemindersListScreen({ navigation }) {
                   <View
                     style={[
                       styles.cardView,
-                      index === reminderList.length-1 && { marginBottom: 40 },
+                      index === reminderList.length - 1 && { marginBottom: 40 },
                     ]}
                   >
                     <View style={[styles.cardSubSec, { marginTop: 0 }]}>

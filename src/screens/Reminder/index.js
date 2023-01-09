@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,14 +12,14 @@ import {
   ImageBackground,
 } from 'react-native';
 import moment from 'moment';
-import {RFValue, RFPercentage} from 'react-native-responsive-fontsize';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
-import {useFormik} from 'formik';
+import { useFormik } from 'formik';
 import CustomAlertDialog from '../../components/default/CustomAlertDialog';
 // import * as Yup from "yup";
 import axiosPostClient from '../../api/ApiClient';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 // import { format } from "date-fns";
 // import messaging from "@react-native-firebase/messaging";
@@ -49,7 +49,7 @@ var reminderArray = [
   },
 ];
 
-function Reminder({navigation}) {
+function Reminder({ navigation }) {
   const nameRef = useRef(null);
   const policyNumberRef = useRef(null);
   const amt = useRef(null);
@@ -123,7 +123,7 @@ function Reminder({navigation}) {
     },
     validateOnChange: false,
     //initialValues: { firstName: '', lastName: '', phoneNumber: '', email: '' },
-    initialValues: {name: '', policyNo: '', dueDate: ''},
+    initialValues: { name: '', policyNo: '', dueDate: '' },
     onSubmit: values => {
       if (checkedBox.includes(true) === false) {
         console.log('1');
@@ -214,10 +214,10 @@ function Reminder({navigation}) {
         checkedBox[2] = false;
       }
     }
+    hideDatePicker();
     setRefresh(!refresh);
     setFieldValue('dueDate', date);
     setIsDateSelected(true);
-    hideDatePicker();
   };
 
   const getDateDiff = date => {
@@ -243,6 +243,10 @@ function Reminder({navigation}) {
              payload: ''
          })*/
     await Helpers.performLogout();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
     dispatch({
       type: SIGN_IN,
       payload: "",
@@ -255,7 +259,7 @@ function Reminder({navigation}) {
     console.log('finalDaysCnt', finalDaysCnt);
     return (
       <View
-        style={[styles.checkedBoxView, index === 0 && {marginTop: 20}]}
+        style={[styles.checkedBoxView, index === 0 && { marginTop: 20 }]}
         key={index}>
         <View style={styles.checkedBoxViewRow}>
           <Text
@@ -297,7 +301,7 @@ function Reminder({navigation}) {
           source={require('../../assets/images/headerBgImg.png')}
           style={[
             styles.headerBgImg,
-            {...(keyboardStatus && {paddingBottom: 55})},
+            { ...(keyboardStatus && { paddingBottom: 55 }) },
           ]}>
           <Header
             isMenu={true}
@@ -316,7 +320,7 @@ function Reminder({navigation}) {
           showsVerticalScrollIndicator={false}
           style={[
             styles.keyboardStyle,
-            {...(keyboardStatus && {marginTop: -18})},
+            { ...(keyboardStatus && { marginTop: -18 }) },
           ]}>
           {/* <View
                     style={{
@@ -328,7 +332,7 @@ function Reminder({navigation}) {
                     keyboardShouldPersistTaps="handled"
                 > */}
           <View style={styles.container}>
-            <View style={{marginHorizontal: 16, marginTop: 12}}>
+            <View style={{ marginHorizontal: 16, marginTop: 12 }}>
               <Text style={styles.textStyle}>Caption Name</Text>
               <CustomTextInput
                 ref={nameRef}
@@ -341,7 +345,7 @@ function Reminder({navigation}) {
                 errors={errors.name}
               />
             </View>
-            <View style={{marginHorizontal: 16}}>
+            <View style={{ marginHorizontal: 16 }}>
               <Text style={styles.textStyle}>Policy Number</Text>
               <CustomTextInput
                 ref={policyNumberRef}
@@ -354,7 +358,7 @@ function Reminder({navigation}) {
                 errors={errors.policyNo}
               />
             </View>
-            <View style={{marginHorizontal: 16}}>
+            <View style={{ marginHorizontal: 16 }}>
               <Text style={styles.textStyle}>Premium Amount</Text>
               <CustomTextInput
                 ref={amt}
@@ -368,7 +372,7 @@ function Reminder({navigation}) {
                 errors={errors.amt}
               />
             </View>
-            <Text style={[styles.textStyle, {marginHorizontal: 16}]}>
+            <Text style={[styles.textStyle, { marginHorizontal: 16 }]}>
               Due Date
             </Text>
             <Pressable
@@ -380,15 +384,15 @@ function Reminder({navigation}) {
                     ? styles.textSelectedExpiryDate
                     : styles.textUnSelectedExpiryDate
                 }>
-                {`Due Date: ${
-                  values.dueDate && moment(values.dueDate).format('DD-MM-yyyy')
-                }`}
+                {`Due Date: ${values.dueDate && moment(values.dueDate).format('DD-MM-yyyy')
+                  }`}
               </Text>
               <DateTimePickerModal
                 isVisible={isDatePickerVisible}
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
+                date={values.dueDate ? values.dueDate : new Date()}
                 headerTextIOS="Due Date"
                 minimumDate={new Date()}
               />
@@ -411,8 +415,8 @@ function Reminder({navigation}) {
 
             {reminderList && reminderList.length > 0
               ? reminderList.map((item, index) => {
-                  return renderItem(item, index);
-                })
+                return renderItem(item, index);
+              })
               : null}
             {!checkedBox.includes(true) ? (
               <Text

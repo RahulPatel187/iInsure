@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -18,14 +18,16 @@ import Helpers from '../../utils/Helpers';
 import Constant from '../../utils/Constant';
 import axiosPostClient from '../../api/ApiClient';
 import ApiRequest from '../../api/ApiRequest';
-import {useDispatch} from 'react-redux';
-import {SET_NOTIFICATION_COUNT} from '../../redux/types';
+import { useDispatch } from 'react-redux';
+import { SET_NOTIFICATION_COUNT } from '../../redux/types';
 import Colors from '../../config/Colors';
 import PushNotification from "react-native-push-notification";
+import Logger from "../../utils/Logger";
 import messaging from "@react-native-firebase/messaging";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomAlertDialog from "../../components/default/CustomAlertDialog";
 
-const {width: screenWidth, height} = Dimensions.get('window');
+const { width: screenWidth, height } = Dimensions.get('window');
 
 const contactUsUrl = 'https://www.uptrust.co.in/contact.php';
 
@@ -47,9 +49,11 @@ const imageData = [
   },
 ];
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
   const [userName, setUserName] = useState('');
   const [notificationCount, setNotificationCount] = useState(0);
+  const [message, setMessage] = useState("");
+  const [isSessionExpired, setSessionExpired] = useState(false);
   const dispatch = useDispatch();
 
   const getUsetNameFromPref = async () => {
@@ -154,6 +158,11 @@ const HomeScreen = ({navigation}) => {
         Constant.PREF_ACCESS_TOKEN,
         '',
       );
+      Logger.log(
+        "Calling GetHealthCardList Api:=>>" +
+        Constant.API_BASE_URL +
+        Constant.API_GET_USER_DETAIL
+    );
       var params = await ApiRequest.getInquiryListRequest(userId, access_token);
       axiosPostClient()
         .post(Constant.API_GET_NOTIFICATIONS, params)
@@ -165,6 +174,8 @@ const HomeScreen = ({navigation}) => {
               payload: response?.data?.data.length,
             });
           } else if (response?.data && response?.data?.status == 401) {
+            setMessage(response?.data?.message);
+            setSessionExpired(true);
           } else {
           }
         })
@@ -175,13 +186,33 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  const renderItem = ({item, index}) => {
+  const proceedLogout = async () => {
+    /*await Helpers.saveInPref(Constant.PREF_TOKEN, "")
+         await Helpers.removeFromPref(Constant.PREF_USER_INFO)
+         await Helpers.removeFromPref(Constant.PREF_ACCESS_TOKEN)
+         await Helpers.removeFromPref(Constant.PREF_USER_NAME)
+          dispatch({
+             type: SIGN_IN,
+             payload: ''
+         })*/
+    await Helpers.performLogout();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
+    dispatch({
+      type: SIGN_IN,
+      payload: "",
+    });
+  };
+
+  const renderItem = ({ item, index }) => {
     return (
-      <View style={{marginVertical: 20}}>
+      <View style={{ marginVertical: 20 }}>
         <Image
           source={item.image}
           style={styles.bannerImg}
-          // resizeMode={'contain'}
+        // resizeMode={'contain'}
         />
       </View>
     );
@@ -248,7 +279,7 @@ const HomeScreen = ({navigation}) => {
               <Text style={styles.columntext}>Inquiry</Text>
             </View>
           </View>
-          <View style={[styles.bottomContainer, {marginVertical: 20}]}>
+          <View style={[styles.bottomContainer, { marginVertical: 20 }]}>
             <View>
               <TouchableOpacity
                 style={styles.columnImgView}
@@ -273,6 +304,14 @@ const HomeScreen = ({navigation}) => {
             </View>
           </View>
         </ScrollView>
+        <CustomAlertDialog
+          visible={isSessionExpired}
+          onCloseDialog={() => {
+            setSessionExpired(false);
+            proceedLogout();
+          }}
+          description={message}
+        />
       </View>
     </>
   );

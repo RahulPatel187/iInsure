@@ -90,32 +90,32 @@ function GetAQuote({ navigation }) {
         //initialValues: { firstName: '', lastName: '', phoneNumber: '', email: '' },
         initialValues: { email: "", mobileNo: "", name: "", summary: "" },
         onSubmit: (values) => {
-              callAddQuoteApi(values);
+            callAddQuoteApi(values);
         },
     });
 
     const sendLocalNotification = () => {
         PushNotification.localNotification({
-          /* Android Only Properties */
-          channelId: "iEnsure",
-          showWhen: true,
-          autoCancel: true,
-          largeIcon: "ic_launcher",
-          bigLargeIcon: "ic_launcher",
-          vibrate: true,
-          vibration: 300,
-          priority: "high",
-          visibility: "private",
-          onlyAlertOnce: false,
-          /* iOS and Android properties */
-          id: 0,
-          title: "iEnsure",
-          message:
-            "Thank you for reaching out. iEnsure team will get back to you in next 2 business days.",
-          playSound: false,
-          soundName: "default",
+            /* Android Only Properties */
+            channelId: "iEnsure",
+            showWhen: true,
+            autoCancel: true,
+            largeIcon: "ic_launcher",
+            bigLargeIcon: "ic_launcher",
+            vibrate: true,
+            vibration: 300,
+            priority: "high",
+            visibility: "private",
+            onlyAlertOnce: false,
+            /* iOS and Android properties */
+            id: 0,
+            title: "iEnsure",
+            message:
+                "Thank you for reaching out. iEnsure team will get back to you in next 2 business days.",
+            playSound: false,
+            soundName: "default",
         });
-      };
+    };
 
     const callAddQuoteApi = async () => {
         if (await Helpers.checkInternet()) {
@@ -177,6 +177,10 @@ function GetAQuote({ navigation }) {
                  payload: ''
              })*/
         await Helpers.performLogout();
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Login' }],
+        });
         dispatch({
             type: SIGN_IN,
             payload: "",
@@ -283,23 +287,23 @@ function GetAQuote({ navigation }) {
                 </View>
 
             </KeyboardAwareScrollView>
-                <Indicator showLoader={isLoading} />
-                <CustomAlertDialog
-                    visible={showErrorDialog || isSessionExpired || quoteSuccess}
-                    onCloseDialog={() => {
-                        if (isSessionExpired) {
-                            setSessionExpired(false);
-                            proceedLogout();
-                        } else if (quoteSuccess) {
-                            setQuoteSuccess(false);
-                            resetForm();
-                            navigation.goBack();
-                        } else {
-                            setShowErrorDialog(false);
-                        }
-                    }}
-                    description={message}
-                />
+            <Indicator showLoader={isLoading} />
+            <CustomAlertDialog
+                visible={showErrorDialog || isSessionExpired || quoteSuccess}
+                onCloseDialog={() => {
+                    if (isSessionExpired) {
+                        setSessionExpired(false);
+                        proceedLogout();
+                    } else if (quoteSuccess) {
+                        setQuoteSuccess(false);
+                        resetForm();
+                        navigation.goBack();
+                    } else {
+                        setShowErrorDialog(false);
+                    }
+                }}
+                description={message}
+            />
         </>
     );
 }

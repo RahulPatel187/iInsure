@@ -140,12 +140,12 @@ const CustomDrawer = props => {
         if (auth().currentUser != null) {
             auth().signOut()
         }*/
-    await AsyncStorage.clear();
     // await Helpers.performLogout();
     // dispatch({
     //   type: SIGN_IN,
     //   payload: "",
     // });
+    await AsyncStorage.clear();
     props.navigation.reset({
       index: 0,
       routes: [{ name: 'Login' }],
@@ -224,6 +224,7 @@ const CustomDrawer = props => {
           <View style={{ width: '40%', height: '100%' }}>
             <ImageBackground
               source={require('../../assets/images/userBack1.png')}
+              resizeMode="contain"
               style={styles.userPic}>
               <Text style={styles.userPictext}>
                 {user?.name.charAt(0).toUpperCase()}
@@ -300,8 +301,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   userPic: {
-    height: 80.9,
-    width: 80.8,
+    height: 83,
+    width: 82,
     // borderRadius: 50,
     margin: 5,
     // marginBottom: 8,
@@ -416,9 +417,9 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
   },
   mobEmailView: {
-    display: 'flex', 
-    justifyContent: 'flex-start', 
-    paddingLeft: 10, 
+    display: 'flex',
+    justifyContent: 'flex-start',
+    paddingLeft: 10,
     paddingRight: 10
   }
 });

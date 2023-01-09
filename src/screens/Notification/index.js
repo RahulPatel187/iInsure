@@ -101,11 +101,15 @@ function NotificationListScreen({ navigation }) {
                  payload: ''
              })*/
         await Helpers.performLogout();
-        dispatch({
-          type: SIGN_IN,
-          payload: "",
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Login' }],
         });
-      };
+        dispatch({
+            type: SIGN_IN,
+            payload: "",
+        });
+    };
 
     const renderEmptyContainer = () => {
         if (!isLoading) {
@@ -148,7 +152,7 @@ function NotificationListScreen({ navigation }) {
                                     <TouchableOpacity
                                         style={[
                                             styles.cardView,
-                                            index === notificationList.length-1 && { marginBottom: 40 },
+                                            index === notificationList.length - 1 && { marginBottom: 40 },
                                         ]}
                                         onPress={() => {
                                             navigation.navigate("RemindersList");
@@ -280,10 +284,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    cardValue2: { 
-        width: '100%', 
-        marginLeft: 10, 
-        marginTop: 5, 
-        lineHeight: 20 
+    cardValue2: {
+        width: '100%',
+        marginLeft: 10,
+        marginTop: 5,
+        lineHeight: 20
     }
 });

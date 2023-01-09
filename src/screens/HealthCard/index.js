@@ -77,6 +77,10 @@ function HealthCard({ navigation }) {
                  payload: ''
              })*/
         await Helpers.performLogout();
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Login' }],
+          });
         dispatch({
             type: SIGN_IN,
             payload: "",

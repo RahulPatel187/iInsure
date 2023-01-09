@@ -118,6 +118,10 @@ function InquiryListScreen({ navigation }) {
              payload: ''
          })*/
     await Helpers.performLogout();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
     dispatch({
       type: SIGN_IN,
       payload: "",
@@ -165,7 +169,7 @@ function InquiryListScreen({ navigation }) {
                   <TouchableOpacity
                     style={[
                       styles.cardView,
-                      index === inquiryList.length-1 && { marginBottom: 40 },
+                      index === inquiryList.length - 1 && { marginBottom: 40 },
                     ]}
                     onPress={() => {
                       navigation.navigate("RemindersList");

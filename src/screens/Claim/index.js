@@ -97,7 +97,7 @@ function Claim({ route, navigation }) {
             setClaimInfo(route?.params?.data);
         }
     }, []);
-    
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             resetForm();
@@ -113,7 +113,7 @@ function Claim({ route, navigation }) {
         var userInfo = await Helpers.getFromPref(Constant.PREF_USER_INFO);
         if (userInfo) {
             var userJsonObject = JSON.parse(userInfo);
-            console.log("userInfo" , userInfo);
+            console.log("userInfo", userInfo);
             // setEmail(userJsonObject.email)
             setName(userJsonObject?.name);
             setPolicyNumber(userJsonObject?.policy_no);
@@ -198,12 +198,12 @@ function Claim({ route, navigation }) {
     };
 
     const handleConfirm = date => {
+        hideDatePicker();
         var formattedDate = format(date, 'dd-MM-yyyy');
         setFieldValue('admitDate', date);
         var serverDate = moment(date).format('dd-MM-yyyy');
         setServerDate(serverDate);
         setIsDateSelected(true);
-        hideDatePicker();
     };
 
     //Call claim card api.
@@ -221,7 +221,7 @@ function Claim({ route, navigation }) {
             var params = await ApiRequest.getClaimRequest(
                 userId,
                 access_token,
-                claimInfo.card_no,
+                claimInfo?.card_no ? claimInfo?.card_no : cardNumber,
                 values.doctorName,
                 values.hospitalName,
                 values.diagnosisName,
@@ -270,6 +270,10 @@ function Claim({ route, navigation }) {
                 })*/
         await AsyncStorage.clear();
         await Helpers.performLogout();
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Login' }],
+        });
         dispatch({
             type: SIGN_IN,
             payload: '',
@@ -386,6 +390,7 @@ function Claim({ route, navigation }) {
                                 onConfirm={handleConfirm}
                                 onCancel={hideDatePicker}
                                 headerTextIOS="Admit Date"
+                                date={values.admitDate ? values.admitDate : new Date()}
                                 maximumDate={new Date(maxDate)}
                                 minimumDate={new Date(minDate)}
                             />
