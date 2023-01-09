@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -12,14 +12,14 @@ import {
   ImageBackground,
 } from 'react-native';
 import moment from 'moment';
-import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {RFValue, RFPercentage} from 'react-native-responsive-fontsize';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
-import { useFormik } from 'formik';
+import {useFormik} from 'formik';
 import CustomAlertDialog from '../../components/default/CustomAlertDialog';
 // import * as Yup from "yup";
 import axiosPostClient from '../../api/ApiClient';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 // import { format } from "date-fns";
 // import messaging from "@react-native-firebase/messaging";
@@ -32,7 +32,7 @@ import CustomButton from '../../components/default/Buttons';
 import Constant from '../../utils/Constant';
 // import DropDownComponent from "../../components/default/DropDownComponent";
 import Indicator from '../../components/default/Indicator';
-import { SIGN_IN } from "../../redux/types";
+import {SIGN_IN} from '../../redux/types';
 
 var reminderArray = [
   {
@@ -49,7 +49,7 @@ var reminderArray = [
   },
 ];
 
-function Reminder({ navigation }) {
+function Reminder({navigation}) {
   const nameRef = useRef(null);
   const policyNumberRef = useRef(null);
   const amt = useRef(null);
@@ -104,26 +104,26 @@ function Reminder({ navigation }) {
     validate: values => {
       const errors = {};
       if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.name)) {
-        errors.name = 'Caption name is required';
+        errors.name = 'Valid Caption name is required';
       }
       //else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
       //     errors.email = 'Invalid email address';
       // }
       if (!values.policyNo) {
-        errors.policyNo = 'Policy number is required';
+        errors.policyNo = 'Valid Policy number is required';
       }
 
-      if (!values.amt) {
-        errors.amt = 'Premium Amount is required';
+      if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.amt)) {
+        errors.amt = 'Valid Premium Amount is required';
       }
       if (!values.dueDate) {
-        errors.dueDate = 'Due date is required';
+        errors.dueDate = 'Valid Due date is required';
       }
       return errors;
     },
     validateOnChange: false,
     //initialValues: { firstName: '', lastName: '', phoneNumber: '', email: '' },
-    initialValues: { name: '', policyNo: '', dueDate: '' },
+    initialValues: {name: '', policyNo: '', dueDate: ''},
     onSubmit: values => {
       if (checkedBox.includes(true) === false) {
         console.log('1');
@@ -245,11 +245,11 @@ function Reminder({ navigation }) {
     await Helpers.performLogout();
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Login' }],
+      routes: [{name: 'Login'}],
     });
     dispatch({
       type: SIGN_IN,
-      payload: "",
+      payload: '',
     });
   };
 
@@ -259,7 +259,7 @@ function Reminder({ navigation }) {
     console.log('finalDaysCnt', finalDaysCnt);
     return (
       <View
-        style={[styles.checkedBoxView, index === 0 && { marginTop: 20 }]}
+        style={[styles.checkedBoxView, index === 0 && {marginTop: 20}]}
         key={index}>
         <View style={styles.checkedBoxViewRow}>
           <Text
@@ -301,7 +301,7 @@ function Reminder({ navigation }) {
           source={require('../../assets/images/headerBgImg.png')}
           style={[
             styles.headerBgImg,
-            { ...(keyboardStatus && { paddingBottom: 55 }) },
+            {...(keyboardStatus && {paddingBottom: 55})},
           ]}>
           <Header
             isMenu={true}
@@ -320,7 +320,7 @@ function Reminder({ navigation }) {
           showsVerticalScrollIndicator={false}
           style={[
             styles.keyboardStyle,
-            { ...(keyboardStatus && { marginTop: -18 }) },
+            {...(keyboardStatus && {marginTop: -18})},
           ]}>
           {/* <View
                     style={{
@@ -332,7 +332,7 @@ function Reminder({ navigation }) {
                     keyboardShouldPersistTaps="handled"
                 > */}
           <View style={styles.container}>
-            <View style={{ marginHorizontal: 16, marginTop: 12 }}>
+            <View style={{marginHorizontal: 16, marginTop: 12}}>
               <Text style={styles.textStyle}>Caption Name</Text>
               <CustomTextInput
                 ref={nameRef}
@@ -345,7 +345,7 @@ function Reminder({ navigation }) {
                 errors={errors.name}
               />
             </View>
-            <View style={{ marginHorizontal: 16 }}>
+            <View style={{marginHorizontal: 16}}>
               <Text style={styles.textStyle}>Policy Number</Text>
               <CustomTextInput
                 ref={policyNumberRef}
@@ -358,7 +358,7 @@ function Reminder({ navigation }) {
                 errors={errors.policyNo}
               />
             </View>
-            <View style={{ marginHorizontal: 16 }}>
+            <View style={{marginHorizontal: 16}}>
               <Text style={styles.textStyle}>Premium Amount</Text>
               <CustomTextInput
                 ref={amt}
@@ -372,7 +372,7 @@ function Reminder({ navigation }) {
                 errors={errors.amt}
               />
             </View>
-            <Text style={[styles.textStyle, { marginHorizontal: 16 }]}>
+            <Text style={[styles.textStyle, {marginHorizontal: 16}]}>
               Due Date
             </Text>
             <Pressable
@@ -384,8 +384,9 @@ function Reminder({ navigation }) {
                     ? styles.textSelectedExpiryDate
                     : styles.textUnSelectedExpiryDate
                 }>
-                {`Due Date: ${values.dueDate && moment(values.dueDate).format('DD-MM-yyyy')
-                  }`}
+                {`Due Date: ${
+                  values.dueDate && moment(values.dueDate).format('DD-MM-yyyy')
+                }`}
               </Text>
               <DateTimePickerModal
                 isVisible={isDatePickerVisible}
@@ -415,8 +416,8 @@ function Reminder({ navigation }) {
 
             {reminderList && reminderList.length > 0
               ? reminderList.map((item, index) => {
-                return renderItem(item, index);
-              })
+                  return renderItem(item, index);
+                })
               : null}
             {!checkedBox.includes(true) ? (
               <Text
@@ -568,6 +569,7 @@ const styles = StyleSheet.create({
   keyboardViewStyle: {
     borderTopLeftRadius: 70,
     borderTopRightRadius: 70,
+    paddingBottom: 30,
   },
   keyboardStyle: {
     marginTop: -35,

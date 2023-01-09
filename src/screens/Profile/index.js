@@ -9,15 +9,17 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import BottomSection from '../../components/BottomSection/BottomSection';
 import Header from '../../components/default/Header';
 import Colors from '../../config/Colors';
 
 function Profile({navigation}) {
-  const userInfo = useSelector(state => state.login.userInfo);
+  const userInfoX = useSelector(state => state.login.userInfo);
   const notificationCount = useSelector(state => state.login.notificationCount);
-
+  let userInfo = JSON.parse(userInfoX);
+  console.log('userInfo', JSON.parse(userInfoX));
   return (
     <>
       <ImageBackground
@@ -42,34 +44,34 @@ function Profile({navigation}) {
         </View>
       </ImageBackground>
       <View style={styles.container}>
-        <View style={styles.flex}>
-          <ImageBackground
-            source={require('../../assets/images/userBack.png')}
-            style={styles.flexImgBg}>
-            <Image
-              source={require('../../assets/images/userr.png')}
-              style={styles.flexImg}
-            />
-          </ImageBackground>
-        </View>
-        <View style={styles.titleContainer2}>
-          <Text style={[styles.titleText, {color: Colors.blackColor}]}>
-            {'Hello, '}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingBottom: 30}}>
+          <View style={styles.flex}>
+            <ImageBackground
+              source={require('../../assets/images/userBack.png')}
+              style={styles.flexImgBg}>
+              <Image
+                source={require('../../assets/images/userr.png')}
+                style={styles.flexImg}
+              />
+            </ImageBackground>
+          </View>
+          <View style={styles.titleContainer2}>
+            <Text style={[styles.titleText, {color: Colors.blackColor}]}>
+              {'Hello, '}
+            </Text>
+            <Text style={[styles.nameTxt, , {color: Colors.blackColor}]}>
+              {userInfo.name || 'User'}
+            </Text>
+          </View>
+          <Text style={styles.titleTxt}>{'Registered details:'}</Text>
+          <Text style={styles.textStyle}>{userInfo.name || 'UserName'}</Text>
+          <Text style={styles.textStyle}>{userInfo.phone || '9876543210'}</Text>
+          <Text style={styles.textStyle}>
+            {userInfo.email || 'user@techforceglobal.com'}
           </Text>
-          <Text style={[styles.nameTxt, , {color: Colors.blackColor}]}>
-            {userInfo ? userInfo.name : 'User'}
-          </Text>
-        </View>
-        <Text style={styles.titleTxt}>{'Registered details'}</Text>
-        <Text style={styles.textStyle}>
-          {userInfo ? userInfo.name : 'UserName'}
-        </Text>
-        <Text style={styles.textStyle}>
-          {userInfo ? userInfo.phone : '9876543210'}
-        </Text>
-        <Text style={styles.textStyle}>
-          {userInfo ? userInfo.email : 'user@techforceglobal.com'}
-        </Text>
+        </ScrollView>
       </View>
     </>
   );
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     // textAlign: "center",
     marginTop: 10,
-    fontFamily: 'Poppins-SemiBold'
+    fontFamily: 'Poppins-SemiBold',
   },
   mainBox: {
     width: '90%',
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '300',
     color: Colors.whiteColor,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   titleText2: {
     display: 'flex',
@@ -164,7 +166,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.whiteColor,
     flexWrap: 'wrap',
-    fontFamily: 'Poppins-SemiBold'
+    fontFamily: 'Poppins-SemiBold',
   },
   textStyle: {
     padding: 16,
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     borderWidth: 1,
     borderColor: Colors.unSelectTextColor,
-    fontFamily: 'Poppins-SemiBold'
+    fontFamily: 'Poppins-SemiBold',
   },
   flex: {
     display: 'flex',
@@ -202,6 +204,6 @@ const styles = StyleSheet.create({
     color: Colors.whiteColor,
     textAlign: 'center',
     // marginVertical: 4,
-    fontFamily: 'Poppins-SemiBold'
+    fontFamily: 'Poppins-SemiBold',
   },
 });

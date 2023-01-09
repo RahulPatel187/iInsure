@@ -153,20 +153,20 @@ function Claim({route, navigation}) {
     validate: values => {
       const errors = {};
       if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.doctorName)) {
-        errors.doctorName = 'Doctor Name is required';
+        errors.doctorName = 'Valid Doctor Name is required';
       }
       if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.hospitalName)) {
-        errors.hospitalName = 'Hospital Name is required';
+        errors.hospitalName = 'Valid Hospital Name is required';
       }
       if (!/^[a-zA-Z0-9][a-zA-Z0-9\. ]*$/.test(values.diagnosisName)) {
-        errors.diagnosisName = 'Diagnosis Name is required';
+        errors.diagnosisName = 'Valid Diagnosis Name is required';
       }
 
       if (!values.admitDate) {
-        errors.admitDate = 'Your admitDate is required';
+        errors.admitDate = 'Valid Your admitDate is required';
       }
       if (!/^(\+\d{1,3}[- ]?)?\d{10}$/.test(values.mobileNo)) {
-        errors.mobileNo = ' Hospital Contact No. is required';
+        errors.mobileNo = 'Valid Hospital Contact No. is required';
       }
       return errors;
     },
@@ -309,6 +309,7 @@ function Claim({route, navigation}) {
         <KeyboardAwareScrollView
           contentContainerStyle={styles.keyboardViewStyle}
           showsVerticalScrollIndicator={false}
+          // contentContainerStyle={{paddingBottom: 30}}
           style={[
             styles.keyboardStyle,
             {...(keyboardStatus && {marginTop: -18})},
@@ -619,6 +620,7 @@ const styles = StyleSheet.create({
   keyboardViewStyle: {
     borderTopLeftRadius: 70,
     borderTopRightRadius: 70,
+    paddingBottom: 30,
   },
   keyboardStyle: {
     marginTop: -35,

@@ -32,7 +32,7 @@ function LoginScreen({navigation}) {
   const emailRef = useRef(null);
   const [isLoading, setLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(''); // 9099790300
-  const [email, setEmail] = useState('rahul123@gmail.com'); // rahul123@gmail.com
+  const [email, setEmail] = useState(''); // rahul123@gmail.com
   const [error, setError] = useState('');
   const [showErrorDialog, setShowErrorDialog] = useState(false);
 

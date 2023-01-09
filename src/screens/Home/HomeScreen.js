@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -18,16 +18,16 @@ import Helpers from '../../utils/Helpers';
 import Constant from '../../utils/Constant';
 import axiosPostClient from '../../api/ApiClient';
 import ApiRequest from '../../api/ApiRequest';
-import { useDispatch } from 'react-redux';
-import { SET_NOTIFICATION_COUNT } from '../../redux/types';
+import {useDispatch} from 'react-redux';
+import {SET_NOTIFICATION_COUNT} from '../../redux/types';
 import Colors from '../../config/Colors';
-import PushNotification from "react-native-push-notification";
-import Logger from "../../utils/Logger";
-import messaging from "@react-native-firebase/messaging";
+import PushNotification from 'react-native-push-notification';
+import Logger from '../../utils/Logger';
+import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CustomAlertDialog from "../../components/default/CustomAlertDialog";
+import CustomAlertDialog from '../../components/default/CustomAlertDialog';
 
-const { width: screenWidth, height } = Dimensions.get('window');
+const {width: screenWidth, height} = Dimensions.get('window');
 
 const contactUsUrl = 'https://www.uptrust.co.in/contact.php';
 
@@ -49,10 +49,10 @@ const imageData = [
   },
 ];
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({navigation}) => {
   const [userName, setUserName] = useState('');
   const [notificationCount, setNotificationCount] = useState(0);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [isSessionExpired, setSessionExpired] = useState(false);
   const dispatch = useDispatch();
 
@@ -72,18 +72,18 @@ const HomeScreen = ({ navigation }) => {
   PushNotification.configure({
     // (optional) Called when Token is generated (iOS and Android)
     onRegister: function (token) {
-      console.log("TOKEN:", token);
+      console.log('TOKEN:', token);
     },
 
     // (required) Called when a remote is received or opened, or local notification is opened
     onNotification: function (notification) {
-      console.log("NOTIFICATION:", notification);
+      console.log('NOTIFICATION:', notification);
     },
 
     // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
     onAction: function (notification) {
-      console.log("ACTION:", notification.action);
-      console.log("NOTIFICATION:", notification);
+      console.log('ACTION:', notification.action);
+      console.log('NOTIFICATION:', notification);
 
       // process the action
     },
@@ -127,14 +127,14 @@ const HomeScreen = ({ navigation }) => {
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
     if (enabled) {
-      console.log("Authorization status:", authStatus);
+      console.log('Authorization status:', authStatus);
       await messaging().registerDeviceForRemoteMessages();
       await messaging()
         .getToken()
-        .then((fcmToken) => {
+        .then(fcmToken => {
           if (fcmToken) {
-            console.log("fcmToken is--", fcmToken);
-            AsyncStorage.setItem("fcmToken", fcmToken.toString());
+            console.log('fcmToken is--', fcmToken);
+            AsyncStorage.setItem('fcmToken', fcmToken.toString());
           }
         });
     }
@@ -159,10 +159,10 @@ const HomeScreen = ({ navigation }) => {
         '',
       );
       Logger.log(
-        "Calling GetHealthCardList Api:=>>" +
-        Constant.API_BASE_URL +
-        Constant.API_GET_USER_DETAIL
-    );
+        'Calling GetHealthCardList Api:=>>' +
+          Constant.API_BASE_URL +
+          Constant.API_GET_USER_DETAIL,
+      );
       var params = await ApiRequest.getInquiryListRequest(userId, access_token);
       axiosPostClient()
         .post(Constant.API_GET_NOTIFICATIONS, params)
@@ -198,21 +198,21 @@ const HomeScreen = ({ navigation }) => {
     await Helpers.performLogout();
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Login' }],
+      routes: [{name: 'Login'}],
     });
     dispatch({
       type: SIGN_IN,
-      payload: "",
+      payload: '',
     });
   };
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({item, index}) => {
     return (
-      <View style={{ marginVertical: 20 }}>
+      <View style={{marginVertical: 20}}>
         <Image
           source={item.image}
           style={styles.bannerImg}
-        // resizeMode={'contain'}
+          // resizeMode={'contain'}
         />
       </View>
     );
@@ -279,7 +279,7 @@ const HomeScreen = ({ navigation }) => {
               <Text style={styles.columntext}>Inquiry</Text>
             </View>
           </View>
-          <View style={[styles.bottomContainer, { marginVertical: 20 }]}>
+          <View style={[styles.bottomContainer, {marginVertical: 20}]}>
             <View>
               <TouchableOpacity
                 style={styles.columnImgView}
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '300',
     color: Colors.whiteColor,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   headerText2: {
     justifyContent: 'center',
@@ -354,11 +354,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: Colors.whiteColor,
-    fontFamily: 'Poppins-SemiBold'
+    fontFamily: 'Poppins-SemiBold',
   },
   bannerImg: {
     height: screenWidth - 50,
-    width: screenWidth - 20,
+    width: screenWidth,
     alignSelf: 'center',
     // resizeMode: 'stretch',
   },
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
     color: Colors.blackColor,
     marginTop: 8,
     textAlign: 'center',
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   columnImgView: {
     borderRadius: 13,
