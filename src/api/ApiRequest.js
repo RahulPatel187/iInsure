@@ -1,6 +1,6 @@
-import { Platform } from "react-native";
-import Helpers from "../utils/Helpers";
-import Constant from "../utils/Constant";
+import {Platform} from 'react-native';
+import Helpers from '../utils/Helpers';
+import Constant from '../utils/Constant';
 
 /*
 This file is for all api request.
@@ -43,7 +43,7 @@ const ApiJSON = {
     hospital_name,
     diagnosis,
     admitDate,
-    mobileno
+    mobileno,
   ) {
     return {
       [Constant.PARAM_USER_ID]: user_id,
@@ -87,7 +87,7 @@ const ApiJSON = {
     phone,
     verified_phone,
     verified_email,
-    fcm_token
+    fcm_token,
   ) {
     return {
       [Constant.PARAM_OTP]: otp,

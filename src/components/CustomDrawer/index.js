@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import LinearGradient from 'react-native-linear-gradient';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Helpers from '../../utils/Helpers';
 import Constant from '../../utils/Constant';
 import CustomLogoutDialog from '../default/CustomLogoutDialog';
@@ -71,7 +71,7 @@ const CustomDrawer = props => {
       props.navigation.closeDrawer();
       props.navigation.reset({
         index: 0,
-        routes: [{ name: 'Home' }],
+        routes: [{name: 'Home'}],
       });
     } else if (slug == 'profile') {
       props.navigation.closeDrawer();
@@ -148,7 +148,7 @@ const CustomDrawer = props => {
     await AsyncStorage.clear();
     props.navigation.reset({
       index: 0,
-      routes: [{ name: 'Login' }],
+      routes: [{name: 'Login'}],
     });
     // props.navigation.navigate('Login');
   };
@@ -183,7 +183,7 @@ const CustomDrawer = props => {
     }
   };
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({item, index}) => {
     return indexs == index ? (
       <TouchableOpacity
         onPress={() => {
@@ -192,7 +192,7 @@ const CustomDrawer = props => {
         style={styles.tabContainer}>
         <LinearGradient
           colors={['#0077B6', '#0096C7', '#0077B6']}
-          style={{ flex: 1, borderRadius: 10 }}>
+          style={{flex: 1, borderRadius: 10}}>
           <View style={styles.tab}>
             <Image source={getIcon(item.slug)} style={styles.imageActive} />
             <Text style={styles.textActive}>{item.title}</Text>
@@ -221,11 +221,11 @@ const CustomDrawer = props => {
             <Text style={styles.textHello}>Hello,</Text>
             <Text style={styles.textName}>{user?.name}</Text>
           </View>
-          <View style={{ width: '40%', height: '100%' }}>
+          <View style={{width: '40%', height: '100%'}}>
             <ImageBackground
               source={require('../../assets/images/userBack1.png')}
-              resizeMode="contain"
-              style={styles.userPic}>
+              style={styles.userPic}
+              imageStyle={{borderRadius: 300}}>
               <Text style={styles.userPictext}>
                 {user?.name.charAt(0).toUpperCase()}
               </Text>
@@ -243,7 +243,7 @@ const CustomDrawer = props => {
           <View style={styles.mobEmail}>
             <Image
               source={require('../../assets/images/emailIcon.png')}
-              style={[styles.mobEmailPic, { tintColor: '#0090C3' }]}
+              style={[styles.mobEmailPic, {tintColor: '#0090C3'}]}
             />
             <Text style={styles.mobEmailText}>{user?.email}</Text>
           </View>
@@ -254,7 +254,7 @@ const CustomDrawer = props => {
             keyExtractor={(item, index) => index.toString()}
             data={drawerList}
             renderItem={renderItem}
-            style={{ padding: 5 }}
+            style={{padding: 5}}
           />
         </View>
       </DrawerContentScrollView>
@@ -263,7 +263,7 @@ const CustomDrawer = props => {
           source={require('../../assets/images/comn.png')}
           style={styles.footerLogo}
         />
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{flexDirection: 'row'}}>
           <Text style={styles.textV}>Version</Text>
           <Text style={styles.textVersion}>1.0</Text>
         </View>
@@ -301,15 +301,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   userPic: {
-    height: 83,
-    width: 82,
-    // borderRadius: 50,
+    height: 80.9,
+    width: 80.8,
     margin: 5,
-    // marginBottom: 8,
-    // paddingBottom: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    display: 'flex'
   },
   userPictext: {
     fontSize: 50,
@@ -321,7 +317,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 14,
     fontWeight: '700',
-    fontFamily: 'Poppins-SemiBold'
+    fontFamily: 'Poppins-SemiBold',
   },
   textName: {
     color: '#000',
@@ -329,7 +325,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontWeight: '400',
     maxWidth: 150,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   mobEmail: {
     flexDirection: 'row',
@@ -347,20 +343,20 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#444444',
     marginLeft: 10,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
     // maxWidth: 160,
   },
   textV: {
     fontSize: 16,
     marginLeft: 5,
     color: 'black',
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   textVersion: {
     fontSize: 16,
     marginLeft: 5,
     color: '#F27C22',
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   flatlist: {
     flex: 1,
@@ -389,7 +385,7 @@ const styles = StyleSheet.create({
     paddingStart: 10,
     fontSize: 16,
     fontWeight: '500',
-    fontFamily: 'Poppins-SemiBold'
+    fontFamily: 'Poppins-SemiBold',
   },
   imageTab: {
     // tintColor: "white",
@@ -403,7 +399,7 @@ const styles = StyleSheet.create({
     paddingStart: 10,
     fontSize: 16,
     fontWeight: '500',
-    fontFamily: 'Poppins-SemiBold'
+    fontFamily: 'Poppins-SemiBold',
   },
   footer: {
     padding: 10,
@@ -420,6 +416,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'flex-start',
     paddingLeft: 10,
-    paddingRight: 10
-  }
+    paddingRight: 10,
+  },
 });

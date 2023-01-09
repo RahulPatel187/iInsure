@@ -28,6 +28,7 @@ import Helpers from '../../utils/Helpers';
 import Indicator from '../../components/default/Indicator';
 import {SIGN_IN, SET_USER_INFO} from '../../redux/types';
 import axiosPostClient from '../../api/ApiClient';
+import messaging from '@react-native-firebase/messaging';
 import ApiRequest from '../../api/ApiRequest';
 import CustomAlertDialog from '../../components/default/CustomAlertDialog';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -186,6 +187,7 @@ function VerifyOTPScreen({route, navigation}) {
     const enabled =
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    console.log('enabledZZ', enabled);
     if (enabled) {
       console.log('Authorization status:', authStatus);
       await messaging().registerDeviceForRemoteMessages();
@@ -217,6 +219,8 @@ function VerifyOTPScreen({route, navigation}) {
         is_verified_email,
         token,
       );
+      console.log('paramsXX', params);
+      // return;
       /*
             if email is verified and when you verfiy phone no. at that time pass is_verified_email="1".
             Backend team need this flag.
@@ -350,9 +354,11 @@ function VerifyOTPScreen({route, navigation}) {
         </ImageBackground>
         <View style={styles.container}>
           <Text style={styles.titleTxt}>
-            {'Please type the OTP as shared on your\n'}{isEmailEnter ? 'email: ' : 'mobile: ' }
-            <Text style={{ fontWeight: '700' }}>
-              {isEmailEnter ? email: phoneNumber}{otp}
+            {'Please type the OTP as shared on your\n'}
+            {isEmailEnter ? 'email: ' : 'mobile: '}
+            <Text style={{fontWeight: '700'}}>
+              {isEmailEnter ? email : phoneNumber}
+              {otp}
             </Text>
           </Text>
           <CodeField
@@ -456,7 +462,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
   },
   titleTxt: {
-    fontSize: 17,
+    fontSize: 15,
     alignSelf: 'center',
     color: Colors.labelTextColor,
     fontWeight: '400',

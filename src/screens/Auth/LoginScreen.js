@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -11,15 +11,15 @@ import {
   Platform,
   BackHandler,
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
-import Helpers from "../../utils/Helpers";
+import Helpers from '../../utils/Helpers';
 import AuthBottomSection from '../../components/AuthBottomSection';
 import CustomAlertDialog from '../../components/default/CustomAlertDialog';
-import Logger from "../../utils/Logger";
-import Constant from "../../utils/Constant";
-import axiosPostClient from "../../api/ApiClient";
-import ApiRequest from "../../api/ApiRequest";
+import Logger from '../../utils/Logger';
+import Constant from '../../utils/Constant';
+import axiosPostClient from '../../api/ApiClient';
+import ApiRequest from '../../api/ApiRequest';
 import Indicator from '../../components/default/Indicator';
 import CustomTextInput from '../../components/default/TextInput';
 import Colors from '../../config/Colors';
@@ -27,13 +27,13 @@ import Colors from '../../config/Colors';
 const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 const regexPhonenoDigit = /^[6-9]\d{9}$/;
 
-function LoginScreen({ navigation }) {
+function LoginScreen({navigation}) {
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
   const [isLoading, setLoading] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(''); // 9099790300
+  const [email, setEmail] = useState('rahul123@gmail.com'); // rahul123@gmail.com
+  const [error, setError] = useState('');
   const [showErrorDialog, setShowErrorDialog] = useState(false);
 
   // const dispatch = useDispatch()
@@ -45,11 +45,11 @@ function LoginScreen({ navigation }) {
 
     if (phoneNumber.toString().trim() && email.toString().trim()) {
       isValid = false;
-      setError("Enter either phone or email");
+      setError('Enter either phone or email');
     } else if (!phoneNumber.toString().trim() && !email.toString().trim()) {
       isValid = false;
       // setError("Enter phone number or email")
-      setError("Enter either phone or email");
+      setError('Enter either phone or email');
     }
     // else if (phoneNumber && !phoneNumber.startsWith("+")) {
     //     isValid = false
@@ -60,17 +60,17 @@ function LoginScreen({ navigation }) {
       !regexPhonenoDigit.test(phoneNumber.toString().trim())
     ) {
       isValid = false;
-      setError("Please enter valid phone no. with 10 digit.");
+      setError('Please enter valid phone no. with 10 digit.');
     } else if (phoneNumber && phoneNumber.length < 10) {
       isValid = false;
-      setError("Please enter valid phone no. with 10 digit.");
+      setError('Please enter valid phone no. with 10 digit.');
     } else if (email && !regexEmail.test(email.trim())) {
       isValid = false;
-      setError("Please enter valid email");
+      setError('Please enter valid email');
     }
 
     if (isValid) {
-      setError("");
+      setError('');
       /*
             If email is exist then callSendOtpWIthEmail api
             Else call callPhoneVerify api
@@ -87,22 +87,22 @@ function LoginScreen({ navigation }) {
     }
   };
 
-  const callSendOtpApi = async (isEmailEnter) => {
+  const callSendOtpApi = async isEmailEnter => {
     if (await Helpers.checkInternet()) {
       if (isEmailEnter) {
         Logger.log(
-          "Calling SendOtpWithEmailApi:=>>" +
-          Constant.API_BASE_URL +
-          Constant.API_SEND_OTP_WITH_EMAIL
+          'Calling SendOtpWithEmailApi:=>>' +
+            Constant.API_BASE_URL +
+            Constant.API_SEND_OTP_WITH_EMAIL,
         );
         setLoading(true);
         var params = await ApiRequest.getSendOtpWithEmailRequest(email);
-        Logger.log("Params is" + JSON.stringify(params));
+        Logger.log('Params is' + JSON.stringify(params));
         await axiosPostClient()
           .post(Constant.API_SEND_OTP_WITH_EMAIL, params)
-          .then((response) => {
+          .then(response => {
             setLoading(false);
-            Logger.log("response" + JSON.stringify(response?.data));
+            Logger.log('response' + JSON.stringify(response?.data));
             if (response?.data && response?.data?.status == 200) {
               var otp = response?.data?.data?.otp;
               proceedLogin(isEmailEnter, otp);
@@ -111,26 +111,26 @@ function LoginScreen({ navigation }) {
               setShowErrorDialog(true);
             }
           })
-          .catch((error) => {
+          .catch(error => {
             setLoading(false);
             setError(JSON.stringify(error));
             setShowErrorDialog(true);
-            Logger.log("error" + JSON.stringify(error));
+            Logger.log('error' + JSON.stringify(error));
           });
       } else {
         Logger.log(
-          "Calling SendOtpWithPhoneApi:=>>" +
-          Constant.API_BASE_URL +
-          Constant.API_SEND_OTP_WITH_Phone
+          'Calling SendOtpWithPhoneApi:=>>' +
+            Constant.API_BASE_URL +
+            Constant.API_SEND_OTP_WITH_Phone,
         );
         setLoading(true);
         var params = await ApiRequest.getSendOtpWithPhoneRequest(phoneNumber);
-        Logger.log("Params is" + JSON.stringify(params));
+        Logger.log('Params is' + JSON.stringify(params));
         axiosPostClient()
           .post(Constant.API_SEND_OTP_WITH_Phone, params)
-          .then((response) => {
+          .then(response => {
             setLoading(false);
-            Logger.log("response" + JSON.stringify(response?.data));
+            Logger.log('response' + JSON.stringify(response?.data));
             if (response?.data && response?.data?.status == 200) {
               var otp = response?.data?.data?.otp;
               proceedLogin(isEmailEnter);
@@ -139,11 +139,11 @@ function LoginScreen({ navigation }) {
               setShowErrorDialog(true);
             }
           })
-          .catch((error) => {
+          .catch(error => {
             setLoading(false);
             setError(JSON.stringify(error));
             setShowErrorDialog(true);
-            Logger.log("error" + JSON.stringify(error));
+            Logger.log('error' + JSON.stringify(error));
           });
       }
     } else {
@@ -152,15 +152,15 @@ function LoginScreen({ navigation }) {
     }
   };
 
-  const proceedLogin = async (isEmailEnter,otp) => {
-    Logger.log("isEmailEnter===>" + isEmailEnter);
-    navigation.navigate("Otp", {
+  const proceedLogin = async (isEmailEnter, otp) => {
+    Logger.log('isEmailEnter===>' + isEmailEnter);
+    navigation.navigate('Otp', {
       email: email,
       phoneNumber: phoneNumber,
       isEmailEnter: isEmailEnter,
-      is_verified_phone: "0",
-      is_verified_email: "0",
-      otp: otp
+      is_verified_phone: '0',
+      is_verified_email: '0',
+      otp: otp,
     });
   };
 
@@ -191,7 +191,7 @@ function LoginScreen({ navigation }) {
               showIcon={false}
               ref={phoneNumberRef}
               placeholder="Mobile"
-              onChangeText={(text) => setPhoneNumber(text)}
+              onChangeText={text => setPhoneNumber(text)}
               value={phoneNumber}
               // keyboardType="phone-pad"
               textStyle={styles.textBox}
@@ -203,15 +203,15 @@ function LoginScreen({ navigation }) {
                 validateLogin();
               }}
               showPasswordIcon={false}
-            // errors={errors.phoneNumber}
+              // errors={errors.phoneNumber}
             />
           </View>
           <View style={styles.orView}>
-            <View style={[styles.line, { marginLeft: 35 }]} />
+            <View style={[styles.line, {marginLeft: 35}]} />
             <View>
               <Text style={styles.orTxt}>{'OR'}</Text>
             </View>
-            <View style={[styles.line, { marginRight: 35 }]} />
+            <View style={[styles.line, {marginRight: 35}]} />
           </View>
           <View style={styles.mainBox}>
             <Text style={styles.labelTxt}>{'Email'}</Text>
@@ -219,7 +219,7 @@ function LoginScreen({ navigation }) {
               showIcon={false}
               ref={emailRef}
               placeholder="Email"
-              onChangeText={(text) => setEmail(text)}
+              onChangeText={text => setEmail(text)}
               value={email}
               textStyle={styles.textBox}
               keyboardType="email-address"
@@ -230,7 +230,7 @@ function LoginScreen({ navigation }) {
                 // handleSubmit()
               }}
               showPasswordIcon={false}
-            // errors={errors.email}
+              // errors={errors.email}
             />
           </View>
           <TouchableOpacity
@@ -242,14 +242,17 @@ function LoginScreen({ navigation }) {
             <Text style={styles.loginBtnTxt}>{'Log In'}</Text>
           </TouchableOpacity>
         </View>
-        <View style={[styles.orView, { marginTop: 30 }]}>
-          <View style={[styles.line, { marginLeft: 35 }]} />
+        <View style={[styles.orView, {marginTop: 30}]}>
+          <View style={[styles.line, {marginLeft: 35}]} />
           <View>
-            <Text style={[styles.orTxt, { width: 100 }]}>{'Help Center'}</Text>
+            <Text style={[styles.orTxt, {width: 100}]}>{'Help Center'}</Text>
           </View>
-          <View style={[styles.line, { marginRight: 35 }]} />
+          <View style={[styles.line, {marginRight: 35}]} />
         </View>
-        <AuthBottomSection containerStyle={{ marginTop: 50 }} navigation={navigation} />
+        <AuthBottomSection
+          containerStyle={{marginTop: 50}}
+          navigation={navigation}
+        />
       </KeyboardAwareScrollView>
       <Indicator showLoader={isLoading} />
       <CustomAlertDialog
@@ -321,7 +324,7 @@ const styles = StyleSheet.create({
     marginVertical: Platform.OS === 'ios' ? 30 : 10,
     color: Colors.titleTextColor,
     fontWeight: '600',
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
   mainBox: {
     width: '90%',
@@ -335,7 +338,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.labelTextColor,
     paddingLeft: 5,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
   textBox: {
     width: '100%',
@@ -353,7 +356,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4,
     paddingLeft: 20,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   orTxt: {
     width: 50,
@@ -361,7 +364,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     color: Colors.labelTextColor,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
   loginBtn: {
     width: '90%',
@@ -385,6 +388,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     color: Colors.whiteColor,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
 });

@@ -3,7 +3,7 @@ import PushNotification from 'react-native-push-notification';
 import {Platform} from 'react-native';
 
 class LocalNotificationService {
-  configure = (onOpenNotification) => {
+  configure = onOpenNotification => {
     PushNotification.configure({
       onRegister: function (token) {
         console.log('[LocalNotificationService] onRegister:', token);
@@ -63,6 +63,7 @@ class LocalNotificationService {
       playSound: options.playSound || false,
       soundName: options.soundName || 'default',
       userInteraction: false,
+      channelId: "iensure"
     });
   };
   buildAndroidNotification = (id, title, message, data = {}, options = {}) => {
@@ -87,7 +88,7 @@ class LocalNotificationService {
       category: options.category || '',
       userInfo: {
         id: id,
-        item: data
+        item: data,
       },
     };
   };
@@ -100,7 +101,7 @@ class LocalNotificationService {
     }
   };
 
-  removeDeliveredNotificationByID = (notificationId) => {
+  removeDeliveredNotificationByID = notificationId => {
     console.log(
       '[LocalNotificationService] removeDeliveredNotificationByID:',
       notificationId,

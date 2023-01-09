@@ -1,25 +1,25 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AppNavigation from './AppNavigation/AppNavigation';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import PushNotification, { Importance } from "react-native-push-notification";
-import { fcmService } from "./notifications/FCMService";
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import PushNotification, {Importance} from 'react-native-push-notification';
+import {fcmService} from './notifications/FCMService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { localNotificationService } from "./notifications/LocalNotificationService";
-import { useSelector } from 'react-redux';
+import {localNotificationService} from './notifications/LocalNotificationService';
+import {useSelector} from 'react-redux';
 import SplashScreen from './screens/SplashScreen';
 const Stack = createNativeStackNavigator();
 
 function App() {
-  const userToken = useSelector((state) => state.login.userToken);
   PushNotification.createChannel(
     {
-      channelId: `iEnsure`, // (required)
-      channelName: `iEnsure`, // (required)
+      channelId: `iensure`, // (required)
+      channelName: `iensure`, // (required)
     },
-    (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+    created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
   );
+
   React.useEffect(() => {
     fcmService.registerAppWithFCM();
     fcmService.register(onRegister, onNotification, onOpenNotification);
@@ -28,13 +28,13 @@ function App() {
     function onRegister(token) {
       console.log(`[App] onRegister:`, token);
       // Helpers.saveInPref(Constant.FCM_TOKEN, token);
-      AsyncStorage.setItem("dummyToken", token);
+      AsyncStorage.setItem('dummyToken', token);
     }
 
     function onNotification(notify) {
       console.log(`[App] onNotification:`, notify);
       const option = {
-        soundName: "default",
+        soundName: 'default',
         playSound: true,
       };
       localNotificationService.showNotification(
@@ -42,7 +42,7 @@ function App() {
         notify.title,
         notify.body,
         notify,
-        option
+        option,
       );
     }
 
@@ -58,10 +58,10 @@ function App() {
     };
   }, []);
 
-  if(!userToken){
-    <SplashScreen />
-  }
-  
+  // if(!userToken){
+  //   <SplashScreen />
+  // }
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
