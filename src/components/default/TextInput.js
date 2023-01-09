@@ -52,6 +52,7 @@ const TextInputCustom = forwardRef(({onChangeText, value, ...props}, ref) => {
           keyboardType={props.type || 'default'}
           secureTextEntry={secureTextEntry}
           {...props}
+          selectionColor={'#C7C7C7'}
           placeholderTextColor={'#C7C7C7'}
         />
         {props.showPasswordIcon ? (
